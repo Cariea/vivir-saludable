@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
+import { Ubuntu } from "next/font/google";
+import "../styles/main.css";
 
 export const metadata: Metadata = {
   title: "Vivir Saludable",
@@ -12,17 +10,26 @@ export const metadata: Metadata = {
     apple: "/icon.png",
   }
 };
+
 export const viewport: Viewport = {
-  themeColor: 'black',
+  themeColor: 'light',
 }
+
+const ubuntu = Ubuntu({ subsets: ["latin"], weight: ['300', '400', '500', '700'] });
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="es">
+      <head>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+      </head>
+      <body className={ubuntu.className}>{children}</body>
     </html>
   );
 }
