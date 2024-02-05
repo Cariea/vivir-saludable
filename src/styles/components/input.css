@@ -1,0 +1,15 @@
+[data-theme="vs"] .input {
+    border-radius: 100%;
+    background-color: theme('colors.white');
+    border-radius: 8rem;
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    color: theme('colors.gray.200');
+    @apply placeholder-gray-200 shadow-base;
+
+    &:focus {
+        color: theme('colors.black');
+        @apply focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40;
+    }
+}
