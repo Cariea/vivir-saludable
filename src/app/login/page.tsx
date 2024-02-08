@@ -8,15 +8,18 @@ import { useState, MouseEvent } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
+import { authenticate } from "@/actions/authActions";
 import Logo from "../../images/Logo.png";
 
 type Inputs = {
-    email: string;
+    cedula: string;
     password: string;
 };
 
 export default function Login() {
     const router = useRouter();
+    const [loading, setLoading] = useState<Boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
     const {
         register,
         handleSubmit,
@@ -30,9 +33,20 @@ export default function Login() {
         setShowPassword(!showPassword);
     };
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data);
-        router.push("/users");
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        setLoading(true);
+
+        const response = await authenticate(data.cedula, data.password);
+        if (response?.status === 401) {
+            setErrorMessage(response.message);
+            setLoading(false);
+            setTimeout(() => {
+                setErrorMessage("");
+            }, 3000);
+            return;
+        }
+        setLoading(false);
+        //router.push("/users");
     };
 
     return (
@@ -47,12 +61,12 @@ export default function Login() {
             <form className="flex flex-col gap-y-8 w-full">
                 <div className="flex flex-col gap-y-2 w-full">
                     <input
-                        type="email"
-                        placeholder="Tu Correo Electrónico"
-                        {...register("email", { required: true })}
+                        type="text"
+                        placeholder="Tu Cédula"
+                        {...register("cedula", { required: true })}
                         className="input"
                     />
-                    {errors.email && <span className="text-red-500">Campo requerido</span>}
+                    {errors.cedula && <span className="text-red-500">Campo requerido</span>}
                 </div>
                 <div className="flex flex-col gap-y-2 w-full">
                     <div className="relative flex items-center mt-2">
@@ -78,14 +92,22 @@ export default function Login() {
                     {errors.password && <span className="text-red-500">Campo requerido</span>}
                 </div>
                 <div className="flex flex-col gap-y-4 w-full items-center">
-                    <button className="btn btn-primary w-full rounded-full text-white-dark py-4" onClick={handleSubmit(onSubmit)}>
-                        Iniciar sesión
+                    <button disabled={loading} className="btn btn-primary w-full rounded-full text-white-dark py-4" onClick={handleSubmit(onSubmit)}>
+                        {loading ? (
+                            <span className="loading loading-ring loading-xs"></span>
+                        ) : "Iniciar sesión"
+                        }
                     </button>
                     <Link href="/reset-password" className="text-gray-400 font-bold">
                         ¿Olvidaste tu contraseña?
                     </Link>
                 </div>
             </form>
+            {!!errorMessage && (
+                <div role="alert" className="absolute bottom-0 left-0 right-0 rounded-none py-4 px-8 alert alert-error">
+                    <span className="font-bold text-sm text-center">{errorMessage}</span>
+                </div>
+            )}
         </div>
     );
 }
