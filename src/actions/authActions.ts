@@ -37,7 +37,6 @@ export async function authenticate(cedula: string, password: string) {
 
 export async function getSession() {
     const encryptedSessionData = cookies().get("session")?.value;
-    if (!encryptedSessionData) return null;
 
-    return encryptedSessionData ? JSON.parse(decrypt(encryptedSessionData)) : null;
+    return encryptedSessionData ? JSON.parse(decrypt(encryptedSessionData as string) || "") : null;
 }
