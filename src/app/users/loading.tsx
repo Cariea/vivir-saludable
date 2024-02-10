@@ -13,7 +13,7 @@ export default function Loading() {
         </div>
     ));
     return (
-        <div className="flex flex-col gap-y-8">
+        <div className="flex flex-col gap-y-8 mt-8">
             {skeletons}
         </div>
     );
