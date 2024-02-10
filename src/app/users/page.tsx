@@ -5,7 +5,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { IoEllipsisHorizontal, IoLayers, IoPerson } from "react-icons/io5";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import { UserPageContext } from "./layout";
+import { UserPageContext } from "@/contexts";
 
 import Loading from "./loading";
 

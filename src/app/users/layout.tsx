@@ -2,20 +2,14 @@
 
 import Image from "next/image";
 
-import { createContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 import Logo from "../../images/Logo.png";
 
 import Navbar from "@/components/Navbar"
 import UserFilter from "@/components/UserFilter";
-
-interface UserListContextType {
-    selection: Object;
-    searchInput: string;
-}
-
-export const UserPageContext = createContext<UserListContextType>({} as UserListContextType);
+import { UserPageContext } from "@/contexts";
 
 export default function UserLayout({
     children,
