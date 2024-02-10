@@ -1,0 +1,13 @@
+/* ._lVbPX {
+    --backdrop: rgba(24, 35, 47, 0.7);
+} */
+
+.sheet-root {
+    background-color: rgba(24, 35, 47, 0.7);
+    --backdrop: rgba(24, 35, 47, 0.7);
+}
+
+div:has(div.rss-content), .rss-content {
+    border-radius: 4rem 4rem 0 0 !important;
+    @apply bg-white-dark !important;
+}

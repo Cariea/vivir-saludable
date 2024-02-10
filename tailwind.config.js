@@ -33,6 +33,9 @@ module.exports = {
             },
             borderRadius: {
                 "8xl": "3rem",
+            },
+            height: {
+                "90": "90%"
             }
         },
     },

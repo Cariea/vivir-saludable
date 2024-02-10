@@ -12,4 +12,8 @@
         color: theme('colors.black');
         @apply focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40;
     }
+
+    &.left-icon {
+        padding-left: 2.5rem;
+    }
 }
