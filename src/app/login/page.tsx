@@ -18,7 +18,7 @@ type Inputs = {
 
 export default function Login() {
     const router = useRouter();
-    const [loading, setLoading] = useState<Boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const {
         register,
@@ -43,10 +43,11 @@ export default function Login() {
             setTimeout(() => {
                 setErrorMessage("");
             }, 3000);
+            setLoading(false);
             return;
         }
         setLoading(false);
-        //router.push("/users");
+        router.push("/users");
     };
 
     return (
