@@ -32,8 +32,6 @@ export default function UserList() {
     const getUserData = async () => {
         const response = await getUsers({ size: userPageSize, page: userPage });
 
-        console.log(response);
-
         if (hasMore && response.status === 200) {
             setUsers([...users, ...response.data.items]);
             setUserPage(userPage + 1);
@@ -47,15 +45,10 @@ export default function UserList() {
     };
 
     const searchedUserItems = useMemo(
-        () =>{
-            console.log(searchInput);
-            const result = users.filter(
+        () =>
+            users.filter(
                 (user) => user.name.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1
-            );
-
-            console.log(result);
-            return result;
-        },
+            ),
         [users, searchInput]
     );
 

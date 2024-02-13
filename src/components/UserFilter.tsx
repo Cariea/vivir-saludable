@@ -7,6 +7,7 @@ import { IoFilter, IoClose } from "react-icons/io5";
 import "react-sheet-slide/style.css";
 
 import { getSpecialties, getPrograms } from "@/actions/getActions";
+import { SpecialtyType, ProgramType } from "@/types";
 
 interface FilterProps {
     selection: {
@@ -17,17 +18,6 @@ interface FilterProps {
     };
     setSelection?: (selection: any) => void;
 };
-
-interface SpecialtyType {
-    specialtyId: number;
-    name: string;
-}
-
-interface ProgramType {
-    programId: number;
-    name: string;
-    description: string;
-}
 
 export default function UserFilter({ selection, setSelection }: FilterProps) {
     const [isOpen, setIsOpen] = useState(false);

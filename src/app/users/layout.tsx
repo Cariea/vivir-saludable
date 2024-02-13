@@ -23,7 +23,6 @@ export default function UserLayout({
         <>
             <Navbar selected="users" />
             <Image src={Logo} alt="Logo" className="size-8" />
-            <h1 className="text-5xl text-primary mt-8 mb-4 font-bold">Usuarios</h1>
             <div className="flex justify-between items-end gap-x-4 mt-4">
                 <div className="relative flex items-center w-full">
                     <IoSearch className="absolute size-base ml-4 text-gray-200 left-0 focus:outline-none rtl:right-0 rtl:left-auto" />
