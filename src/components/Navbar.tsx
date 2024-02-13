@@ -12,7 +12,7 @@ export default function Navbar({ selected }: NavbarProps) {
     const router = useRouter();
 
     return (
-        <div className="btm-nav bg-primary">
+        <div className="btm-nav bg-primary z-50">
             <div className="flex flex-col items-center justify-center gap-y-0">
                 <button className={`${selected === "users" ? "text-secondary" : "text-white"}`}>
                     <IoPeople className="size-6" />
