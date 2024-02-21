@@ -1,3 +1,5 @@
+// TODO: Remove tailwind to be replaced by Material UI
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
