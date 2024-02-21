@@ -9,6 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/ubuntu": "^5.0.8",
+    "@mui/icons-material": "^5.15.10",
+    "@mui/material": "^5.15.10",
+    "@mui/material-nextjs": "^5.15.9",
     "@react-spring/web": "^9.7.3",
     "@use-gesture/react": "^10.3.0",
     "axios": "^1.6.7",

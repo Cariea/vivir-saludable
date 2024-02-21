@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Ubuntu } from "next/font/google";
+import { Container, CssBaseline, ThemeProvider } from "@mui/material";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter"
+import theme from "@/config/materialUITheme";
+
 import "../styles/main.css";
 
 export const metadata: Metadata = {
@@ -15,8 +18,6 @@ export const viewport: Viewport = {
     themeColor: "light",
 };
 
-const ubuntu = Ubuntu({ subsets: ["latin"], weight: ["300", "400", "500", "700"] });
-
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -26,13 +27,18 @@ export default function RootLayout({
         <html lang="es" data-theme="vs">
             <head>
                 <meta charSet="UTF-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta name="viewport" content="initial-scale=1, width=device-width" />
                 <link rel="icon" type="image/x-icon" href="./favicon.ico" />
             </head>
-            <body className={`${ubuntu.className} bg-white-dark`}>
-                <main>
-                    <div className="container-sm container-xl h-screen p-8">{children}</div>
-                </main>
+            <body>
+                <AppRouterCacheProvider>
+                    <ThemeProvider theme={theme}>
+                        <CssBaseline />
+                        <Container maxWidth="sm">
+                            {children}
+                        </Container>
+                    </ThemeProvider>
+                </AppRouterCacheProvider>
             </body>
         </html>
     );
