@@ -31,7 +31,7 @@ export default function RootLayout({
             </head>
             <body className={`${ubuntu.className} bg-white-dark`}>
                 <main>
-                    <div className="container-sm container-xl h-screen p-8">{children}</div>
+                    <div className="container-sm container-xl h-screen p-8 pt-4">{children}</div>
                 </main>
             </body>
         </html>
