@@ -47,6 +47,40 @@ export async function getSpecialties() {
     }
 }
 
+export async function getMe() {
+    const session = JSON.parse(await getSession());
+
+    try {
+        const response = await axios.get(`${config.apiUrl}pacients/me`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            }
+        });
+
+        return {
+            status: response.status,
+            data: response.data
+        }
+        
+    } catch(error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            // 👇️ error: AxiosError<any, any>
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}
+
 export async function getPrograms() {
     const session = JSON.parse(await getSession());
 

@@ -10,6 +10,7 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 
 import { authenticate } from "@/actions/authActions";
 import Logo from "../../images/Logo.png";
+import { Button } from "@mui/material";
 
 type Inputs = {
     cedula: string;
@@ -100,12 +101,23 @@ export default function Login() {
                     {errors.password && <span className="text-red-500">Campo requerido</span>}
                 </div>
                 <div className="flex flex-col gap-y-4 w-full items-center">
-                    <button disabled={loading} className="btn btn-primary w-full rounded-full text-white-dark py-4" onClick={handleSubmit(onSubmit)}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit(onSubmit)}
+                        disabled={loading}
+                    >
                         {loading ? (
                             <span className="loading loading-ring loading-xs"></span>
                         ) : "Iniciar sesión"
                         }
-                    </button>
+                    </Button>
+                    {/* <button disabled={loading} className="btn btn-primary w-full rounded-full text-white-dark py-4" onClick={handleSubmit(onSubmit)}>
+                        {loading ? (
+                            <span className="loading loading-ring loading-xs"></span>
+                        ) : "Iniciar sesión"
+                        }
+                    </button> */}
                     <Link href="/reset-password" className="text-gray-400 font-bold">
                         ¿Olvidaste tu contraseña?
                     </Link>
