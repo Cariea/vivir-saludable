@@ -8,7 +8,7 @@ import { getSession } from "@/actions/authActions";
 
 export async function updateUser(newUser: NewUserInput) {
     try {
-        const session = JSON.parse(await getSession());
+        const session = await getSession();
 
         let url;
         if (newUser.role === "specialist") {

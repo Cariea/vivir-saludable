@@ -1,7 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import { Container, CssBaseline, ThemeProvider } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter"
+
 import theme from "@/config/materialUITheme";
+
+import RootContainer from "@/components/RootContainer";
 
 import "../styles/main.css";
 
@@ -23,6 +27,8 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const cookieStore = cookies().get("session");
+
     return (
         <html lang="es" data-theme="vs">
             <head>
@@ -34,9 +40,9 @@ export default function RootLayout({
                 <AppRouterCacheProvider>
                     <ThemeProvider theme={theme}>
                         <CssBaseline />
-                        <Container maxWidth="sm">
+                        <RootContainer cookies={cookieStore}>
                             {children}
-                        </Container>
+                        </RootContainer>
                     </ThemeProvider>
                 </AppRouterCacheProvider>
             </body>

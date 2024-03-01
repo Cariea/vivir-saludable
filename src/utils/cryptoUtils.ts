@@ -2,6 +2,8 @@ import config from "@/config/config";
 
 import * as crypto from "crypto";
 
+import * as CryptoJS from "crypto-js";
+
 function splitEncryptedText(encryptedText: string) {
     return {
         ivString: encryptedText.slice(0, 32),
@@ -11,32 +13,17 @@ function splitEncryptedText(encryptedText: string) {
 
 export function encrypt(plaintext: string) {
     try {
-        const iv = crypto.randomBytes(16);
-        const cipher = crypto.createCipheriv("aes-256-cbc", Buffer.from(config.encryptPassword, 'hex'), iv);
-
-        const encrypted = Buffer.concat([
-            cipher.update(JSON.stringify(plaintext), "utf-8"),
-            cipher.final(),
-        ]);
-
-        return iv.toString("hex") + encrypted.toString("hex");
+        const encrypted = CryptoJS.AES.encrypt(JSON.stringify(plaintext), config.encryptPassword).toString();
+        const result = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(encrypted));
+        return result;
     } catch (error) {
         console.error(error);
         throw error;
     }
 }
 
-export function decrypt(cipherText: string | undefined) {
-    const { encryptedDataString, ivString } = splitEncryptedText(cipherText || "");
-
-    try {
-        const iv = Buffer.from(ivString, "hex");
-        const encryptedText = Buffer.from(encryptedDataString, "hex");
-        const decipher = crypto.createDecipheriv("aes-256-cbc", Buffer.from(config.encryptPassword, 'hex'), iv);
-
-        const decrypted = decipher.update(encryptedText);
-        return Buffer.concat([decrypted, decipher.final()]).toString();
-    } catch (e) {
-        console.error(e);
-    }
+export function decrypt(cipherText: string) {
+    const decData = CryptoJS.enc.Base64.parse(cipherText).toString(CryptoJS.enc.Utf8);
+    const bytes = CryptoJS.AES.decrypt(decData, config.encryptPassword).toString(CryptoJS.enc.Utf8);
+    return JSON.parse(bytes);
 }
