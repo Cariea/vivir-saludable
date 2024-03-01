@@ -1,9 +1,9 @@
 'use client';
 
-import { Roboto } from 'next/font/google';
+import { Ubuntu } from 'next/font/google';
 import { ThemeOptions, createTheme } from '@mui/material/styles';
 
-const roboto = Roboto({
+const ubuntu = Ubuntu({
     weight: ['300', '400', '500', '700'],
     subsets: ['latin'],
     display: 'swap',
@@ -35,7 +35,7 @@ export const themeOptions: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: ubuntu.style.fontFamily,
     fontSize: 16
   },
   components: {
@@ -62,6 +62,28 @@ export const themeOptions: ThemeOptions = {
                 })
             })
         }
+    },
+    MuiBottomNavigation: {
+      styleOverrides: {
+        root: ({ ownerState, theme }) => ({
+          ...(ownerState && {
+            paddingTop: "0.5rem",
+            paddingBottom: "0.5rem",
+            boxShadow: "0px 2px 8px 0px rgba(120, 152, 186, 0.3)",
+            height: "auto",
+          })
+        })
+      }
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: ({ ownerState, theme }) => ({
+          ...(ownerState && {
+            backgroundColor: theme.palette.background.default,
+            height: "100vh"
+          })
+        })
+      }
     }
   }
 };

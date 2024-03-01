@@ -10,15 +10,24 @@ import { User } from "@/types";
 import { getUsers } from "@/actions/getActions";
 
 import UserCard from "@/components/UserCard";
-import Navbar from "@/components/Navbar"
+import AssistentNavbar from "@/components/Navbar/AssistentNavbar";
 import UserFilter from "@/components/UserFilter";
 
 import Loading from "./loading";
 
 import Logo from "@/images/Logo.png";
+import { usePathname } from "next/navigation";
+
+interface SelectionProps {
+    byRole?: string;
+    bySpecialty?: string[];
+    byProgram?: string[];
+    byClinicCenter?: string[];
+}
 
 export default function UserList() {
-    const [filterSelection, setFilterSelection] = useState<Object>({});
+    const pathname = usePathname();
+    const [filterSelection, setFilterSelection] = useState<SelectionProps>({});
     const [searchInput, setSearchInput] = useState<string>("");
     const [users, setUsers] = useState<User[]>([]);
     const [hasMore, setHasMore] = useState(true);
@@ -40,13 +49,51 @@ export default function UserList() {
         }
     };
 
-    const searchedUserItems = useMemo(
-        () =>
-            users.filter(
-                (user) => user.name.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1
-            ),
-        [users, searchInput]
-    );
+    const searchedUserItems = useMemo(() => {
+        const usersByName = users.filter(
+            (user) => user.name.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1
+        );
+
+        const usersByRole = usersByName.filter((user) =>
+            filterSelection.byRole ? user.role === filterSelection.byRole : true
+        );
+
+        const usersBySpecialty = usersByRole.filter((user) =>{
+            if (!user.especialty || !filterSelection.bySpecialty) return true;
+
+            if (!filterSelection.bySpecialty.length) return false;
+
+            return filterSelection.bySpecialty.includes(user.especialty);
+        });
+
+        const usersByProgram = usersByRole.filter((user) => {
+            if (!user.program || !filterSelection.byProgram) return true;
+
+            if (!filterSelection.byProgram.length) return false;
+
+            return filterSelection.byProgram.includes(user.program);
+        });
+
+        console.log("specialty", usersBySpecialty);
+
+        const ids = new Set(usersBySpecialty.map((u) => u.userId));
+        const merged = [
+            ...(filterSelection.byRole
+                ? filterSelection.byRole === "specialist"
+                    ? usersBySpecialty
+                    : []
+                : usersBySpecialty),
+            ...(filterSelection.byRole
+                ? filterSelection.byRole === "pacient"
+                    ? usersByProgram
+                    : []
+                : usersByProgram.filter((d) => !ids.has(d.userId))),
+        ];
+
+        console.log("merged", merged);
+
+        return merged;
+    }, [users, searchInput, filterSelection]);
 
     useEffect(() => {
         getUserData();
@@ -54,7 +101,6 @@ export default function UserList() {
 
     return (
         <>
-            <Navbar selected="users" />
             <Image src={Logo} alt="Logo" className="size-8" />
             <div className="flex justify-between items-end gap-x-4 mt-4">
                 <div className="relative flex items-center w-full">
@@ -69,7 +115,7 @@ export default function UserList() {
                         />
                     </div>
                 </div>
-                <UserFilter selection={filterSelection} setSelection={setFilterSelection} />
+                <UserFilter setOriginalSelection={setFilterSelection} />
             </div>
             <InfiniteScroll
                 dataLength={searchedUserItems.length}
@@ -89,6 +135,7 @@ export default function UserList() {
                     ))}
                 </div>
             </InfiniteScroll>
+            <AssistentNavbar selected={pathname} />
         </>
     );
 }
