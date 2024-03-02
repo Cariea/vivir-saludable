@@ -10,8 +10,9 @@ import { getPrograms, getSpecialties, getUserInfo } from "@/actions/getActions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createUser } from "@/actions/postActions";
 import { updateUser } from "@/actions/putActions";
+import { withRoles } from "@/components/WithRolesWrapper";
 
-export default function UserRegister() {
+const UserRegister = () => {
     const searchParams = useSearchParams();
     const [isLoading, setLoading] = useState<boolean>(true);
     const [specialties, setSpecialties] = useState<SpecialtyType[]>([]);
@@ -272,3 +273,5 @@ export default function UserRegister() {
         </>
     )
 }
+
+export default withRoles(UserRegister, ["asistent"]);

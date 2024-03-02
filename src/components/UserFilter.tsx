@@ -102,15 +102,11 @@ export default function UserFilter({ setOriginalSelection }: FilterProps) {
         setIsOpen(newOpen);
     };
 
-    const filterSelectionBadgeCount = useMemo(() => {
-        const result = (selection.byRole ? 1 : 0) +
+    const filterSelectionBadgeCount = useMemo(() => (
+        (selection.byRole ? 1 : 0) +
         (selection.byProgram ? 1 : 0) +
-        (selection.bySpecialty ? 1 : 0);
-
-        console.log("filterSelectionBadgeCount", result);
-
-        return result;
-    }, [selection])
+        (selection.bySpecialty ? 1 : 0)
+    ), [selection])
 
     useEffect(() => {
         const getSpecialtiesData = async () => {

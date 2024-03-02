@@ -10,8 +10,9 @@ import { CurrentPacient } from "@/types";
 import { getMe } from "@/actions/getActions";
 
 import Logo from "@/images/Logo.png";
+import { withRoles } from "@/components/WithRolesWrapper";
 
-export default function TodoPage({}) {
+const TodoPage = ({}) => {
     const [currentUserInfo, setCurrentUserInfo] = useState<CurrentPacient>({} as CurrentPacient);
     const [currentSpecialty, setCurrentSpecialty] = useState<string>("");
 
@@ -109,3 +110,6 @@ export default function TodoPage({}) {
         </>
     );
 }
+
+
+export default withRoles(TodoPage, ["pacient", "specialist"]);

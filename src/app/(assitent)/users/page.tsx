@@ -17,6 +17,7 @@ import Loading from "./loading";
 
 import Logo from "@/images/Logo.png";
 import { usePathname } from "next/navigation";
+import { withRoles } from "@/components/WithRolesWrapper";
 
 interface SelectionProps {
     byRole?: string;
@@ -25,7 +26,7 @@ interface SelectionProps {
     byClinicCenter?: string[];
 }
 
-export default function UserList() {
+const UserList = () => {
     const pathname = usePathname();
     const [filterSelection, setFilterSelection] = useState<SelectionProps>({});
     const [searchInput, setSearchInput] = useState<string>("");
@@ -74,8 +75,6 @@ export default function UserList() {
             return filterSelection.byProgram.includes(user.program);
         });
 
-        console.log("specialty", usersBySpecialty);
-
         const ids = new Set(usersBySpecialty.map((u) => u.userId));
         const merged = [
             ...(filterSelection.byRole
@@ -89,8 +88,6 @@ export default function UserList() {
                     : []
                 : usersByProgram.filter((d) => !ids.has(d.userId))),
         ];
-
-        console.log("merged", merged);
 
         return merged;
     }, [users, searchInput, filterSelection]);
@@ -131,7 +128,7 @@ export default function UserList() {
             >
                 <div className="flex flex-col gap-y-8">
                     {searchedUserItems.map((user: User) => (
-                        <UserCard user={user} key={user.userId} />
+                        <UserCard user={user} key={user.userId} setUpdate={() => {}} />
                     ))}
                 </div>
             </InfiniteScroll>
@@ -139,3 +136,6 @@ export default function UserList() {
         </>
     );
 }
+
+
+export default withRoles(UserList, ["asistent"]);

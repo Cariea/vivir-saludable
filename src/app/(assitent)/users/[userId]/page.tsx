@@ -12,13 +12,15 @@ import UserCard from "@/components/UserCard";
 import LinkPatientSpecialistOverlay from "@/components/LinkPatientSpecialistOverlay";
 
 import UserInfoLoading from "./loading";
-import { set } from "react-hook-form";
+import { Avatar } from "@mui/material";
+import { withRoles } from "@/components/WithRolesWrapper";
 
-export default function UserInfo({ params }: { params: { userId: string } }) {
+const UserInfo = ({ params }: { params: { userId: string } }) => {
     const router = useRouter();
     const [isOverlayOpen, setIsOverlayOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [userInfo, setUserInfo] = useState<UserInfoByAssitent>({} as UserInfoByAssitent);
+    const [mustUpdateUser, setUpdateUser] = useState<boolean>();
     const [searchInput, setSearchInput] = useState<string>("");
 
     const userAlias = useMemo(
@@ -79,19 +81,18 @@ export default function UserInfo({ params }: { params: { userId: string } }) {
         };
 
         getData();
-    }, [params.userId]);
+        setUpdateUser(false);
+    }, [params.userId, mustUpdateUser]);
 
     return isLoading ? (
         <UserInfoLoading />
     ) : (
         <>
-            <LinkPatientSpecialistOverlay
-                userId={userInfo.userId}
-                userType={userInfo.specialty ? "specialist" : "pacient"}
-                isOpen={isOverlayOpen}
-                setOpen={setIsOverlayOpen}
-            />
-            <div className={`relative flex flex-col bg-white rounded-3xl shadow-base items-center p-8 pt-0 ${isOverlayOpen && "pointer-events-none"}`}>
+            <div
+                className={`relative flex flex-col bg-white rounded-3xl shadow-base items-center p-8 pt-0 ${
+                    isOverlayOpen && "pointer-events-none"
+                }`}
+            >
                 <div className="relative -top-12 bg-primary h-24 w-24 flex items-center justify-center rounded-full">
                     <span className="text-white text-4xl font-bold">{userAlias}</span>
                 </div>
@@ -176,9 +177,7 @@ export default function UserInfo({ params }: { params: { userId: string } }) {
                         />
                     </div>
                 </div>
-                <button className="btn btn-primary rounded-full h-auto shadow-base p-4">
-                    <IoAdd className="size-6 font-bold" onClick={() => setIsOverlayOpen(true)} />
-                </button>
+                <LinkPatientSpecialistOverlay user={userInfo} setUpdate={setUpdateUser} />
             </div>
             <div className="flex flex-col gap-y-4">
                 {userInfo.specialty
@@ -187,6 +186,7 @@ export default function UserInfo({ params }: { params: { userId: string } }) {
                               user={transformUserInfo(pacient)}
                               key={pacient.userId}
                               noSpecialist
+                              setUpdate={setUpdateUser}
                           />
                       ))
                     : userInfo.specialists?.map((specialist) => (
@@ -194,9 +194,12 @@ export default function UserInfo({ params }: { params: { userId: string } }) {
                               user={transformUserInfo(specialist)}
                               key={specialist.userId}
                               noPatient
+                              setUpdate={setUpdateUser}
                           />
                       ))}
             </div>
         </>
     );
-}
+};
+
+export default withRoles(UserInfo, ["asistent"]);
