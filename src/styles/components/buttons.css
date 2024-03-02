@@ -3,3 +3,6 @@
     font-size: 1rem;
 }
 
+[data-theme="vs"] .btn-sm {
+    @apply text-sm
+}

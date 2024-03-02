@@ -11,8 +11,7 @@ interface UserListParams {
 }
 
 export async function getSpecialties() {
-    const session = JSON.parse(await getSession());
-
+    const session = await getSession();
     try {
         const response = await axios.get(`${config.apiUrl}specialties`, {
             headers: {
@@ -47,8 +46,42 @@ export async function getSpecialties() {
     }
 }
 
+export async function getMe() {
+    const session = await getSession();
+
+    try {
+        const response = await axios.get(`${config.apiUrl}pacients/me`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            }
+        });
+
+        return {
+            status: response.status,
+            data: response.data
+        }
+        
+    } catch(error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            // 👇️ error: AxiosError<any, any>
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}
+
 export async function getPrograms() {
-    const session = JSON.parse(await getSession());
+    const session = await getSession();
 
     try {
         const response = await axios.get(`${config.apiUrl}programs`, {
@@ -85,7 +118,7 @@ export async function getPrograms() {
 }
 
 export async function getUsers({ size, page }: UserListParams) {
-    const session = JSON.parse(await getSession());
+    const session = await getSession();
 
     try {
         const response = await axios.get(`${config.apiUrl}users`, {
@@ -93,6 +126,111 @@ export async function getUsers({ size, page }: UserListParams) {
                 Authorization: `Bearer ${session.token}`,
             },
             params: { size, page }
+        });
+
+        return {
+            status: response.status,
+            data: response.data
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            // 👇️ error: AxiosError<any, any>
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}
+
+export async function getUserInfo(userId: string) {
+    const session = await getSession();
+
+    try {
+        const response = await axios.get(`${config.apiUrl}users/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            }
+        });
+
+        return {
+            status: response.status,
+            data: response.data
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            // 👇️ error: AxiosError<any, any>
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}
+
+export async function getSpecialists() {
+    const session = await getSession();
+
+    try {
+        const response = await axios.get(`${config.apiUrl}users`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            },
+            params: {
+                role: "specialist"
+            }
+        });
+
+        return {
+            status: response.status,
+            data: response.data
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            // 👇️ error: AxiosError<any, any>
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}
+
+export async function getPacients() {
+    const session = await getSession();
+
+    try {
+        const response = await axios.get(`${config.apiUrl}users`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            },
+            params: {
+                role: "pacient"
+            }
         });
 
         return {

@@ -1,6 +1,9 @@
 "use server";
 
+import { NextResponse } from "next/server";
+
 import { cookies } from "next/headers";
+import { setCookie } from "cookies-next";
 import axios, { AxiosError } from "axios";
 
 import config from "@/config/config";
@@ -13,9 +16,9 @@ export async function authenticate(cedula: string, password: string) {
             password,
         });
 
-        const encryptedSessionData = encrypt(JSON.stringify(response.data));
+        //const encryptedSessionData = encrypt(JSON.stringify(response.data));
 
-        cookies().set("session", encryptedSessionData, {
+        cookies().set("session", JSON.stringify(response.data), {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             maxAge: 60 * 60 * 24 * 7, // One week
@@ -38,5 +41,7 @@ export async function authenticate(cedula: string, password: string) {
 export async function getSession() {
     const encryptedSessionData = cookies().get("session")?.value;
 
-    return encryptedSessionData ? JSON.parse(decrypt(encryptedSessionData) || "") : null;
+    return JSON.parse(encryptedSessionData || "");
+
+    // return encryptedSessionData ? JSON.parse(decrypt(encryptedSessionData) || "") : null;
 }

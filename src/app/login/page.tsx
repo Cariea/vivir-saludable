@@ -48,7 +48,14 @@ export default function Login() {
             return;
         }
         setLoading(false);
-        router.push("/users");
+        switch (response?.message.data) {
+            case "specialist":
+                router.push("/pacients");
+            case "pacient":
+                router.push("/specialists");
+            default:
+                router.push("/users");
+        }
     };
 
     return (
