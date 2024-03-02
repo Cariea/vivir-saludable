@@ -12,7 +12,7 @@ interface AlertDialogProps {
     text: string;
     title: string;
     open: boolean;
-    color: string;
+    color: any;
     action: any;
     setOpen: (value: boolean) => void;
 }
