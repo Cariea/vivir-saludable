@@ -16,8 +16,10 @@ import UserFilter from "@/components/UserFilter";
 import Loading from "./loading";
 
 import Logo from "@/images/Logo.png";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { withRoles } from "@/components/WithRolesWrapper";
+import { Fab } from "@mui/material";
+import { AddRounded } from "@mui/icons-material";
 
 interface SelectionProps {
     byRole?: string;
@@ -34,6 +36,7 @@ const UserList = () => {
     const [hasMore, setHasMore] = useState(true);
     const [userPageSize, setUserPageSize] = useState(5);
     const [userPage, setUserPage] = useState(1);
+    const router = useRouter();
 
     const getUserData = async () => {
         const response = await getUsers({ size: userPageSize, page: userPage });
@@ -59,7 +62,7 @@ const UserList = () => {
             filterSelection.byRole ? user.role === filterSelection.byRole : true
         );
 
-        const usersBySpecialty = usersByRole.filter((user) =>{
+        const usersBySpecialty = usersByRole.filter((user) => {
             if (!user.especialty || !filterSelection.bySpecialty) return true;
 
             if (!filterSelection.bySpecialty.length) return false;
@@ -132,10 +135,20 @@ const UserList = () => {
                     ))}
                 </div>
             </InfiniteScroll>
+            <div className="absolute">
+                <Fab
+                    color="secondary"
+                    aria-label="add"
+                    sx={{ position: "fixed", bottom: "5.5rem", color: "white", right: "1rem" }}
+                    onClick={() => router.push("/users/add")}
+                >
+                    <AddRounded />
+                </Fab>
+            </div>
+
             <AssistentNavbar selected={pathname} />
         </>
     );
-}
-
+};
 
 export default withRoles(UserList, ["asistent"]);

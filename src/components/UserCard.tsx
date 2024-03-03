@@ -5,7 +5,16 @@ import { IoLayers, IoPerson } from "react-icons/io5";
 
 import { User } from "@/types";
 import { useRouter } from "next/navigation";
-import { Box, IconButton, ListItem, ListItemIcon, Menu, MenuItem, Stack, Typography } from "@mui/material";
+import {
+    Box,
+    IconButton,
+    ListItem,
+    ListItemIcon,
+    Menu,
+    MenuItem,
+    Stack,
+    Typography,
+} from "@mui/material";
 import { DeleteRounded, MoreHorizRounded } from "@mui/icons-material";
 import { useState } from "react";
 import AlertDialog from "./AlertDialog";
@@ -19,7 +28,13 @@ interface UserCardProps {
     setUpdate: (value: boolean) => void;
 }
 
-export default function UserCard({ user, noSpecialist, noPatient, noMenu, setUpdate }: UserCardProps) {
+export default function UserCard({
+    user,
+    noSpecialist,
+    noPatient,
+    noMenu,
+    setUpdate,
+}: UserCardProps) {
     const router = useRouter();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -45,13 +60,13 @@ export default function UserCard({ user, noSpecialist, noPatient, noMenu, setUpd
     };
 
     const handleClose = () => {
-        setAnchorEl(null)
-    }
+        setAnchorEl(null);
+    };
 
     const handleDelete = (info: any) => () => {
         console.log(info);
-        setUpdate(true)
-    }
+        setUpdate(true);
+    };
 
     return (
         <Box
@@ -85,7 +100,7 @@ export default function UserCard({ user, noSpecialist, noPatient, noMenu, setUpd
                             open={open}
                             onClose={handleClose}
                             MenuListProps={{
-                                'aria-labelledby': `user-submenu-button-${user.userId}`,
+                                "aria-labelledby": `user-submenu-button-${user.userId}`,
                             }}
                         >
                             <MenuItem color="danger" onClick={handleRouter}>
@@ -117,13 +132,19 @@ export default function UserCard({ user, noSpecialist, noPatient, noMenu, setUpd
                     <span className="text-red-500 text-sm">Inactivo</span>
                 </div>
             )}
-            <div className="flex justify-end gap-x-2 mt-8 items-end">
+            <div
+                className={`flex justify-end gap-x-2 items-end ${
+                    noSpecialist && noPatient ? "" : "mt-8"
+                }`}
+            >
                 {user.role === "specialist" ? (
                     <>
-                        <div className="flex gap-x-1 items-center text-gray-400">
-                            <IoLayers className="w-4 h-4" />
-                            <span className="text-xs">{user.programs} Programas</span>
-                        </div>
+                        {!noSpecialist && (
+                            <div className="flex gap-x-1 items-center text-gray-400">
+                                <IoLayers className="w-4 h-4" />
+                                <span className="text-xs">{user.programs} Programas</span>
+                            </div>
+                        )}
                         {!noPatient && (
                             <div className="flex gap-x-1 items-center text-gray-400">
                                 <IoPerson className="w-4 h-4" />
@@ -133,10 +154,12 @@ export default function UserCard({ user, noSpecialist, noPatient, noMenu, setUpd
                     </>
                 ) : (
                     <>
-                        <div className="flex gap-x-1 items-center text-gray-400">
-                            <IoLayers className="w-4 h-4" />
-                            <span className="text-xs">{user.program}</span>
-                        </div>
+                        {!noPatient && (
+                            <div className="flex gap-x-1 items-center text-gray-400">
+                                <IoLayers className="w-4 h-4" />
+                                <span className="text-xs">{user.program}</span>
+                            </div>
+                        )}
                         {!noSpecialist && (
                             <div className="flex gap-x-1 items-center text-gray-400">
                                 <IoPerson className="w-4 h-4" />
