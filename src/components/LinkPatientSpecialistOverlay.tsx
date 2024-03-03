@@ -10,7 +10,7 @@ import {
     Typography,
 } from "@mui/material";
 
-import { getPacients, getSpecialists } from "@/actions/getActions";
+import { getAvailableUsersForLink, getPacients, getSpecialists } from "@/actions/getActions";
 import { UserInfoByAssitent, User } from "@/types";
 
 import UserSelector from "./UserSelector";
@@ -23,7 +23,7 @@ export default function LinkPatientSpecialistOverlay({
     setUpdate: (value: boolean) => void;
 }) {
     const [searchInput, setSearchInput] = useState<string>("");
-    const [specialists, setSpecialists] = useState<User[]>([]);
+    const [availableUsers, setAvailableUsers] = useState<User[]>([]);
     const [pacients, setPacients] = useState<User[]>([]);
     const [isOpen, setOpen] = useState<boolean>(false);
 
@@ -33,32 +33,15 @@ export default function LinkPatientSpecialistOverlay({
 
     useEffect(() => {
         const getData = async () => {
-            const specialistResponse = await getSpecialists();
-            const pacientResponse = await getPacients();
+            const response = await getAvailableUsersForLink(user.userId)
 
-            if (specialistResponse.status === 200) {
-                setSpecialists(specialistResponse.data.items);
-            }
-
-            if (pacientResponse.status === 200) {
-                setPacients(pacientResponse.data.items);
+            if (response.status === 200) {
+                setAvailableUsers(response.data);
             }
         };
 
         getData();
     }, []);
-
-    const filteredList: User[] = useMemo(
-        () =>
-            !!user.specialty
-                ? pacients.filter(
-                      (pacient) => !user.pacients?.some((p) => p.userId === pacient.userId)
-                  )
-                : specialists.filter(
-                      (specialist) => !user.specialists?.some((s) => s.userId === specialist.userId)
-                  ),
-        [user, pacients, specialists]
-    );
 
     return (
         <>
@@ -105,7 +88,7 @@ export default function LinkPatientSpecialistOverlay({
                         </div>
                     </div>
                     <UserSelector
-                        list={filteredList}
+                        list={availableUsers}
                         inputText={searchInput}
                         setUpdate={setUpdate}
                         toggleDrawer={toggleDrawer}

@@ -255,3 +255,39 @@ export async function getPacients() {
         };
     }
 }
+
+export async function getAvailableUsersForLink(userId: string) {
+    const session = await getSession();
+
+    try {
+        const response = await axios.get(`${config.apiUrl}linker`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            },
+            params: {
+                userId
+            }
+        });
+
+        return {
+            status: response.status,
+            data: response.data
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            // 👇️ error: AxiosError<any, any>
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}

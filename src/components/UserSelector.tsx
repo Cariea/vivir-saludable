@@ -130,7 +130,7 @@ export default function UserSelector({
                     fullWidth
                     onClick={handleAdd}
                 >
-                    {loading ? <CircularProgress size="small" color="inherit" /> : "Agregar"}
+                    {loading ? <CircularProgress size="2rem" color="inherit" /> : "Agregar"}
                 </Button>
             </Box>
         </>
