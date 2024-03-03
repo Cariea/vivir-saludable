@@ -193,6 +193,7 @@ const UserInfo = ({ params }: { params: { userId: string } }) => {
                           <UserCard
                               user={transformUserInfo(specialist)}
                               key={specialist.userId}
+                              noSpecialist
                               noPatient
                               setUpdate={setUpdateUser}
                           />
