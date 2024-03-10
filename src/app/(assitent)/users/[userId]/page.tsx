@@ -2,18 +2,18 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { IoAdd, IoPencil, IoSearch } from "react-icons/io5";
-import { useAnimate } from "framer-motion";
+import { Button } from "@mui/material";
+import { EditRounded } from "@mui/icons-material";
 
 import { PacientInfoByUser, SpecialistInfoByUser, User, UserInfoByAssitent } from "@/types";
 import { getUserInfo } from "@/actions/getActions";
 
+import { withRoles } from "@/components/WithRolesWrapper";
+import SearchInput from "@/components/SearchInput";
 import UserCard from "@/components/UserCard";
 import LinkPatientSpecialistOverlay from "@/components/LinkPatientSpecialistOverlay";
 
 import UserInfoLoading from "./loading";
-import { Avatar } from "@mui/material";
-import { withRoles } from "@/components/WithRolesWrapper";
 
 const UserInfo = ({ params }: { params: { userId: string } }) => {
     const router = useRouter();
@@ -106,13 +106,14 @@ const UserInfo = ({ params }: { params: { userId: string } }) => {
                     <div className="w-2 h-2 bg-secondary rounded-full"></div>
                     <span className="block text-secondary">Activo</span>
                 </div>
-                <button
-                    className="btn btn-outline mt-8 btn-sm border-gray-500 text-gray-500 rounded-8xl w-full text-sm"
+                <Button 
+                    size="small"
+                    variant="outlined"
+                    color="inherit"
+                    className="shadow-none"
+                    startIcon={<EditRounded />}
                     onClick={() => router.push(`/users/add?edit=true&userId=${params.userId}`)}
-                >
-                    <IoPencil className="size-4" />
-                    Editar
-                </button>
+                >Editar</Button>
             </div>
             <h2 className="font-bold text-primary mt-8 mb-4">Información Personal</h2>
             <div className="bg-white shadow-base rounded-3xl p-8 flex flex-col gap-y-4">
@@ -166,16 +167,7 @@ const UserInfo = ({ params }: { params: { userId: string } }) => {
             </h2>
             <div className="flex justify-between items-end gap-x-4 my-4 mb-8">
                 <div className="relative flex items-center w-full">
-                    <IoSearch className="absolute size-base ml-4 text-gray-200 left-0 focus:outline-none rtl:right-0 rtl:left-auto" />
-                    <div className="flex flex-col gap-y-2 w-full">
-                        <input
-                            type="text"
-                            placeholder="Buscar..."
-                            className="block input h-14 w-full left-icon"
-                            value={searchInput}
-                            onChange={(e) => setSearchInput(e.target.value)}
-                        />
-                    </div>
+                    <SearchInput value={searchInput} setValue={setSearchInput} />
                 </div>
                 <LinkPatientSpecialistOverlay user={userInfo} setUpdate={setUpdateUser} />
             </div>
