@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 
 import { IconButton, Stack } from "@mui/material";
 import { Check, ChevronLeft, ChevronRight } from "@mui/icons-material";
@@ -9,7 +8,6 @@ import { useEffect, useMemo, useState } from "react";
 import { CurrentPacient } from "@/types";
 import { getDailyAssignments, getMe } from "@/actions/getActions";
 
-import Logo from "@/images/Logo.png";
 import { withRoles } from "@/components/WithRolesWrapper";
 import CheckboxList from "@/components/Todo/CheckboxList";
 import {Assignments} from "@/types";
