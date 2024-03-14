@@ -12,7 +12,7 @@ export default function TodoLayout({ children }: { children: React.ReactNode }) 
         <>
             <Stack direction='row' justifyContent="space-between" alignItems="center" className="mb-4">
                 <Image src={Logo} alt="Logo" className="size-8" />
-                <h4 className="font-bold text-primary">Actividades Diarias</h4>
+                <h4 className="font-bold text-primary">Tareas Diarias</h4>
                 <IconButton aria-label="help" size="large" sx={{ paddingX: 0 }}>
                     <Help className="text-gray-400" fontSize="inherit" />
                 </IconButton>

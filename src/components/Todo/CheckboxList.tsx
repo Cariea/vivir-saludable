@@ -8,11 +8,9 @@ import Checkbox from '@mui/material/Checkbox';
 
 import {Assignments} from "@/types";
 import { updateDailyAssigmentStatus } from '@/actions/putActions';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function CheckboxList(props: {assignments: Assignments[], specialty: string}) {
   const [currentAssigments, setAssigments] = React.useState<Assignments[]>(props.assignments);
-  const [hasMore, setHasMore] = React.useState(true);
 
   const handleToggle = (value: number) => () =>{
     const index = currentAssigments.findIndex((assigment) => assigment.recordId === value);
@@ -40,7 +38,7 @@ export default function CheckboxList(props: {assignments: Assignments[], special
 
 
   return (
-    <List  className=' overflow-y-scroll overflow-x-hidden  ' sx={{ width: '100%', maxWidth: 380, bgcolor: 'background.paper'}}>
+    <List  className=' overflow-y-scroll overflow-x-hidden  ' sx={{ width: '100%', maxWidth: 380}}>
       
         {props.assignments.map((assigment) => {
           if(assigment.specialty !== props.specialty) return;
