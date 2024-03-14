@@ -154,3 +154,12 @@ export interface CurrentPacient {
     postProcedureSymptoms: PostprocedureSymptomType[];
     secretions: SecretionType[];
 }
+
+export interface Assignments {
+    specialistName: string;
+    specialty: string;
+    date: string;
+    recordId: number;
+    description: string;
+    completed: boolean;
+}
