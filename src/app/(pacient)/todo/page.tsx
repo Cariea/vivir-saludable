@@ -3,19 +3,28 @@
 import Image from "next/image";
 
 import { IconButton, Stack } from "@mui/material";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { Check, ChevronLeft, ChevronRight } from "@mui/icons-material";
 
 import { useEffect, useMemo, useState } from "react";
 import { CurrentPacient } from "@/types";
-import { getMe } from "@/actions/getActions";
+import { getDailyAssignments, getMe } from "@/actions/getActions";
 
 import Logo from "@/images/Logo.png";
 import { withRoles } from "@/components/WithRolesWrapper";
+import CheckboxList from "@/components/Todo/CheckboxList";
+import {Assignments} from "@/types";
 
 const TodoPage = ({}) => {
     const [currentUserInfo, setCurrentUserInfo] = useState<CurrentPacient>({} as CurrentPacient);
     const [currentSpecialty, setCurrentSpecialty] = useState<string>("");
-
+    const [assignments, setAssignments] = useState<Assignments[]>([]);
+    const fetchAssignments = async () => {
+        const response = await getDailyAssignments(currentUserInfo.userId);
+        console.log(response);
+        if (response.status === 200) {
+            setAssignments(response.data);
+        }
+    }
     useEffect(() => {
         const getData = async () => {
             const response = await getMe();
@@ -25,6 +34,10 @@ const TodoPage = ({}) => {
                 setCurrentSpecialty(response.data.specialists[0].especialty);
             }
         };
+        if (currentUserInfo) {
+            console.log("fetching assignments");
+            fetchAssignments();
+        }
 
         getData();
     }, []);
@@ -107,6 +120,11 @@ const TodoPage = ({}) => {
                     <ChevronRight />
                 </IconButton>
             </Stack>
+            <div className="flex  justify-center h-[calc(100vh-200px)]" >
+            
+            <CheckboxList assignments={assignments} specialty={currentSpecialty} />
+
+            </div>
         </>
     );
 }
