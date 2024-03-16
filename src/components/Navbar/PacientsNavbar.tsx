@@ -1,9 +1,9 @@
 'use client'
 
-import { Notifications, People, Person } from "@mui/icons-material";
+import { Notifications, People, Person,HealthAndSafety} from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction, styled } from "@mui/material";
 import { useRouter } from "next/navigation";
-
+import { FaUserDoctor } from "react-icons/fa6";
 type NavbarProps = {
     selected: string;
 }
@@ -27,8 +27,7 @@ export default function PacientNavbar({ selected }: NavbarProps) {
             }}
             className="fixed bottom-0 left-0 right-0"
         >
-            <StyledBottomNavigationAction value="/specialists" label="Especialistas" icon={<People />} />
-            <StyledBottomNavigationAction value="/notifications" label="Notificaciones" icon={<Notifications />} />
+            <StyledBottomNavigationAction value="/specialists" label="Especialistas" icon={<HealthAndSafety />} />
             <StyledBottomNavigationAction value="/todo" label="Tareas" icon={<Person />} />
         </BottomNavigation>
     );
