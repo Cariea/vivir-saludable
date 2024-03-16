@@ -1,44 +1,33 @@
 "use client";
 
+import { useEffect, useState, useMemo } from "react";
 
-import { IconButton, Stack } from "@mui/material";
-import { Check, ChevronLeft, ChevronRight } from "@mui/icons-material";
-
-import { useEffect, useMemo, useState } from "react";
-import { CurrentPacient } from "@/types";
-import { getDailyAssignments, getMe } from "@/actions/getActions";
+import { getMe, getPacientSpecialists } from "@/actions/getActions";
 
 import { withRoles } from "@/components/WithRolesWrapper";
-import CheckboxList from "@/components/Todo/CheckboxList";
-import {Assignments} from "@/types";
-
-const TodoPage = ({}) => {
+import SpecialistCard, { PacientSpecialists } from "@/components/SpecialistCard";
+import { CurrentPacient} from "@/types";
+import { IconButton, Stack } from "@mui/material";
+import { Check, ChevronLeft, ChevronRight } from "@mui/icons-material";
+const UserList = () => {
+    const [specialists, setSpecialists] = useState<PacientSpecialists[]>([]);
     const [currentUserInfo, setCurrentUserInfo] = useState<CurrentPacient>({} as CurrentPacient);
     const [currentSpecialty, setCurrentSpecialty] = useState<string>("");
-    const [assignments, setAssignments] = useState<Assignments[]>([]);
-    const fetchAssignments = async () => {
-        const response = await getDailyAssignments(currentUserInfo.userId);
+
+
+    const getUserData = async () => {
+        const user = await getMe();
+        if (user.status === 200) {
+            setCurrentUserInfo(user.data);
+            setCurrentSpecialty(user.data.specialists[0].especialty);
+        }
+        const response = await getPacientSpecialists();
         if (response.status === 200) {
-            setAssignments(response.data);
+            setSpecialists(response.data);
         }
-    }
-    useEffect(() => {
-        const getData = async () => {
-            const response = await getMe();
+    };
 
-            if (response.status === 200) {
-                setCurrentUserInfo(response.data);
-                setCurrentSpecialty(response.data.specialists[0].especialty);
-            }
-        };
-        if (currentUserInfo) {
-            fetchAssignments();
-        }
-
-        getData();
-    }, []);
-
-    const nextSpecialty = () => {
+ const nextSpecialty = () => {
         if (!currentUserInfo.specialists.length) return;
 
         const currentIndex = currentUserInfo.specialists.indexOf(
@@ -91,9 +80,19 @@ const TodoPage = ({}) => {
             : true;
     }, [currentUserInfo, currentSpecialty]);
 
+
+    const specialistsBySpecialty = useMemo(() => {
+        const filteredSpecialist = specialists.filter((specialist) => specialist.especialty === currentSpecialty)[0] as PacientSpecialists;
+        return filteredSpecialist
+    }, [specialists, currentSpecialty]);
+
+    useEffect(() => {
+        getUserData();
+    }, []);
+
     return (
         <>
-            <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
                 <IconButton
                     size="medium"
                     disabled={previousButtonDisabled}
@@ -116,14 +115,22 @@ const TodoPage = ({}) => {
                     <ChevronRight />
                 </IconButton>
             </Stack>
-            <div className="flex  justify-center h-[calc(100vh-200px)]" >
             
-            <CheckboxList assignments={assignments} specialty={currentSpecialty} />
-
+            <div className="pb-32 mt-8" style={{ maxHeight: 'calc(100vh - 11rem)', overflowY: 'auto' }}>
+                <div className="flex flex-col gap-y-8" >
+                    {
+                        specialistsBySpecialty && (
+                            <SpecialistCard
+                                user={specialistsBySpecialty}
+                                pacientId={currentUserInfo.userId}
+                            />
+                        )
+                }
+                </div>
             </div>
         </>
     );
-}
+    
+};
 
-
-export default withRoles(TodoPage, ["pacient", "specialist"]);
+export default withRoles(UserList, ["pacient"]);
