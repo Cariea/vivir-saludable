@@ -52,7 +52,7 @@ export default function MealsBox() {
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
     });
-};
+  };
 
   const [mealData, setMealData] = React.useState<MealData>({
     description: '',

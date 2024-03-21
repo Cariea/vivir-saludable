@@ -6,8 +6,11 @@ import { getSession } from "@/actions/authActions";
 import config from "@/config/config";
 import { NewUserInput } from "@/types";
 import { Ingredient } from "@/components/pacient/nutricionist/Meals";
+import sharp from "sharp";
+
 export async function base64ToFile(base64String: string, fileName: string): Promise<File> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+        const maxSizeInBytes = 1024 * 1024;
         const mimeType = "image/webp"; // Establecer el tipo MIME como image/webp
 
         // Obtener el contenido binario del base64
@@ -20,15 +23,49 @@ export async function base64ToFile(base64String: string, fileName: string): Prom
         }
         const byteArray = new Uint8Array(byteNumbers);
 
-        // Crear un Blob a partir del array de bytes
-        const blob = new Blob([byteArray], { type: mimeType });
+        let imageResized: Buffer | undefined; 
 
-        // Crear un objeto File a partir del Blob
-        const file = new File([blob], fileName, { type: mimeType });
+        const resizeImage = async () => {
+            try {
+                const resizedImageBuffer = await sharp(Buffer.from(byteArray))
+                    .resize(300, 300)
+                    .toBuffer();
 
-        resolve(file);
+                const fileSizeInBytes = resizedImageBuffer.length;
+
+                if (fileSizeInBytes > maxSizeInBytes) {
+       
+                    await resizeImage();
+                } else {
+ 
+                    console.log("Tamaño de la imagen redimensionada: ", fileSizeInBytes);
+                    imageResized = resizedImageBuffer;
+                }
+            } catch (error) {
+                reject(error);
+            }
+        };
+
+
+        resizeImage()
+            .then(() => {
+                if (imageResized) { 
+                    const blob = new Blob([imageResized], { type: mimeType });
+
+            
+                    const file = new File([blob], fileName, { type: mimeType });
+
+                    resolve(file);
+                } else {
+                    reject(new Error('No se pudo redimensionar la imagen.'));
+                }
+            })
+            .catch(error => {
+                reject(error);
+            });
     });
 }
+
 export async function createUser(newUser: NewUserInput) {
     try {
         const session = await getSession();
