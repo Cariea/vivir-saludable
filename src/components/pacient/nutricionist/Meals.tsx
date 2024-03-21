@@ -72,9 +72,12 @@ export default function MealsBox() {
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
+    const maxSizeImage = 1024 * 1024;
+    if (file && file.size < maxSizeImage) {
       setImage(file);
       setMealData({ ...mealData, mealImage: file });
+    }else{
+      alert('La imagen es muy pesada, por favor sube una imagen con un peso menor a 1MB');
     }
   };
 
