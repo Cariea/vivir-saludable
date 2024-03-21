@@ -9,6 +9,9 @@ import SpecialistCard, { PacientSpecialists } from "@/components/SpecialistCard"
 import { CurrentPacient} from "@/types";
 import { IconButton, Stack } from "@mui/material";
 import { Check, ChevronLeft, ChevronRight } from "@mui/icons-material";
+import Meals from "@/components/pacient/nutricionist/Meals";
+
+
 const UserList = () => {
     const [specialists, setSpecialists] = useState<PacientSpecialists[]>([]);
     const [currentUserInfo, setCurrentUserInfo] = useState<CurrentPacient>({} as CurrentPacient);
@@ -117,7 +120,7 @@ const UserList = () => {
             </Stack>
             
             <div className="pb-32 mt-8" style={{ maxHeight: 'calc(100vh - 11rem)', overflowY: 'auto' }}>
-                <div className="flex flex-col gap-y-8" >
+                <div className="flex flex-col gap-y-8 pb-12" >
                     {
                         specialistsBySpecialty && (
                             <SpecialistCard
@@ -125,8 +128,13 @@ const UserList = () => {
                                 pacientId={currentUserInfo.userId}
                             />
                         )
-                }
+                    }
                 </div>
+                {
+                    currentSpecialty === 'nutricionista' && (
+                        <Meals />
+                    )
+                }
             </div>
         </>
     );

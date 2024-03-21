@@ -48,8 +48,11 @@ export default function CheckboxList(props: {assignments: Assignments[], special
             <ListItem
               key={assigment.recordId}
               disablePadding
-            sx={assigment.completed ? {backgroundColor: 'rgba(0, 255, 0, 0.2)'} : {backgroundColor: 'rgba(255, 0, 0, 0.2)'}}
-            className='rounded-3xl m-2 ml-0'
+              sx={{ 
+                backgroundColor: '#ffffff',
+                textDecoration: assigment.completed ? 'line-through' : 'none'
+              }}
+            className='rounded-xl m-2 ml-0'
             >
               <ListItemButton role={undefined} onClick={!assigment.completed ? handleToggle(assigment.recordId) : handleToggle(assigment.recordId) } dense>
                 <ListItemIcon>
@@ -62,7 +65,6 @@ export default function CheckboxList(props: {assignments: Assignments[], special
                     />
                 </ListItemIcon>
                 <ListItemText id={labelId} primary={assigment.description} />
-                    <p>{assigment.completed ? 'Completado' : 'Pendiente'}</p>
               </ListItemButton>
             </ListItem>
           );
