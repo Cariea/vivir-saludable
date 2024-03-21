@@ -7,7 +7,7 @@ const nextConfig = {
         removeConsole: process.env.NODE_ENV !== 'development'
     },
     serverRuntimeConfig: {
-        bodySiziLimit: '3mb'
+        bodySizeLimit: '3mb'
     },
     async redirects() {
         return [
