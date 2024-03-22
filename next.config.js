@@ -6,9 +6,6 @@ const nextConfig = {
     compiler: {
         removeConsole: process.env.NODE_ENV !== 'development'
     },
-    serverRuntimeConfig: {
-        bodySizeLimit: '3mb'
-    },
     async redirects() {
         return [
             {
@@ -24,10 +21,7 @@ const withPWA = require('next-pwa')({
     dest: 'public',
     disable: process.env.NODE_ENV === "development",
     register: true,
-    skipWaiting: true,
-    serverRuntimeConfig: {
-        bodySizeLimit: '3mb'
-    },
+    skipWaiting: true
 });
 
 module.exports = withPWA(nextConfig);
