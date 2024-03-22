@@ -119,7 +119,7 @@ const UserList = () => {
                 </IconButton>
             </Stack>
             
-            <div className="pb-32 mt-8" style={{ maxHeight: 'calc(100vh - 11rem)', overflowY: 'auto' }}>
+            <div className="pb-32 mt-8" style={{ maxHeight: 'calc(100vh - 14.5rem)', overflowY: 'auto' }}>
                 <div className="flex flex-col gap-y-8 pb-12" >
                     {
                         specialistsBySpecialty && (
@@ -130,11 +130,14 @@ const UserList = () => {
                         )
                     }
                 </div>
-                {
-                    currentSpecialty === 'nutricionista' && (
-                        <Meals />
-                    )
-                }
+                <div className="flex flex-col gap-y-8 pb-12" >
+                    {
+                        currentSpecialty === 'nutricionista' && (
+                            <Meals />
+                        )
+                    }
+                </div>
+
             </div>
         </>
     );
