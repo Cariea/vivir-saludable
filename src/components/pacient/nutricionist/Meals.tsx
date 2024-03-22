@@ -14,22 +14,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import AddIcon from '@mui/icons-material/Add';
 import Image from 'next/image';
 import { postPacientMeal } from '@/actions/postActions';
-
-
-
-
-
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-});
+import imageCompression from 'browser-image-compression';
 
 export interface MealData {
   description: string;
@@ -37,7 +22,6 @@ export interface MealData {
   pica: boolean;
   wasSatisfied: boolean;
 }
-
 export interface Ingredient {
   name: string;
   quantity: string;
@@ -70,15 +54,29 @@ export default function MealsBox() {
     setMealData({ ...mealData, [name]: value });
   };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    const maxSizeImage = 1024 * 1024;
-    if (file && file.size < maxSizeImage) {
-      console.log(file.size);
-      setImage(file);
-      setMealData({ ...mealData, mealImage: file });
-    }else{
-      alert('La imagen es muy pesada, por favor sube una imagen con un peso menor a 1MB');
+    if(file instanceof Blob){
+
+      if(file.size > 1048576){
+        const options = {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+        }
+        try {
+          const compressedFile = await imageCompression(file, options);
+          setImage(compressedFile);
+          setMealData({ ...mealData, mealImage: compressedFile });
+
+        } catch (error) {
+          console.log(error);
+          alert('Ocurrio un error al subir la imagen, intenta con una imagen mas pequeña');
+        }
+      }else{
+        setImage(file);
+        setMealData({ ...mealData, mealImage: file });
+      }
     }
   };
 
@@ -92,14 +90,11 @@ export default function MealsBox() {
     setIngredient({ name: '', quantity: '', type: '' });
   };
 
-
-
   const handleSubmit = async () => {
-    if(image instanceof File){
+    if(image instanceof Blob){
       const base = await imageToBase64(image);
       await postPacientMeal(mealData.description, mealData.pica, mealData.wasSatisfied, base as string, ingredients, image.name);
     }
-  
     setMealData({
       description: '',
       mealImage: '',
@@ -166,7 +161,7 @@ export default function MealsBox() {
               {renderThumbnail()}
               <Button component="label" role={undefined} variant="contained" tabIndex={-1} startIcon={<CameraAltIcon />}>
                 Subir Foto
-                <input type="file" onChange={handleImageChange} style={{ display: 'none' }} />
+                <input type="file" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
               </Button>
           
               
