@@ -72,9 +72,13 @@ export default function MealsBox() {
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
+    const maxSizeImage = 1024 * 1024;
+    if (file && file.size < maxSizeImage) {
+      console.log(file.size);
       setImage(file);
       setMealData({ ...mealData, mealImage: file });
+    }else{
+      alert('La imagen es muy pesada, por favor sube una imagen con un peso menor a 1MB');
     }
   };
 
@@ -93,7 +97,7 @@ export default function MealsBox() {
   const handleSubmit = async () => {
     if(image instanceof File){
       const base = await imageToBase64(image);
-      const response = await postPacientMeal(mealData.description, mealData.pica, mealData.wasSatisfied, base as string, ingredients, image.name);
+      await postPacientMeal(mealData.description, mealData.pica, mealData.wasSatisfied, base as string, ingredients, image.name);
     }
   
     setMealData({
@@ -187,6 +191,7 @@ export default function MealsBox() {
                     value={ingredient.quantity}
                     onChange={(e) => setIngredient({ ...ingredient, quantity: e.target.value })}
                     required
+                    type='number'
                   />
                   <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Selecciona un tipo de ingrediente</InputLabel>
