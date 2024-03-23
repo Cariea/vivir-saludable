@@ -1,0 +1,106 @@
+@import '@chatui/core/dist/index.css';
+
+:root {
+    --brand-1: #003f52;
+    --brand-2: #32c5a3;
+    --brand-3: #c9fffc;
+    --gray-1: #111922;
+    --gray-2: #456587;
+    --gray-3: #7898ba;
+    --gray-4: #9ab2cb;
+    --gray-5: #bbcbdd;
+    --gray-6: #dde5ee;
+    --gray-7: #eef2f6;
+    --gray-dark: #090d11;
+    --green: #32c5a3;
+    --red: #e11d48;
+    --yellow: #facc15;
+    --marked-color: #ffffff;
+    --marked-bg-color: #32c5a3;
+    --btn-primary-color: #ffffff;
+
+    --list-bg: #f5f9ff;
+    --font-family-sans-serif: Ubuntu, sans-serif;
+  }
+  .ChatApp,
+  .MessageContainer,
+  .Navbar,
+  .Message .Bubble,
+  .QuickReplies,
+  .ChatFooter {
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: var(--font-family-sans-serif);
+  }
+  .ChatApp {
+    background-color: #f5f9ff;
+    height: 100vh;
+    width: 100vw;
+  }
+  .Composer {
+    padding-bottom: 2rem;
+  }
+  .List {
+    background: var(--list-bg) !important;
+  }
+  .ListItem {
+    background-color: var(--list-bg) !important;
+    padding: 0;
+  }
+  .ListItem-content {
+    display: flex;
+    -mox-colum-gap: 0.5rem;
+    column-gap: 0.5rem;
+    align-items: center;
+  }
+  .Notice {
+    background-color: #ffffff;
+  }
+  .Navbar {
+    background-color: #003f52;
+    border: 0;
+    box-shadow: none;
+  }
+  .Navbar .IconBtn {
+    color: #ffffff;
+  }
+  .Navbar-title {
+    color: #ffffff;
+  }
+  .Navbar-main {
+    min-height: 56px;
+  }
+  .Message.left .Bubble {
+    background-color: #086b82;
+    color: #fff;
+  }
+  .Message.right .Bubble {
+    background-color: #c9fffc;
+    color: #111;
+  }
+  .QuickReply.highlight {
+    background-color: #ffffff;
+    color: #111;
+  }
+  .QuickReplies,
+  .ChatFooter {
+    background-color: #003f52;
+  }
+  .Message.left .Bubble {
+    border-radius: 16px;
+  }
+  .Message.right .Bubble {
+    border-radius: 16px;
+  }
+  .Card {
+    border-radius: 16px;
+  }
+  .QuickReply {
+    border-radius: 16px;
+  }
+  .Input {
+    border: 0;
+    font-family: var(--font-family-sans-serif);
+    @apply placeholder-gray-200 border-0 rounded-full
+  }
+  

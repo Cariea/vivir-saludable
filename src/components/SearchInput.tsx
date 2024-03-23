@@ -4,7 +4,9 @@ import { Dispatch, SetStateAction } from "react";
 export default function SearchInput({
     value,
     setValue,
+    noShadow
 }: {
+    noShadow?: boolean;
     value: string;
     setValue: Dispatch<SetStateAction<string>>;
 }) {
@@ -15,7 +17,7 @@ export default function SearchInput({
                 <input
                     type="text"
                     placeholder="Buscar..."
-                    className="block input h-14 w-full left-icon"
+                    className={`block rounded-full pl-12 shadow-base placeholder-gray-200 focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40 h-14 w-full left-icon ${noShadow ? "shadow-none" : ""}`}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                 />

@@ -1,5 +1,3 @@
-import { CipherKey } from "crypto";
-
 type Config = {
     apiUrl: string,
     encryptPassword: string
@@ -7,7 +5,7 @@ type Config = {
 
 
 const config: Config = {
-    apiUrl: process.env.API_URL || 'http://localhost:3000',
+    apiUrl: process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000',
     encryptPassword: process.env.ENCRYPT_PASSWORD || "",
 }
 

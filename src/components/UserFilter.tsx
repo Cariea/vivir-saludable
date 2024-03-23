@@ -1,10 +1,7 @@
 "use client";
 
 import { useState, createRef, useEffect, useMemo } from "react";
-import { Sheet, Content, detents, Portal, Header, Footer } from "react-sheet-slide";
 import { IoFilter, IoClose } from "react-icons/io5";
-
-import "react-sheet-slide/style.css";
 
 import { getSpecialties, getPrograms } from "@/actions/getActions";
 import { SpecialtyType, ProgramType } from "@/types";

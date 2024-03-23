@@ -59,7 +59,7 @@ export default function Login() {
     };
 
     return (
-        <div className="h-full flex flex-col items-center justify-center gap-y-16">
+        <div className="h-full px-4 flex flex-col items-center justify-center gap-y-16">
             <Image src={Logo} alt="Vivir Saludable" className="w-1/2" />
             <div className="flex flex-col gap-y-2 w-full items-center">
                 <h1 className="text-4xl text-primary font-bold">Bienvenid@</h1>

@@ -11,6 +11,7 @@ import { getMe } from "@/actions/getActions";
 
 import Logo from "@/images/Logo.png";
 import { withRoles } from "@/components/WithRolesWrapper";
+import Navbar from "@/components/Navbar";
 
 const TodoPage = ({}) => {
     const [currentUserInfo, setCurrentUserInfo] = useState<CurrentPacient>({} as CurrentPacient);
@@ -107,6 +108,7 @@ const TodoPage = ({}) => {
                     <ChevronRight />
                 </IconButton>
             </Stack>
+            <Navbar />
         </>
     );
 }

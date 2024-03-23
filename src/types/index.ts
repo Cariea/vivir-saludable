@@ -154,3 +154,17 @@ export interface CurrentPacient {
     postProcedureSymptoms: PostprocedureSymptomType[];
     secretions: SecretionType[];
 }
+
+export interface StoredMessage {
+    userId: string;
+    messageId?: string;
+    message: string;
+    userReceptor: string;
+    createdAt: string;
+}
+
+export interface ChatMessage {
+    from: string,
+    to: string,
+    text: string
+}

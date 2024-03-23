@@ -4,7 +4,7 @@ import { SessionCookiesContext } from "@/contexts";
 import { CalendarMonthRounded, CheckRounded, MessageRounded, Notifications, NotificationsRounded, People, PeopleRounded, Person, PersonRounded } from "@mui/icons-material";
 import { BottomNavigation, BottomNavigationAction, styled } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 type NavbarProps = {
     selected: string;
@@ -20,7 +20,12 @@ const StyledBottomNavigationAction = styled(BottomNavigationAction)({
 export default function Navbar() {
     const router = useRouter();
     const pathname = usePathname();
-    const session = useContext(SessionCookiesContext);
+    const [session, setSession] = useState<{ role: string  }>({} as any);
+    const cookie = useContext(SessionCookiesContext);
+
+    useEffect(() => {
+        setSession(JSON.parse(cookie.value));
+    }, [])
 
     return (
         <BottomNavigation

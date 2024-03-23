@@ -8,7 +8,7 @@ import { Help } from "@mui/icons-material";
 
 export default function TodoLayout({ children }: { children: React.ReactNode }) {
     return (
-        <>
+        <div style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
             <Stack direction='row' justifyContent="space-between" alignItems="center" className="mb-4">
                 <Image src={Logo} alt="Logo" className="size-8" />
                 <h4 className="font-bold text-primary">Actividades Diarias</h4>
@@ -17,6 +17,6 @@ export default function TodoLayout({ children }: { children: React.ReactNode }) 
                 </IconButton>
             </Stack>
             {children}
-        </>
+        </div>
     )
 }

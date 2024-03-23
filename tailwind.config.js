@@ -11,9 +11,36 @@ module.exports = {
             sans: ["Ubuntu", "sans-serif"],
         },
         extend: {
+            fontSize: {
+                base: "0.75rem",
+            },
             colors: {
-                primary: "#003F52",
-                secondary: "#32C5A3",
+                primary: {
+                    default: "#003f52", 
+                    50: "#c9fffc",
+                    100: "#99fffd",
+                    200: "#54fffe",
+                    300: "#07f4ff",
+                    400: "#00d5ef",
+                    500: "#00a9c9",
+                    600: "#0086a1",
+                    700: "#111922",
+                    800: "#086b82",
+                    900: "#003f52",
+                },
+                secondary: {
+                    default: '#32c5a3',
+                    50: "#f1fcf9",
+                    100: "#cef9eb",
+                    200: "#9ef1d8",
+                    300: "#65e3c2",
+                    400: "#32c5a3",
+                    500: "#1cb090",
+                    600: "#148d76",
+                    700: "#147160",
+                    800: "#155a4f",
+                    900: "#164b41",
+                },
                 white: "#FFFFFF",
                 "white-dark": "#F5F9FF",
                 black: "#18232F",
@@ -33,6 +60,9 @@ module.exports = {
             boxShadow: {
                 base: "0px 18px 50px -10px rgba(120, 152, 186, 0.3)",
             },
+            border: {
+                1: '1px'
+            },
             borderRadius: {
                 "8xl": "3rem",
             },
@@ -40,26 +70,5 @@ module.exports = {
                 "90": "90%"
             }
         },
-    },
-    plugins: [require("daisyui")],
-    daisyui: {
-        themes: [
-            {
-                vs: {
-                    fontSize: "1rem",	
-                    primary: "#003F52",
-                    secondary: "#32C5A3",
-                    accent: "#18232F",
-                    neutral: "#84cc16",
-                    "base-100": "#F5F9FF",
-                    info: "#0ea5e9",
-                    success: "#32C5A3",
-                    warning: "#facc15",
-                    error: "#e11d48",
-                },
-            },
-            "light",
-            "dark"
-        ],
-    },
+    }
 };
