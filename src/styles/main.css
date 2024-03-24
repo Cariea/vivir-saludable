@@ -3,7 +3,6 @@
 
 @import './vendor/tailwindcss/components.css';
 @import './vendor/tailwindcss/utilities.css';
-@import "./vendor/chat-ui/import.css";
 
 @import './components/import.css';
 
