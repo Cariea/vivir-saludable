@@ -37,7 +37,7 @@ export default function ResetPassword() {
             <div className="flex flex-col items-center pt-16 gap-y-16">
                 <Image src={Logo} alt="Vivir Saludable" className="w-1/2" />
                 <div className="flex flex-col gap-y-2 w-full items-center">
-                    <h1 className="text-4xl text-primary font-bold text-center">Reseteo de Contraseña</h1>
+                    <h1 className="text-4xl text-primary-default font-bold text-center">Reseteo de Contraseña</h1>
                     <span className="text-gray-400 text-center">
                         Introduzca su correo electrónico para recibir un enlace de restablecimiento de contraseña
                     </span>
@@ -67,7 +67,7 @@ export default function ResetPassword() {
                 </div>
             </div>
             {showMessage && (
-                <div className="absolute bottom-0 right-0 left-0 flex items-center justify-center bg-secondary text-primary text-center px-4 py-3" role="alert">
+                <div className="absolute bottom-0 right-0 left-0 flex items-center justify-center bg-secondary-default text-primary-default text-center px-4 py-3" role="alert">
                     <span><strong>Correo Enviado.</strong> Revise su bandeja de entrada para acceder al link de reseteo de contraseña.</span>
                 </div>
             )}

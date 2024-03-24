@@ -105,8 +105,8 @@ export default function UserSelector({
                                 {user.name}
                             </Typography>
                             <Stack direction="row" spacing={0.5} alignItems="center">
-                                <div className="rounded-full h-2 w-2 bg-secondary"></div>
-                                <Typography variant="caption" className="text-secondary">
+                                <div className="rounded-full h-2 w-2 bg-secondary-default"></div>
+                                <Typography variant="caption" className="text-secondary-default">
                                     Activo
                                 </Typography>
                             </Stack>

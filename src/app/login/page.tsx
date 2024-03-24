@@ -62,7 +62,7 @@ export default function Login() {
         <div className="h-full px-4 flex flex-col items-center justify-center gap-y-16">
             <Image src={Logo} alt="Vivir Saludable" className="w-1/2" />
             <div className="flex flex-col gap-y-2 w-full items-center">
-                <h1 className="text-4xl text-primary font-bold">Bienvenid@</h1>
+                <h1 className="text-4xl text-primary-default font-bold">Bienvenid@</h1>
                 <span className="text-gray-400 text-center">
                     Inicia Sesión para comenzar tu seguimiento
                 </span>

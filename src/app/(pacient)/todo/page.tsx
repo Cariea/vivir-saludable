@@ -96,7 +96,7 @@ const TodoPage = ({}) => {
                 >
                     <ChevronLeft />
                 </IconButton>
-                <h4 className="font-bold text-primary">{currentSpecialty}</h4>
+                <h4 className="font-bold text-primary-default">{currentSpecialty}</h4>
                 <IconButton
                     size="medium"
                     disabled={nextButtonDisabled}

@@ -134,7 +134,7 @@ export default function ChatPage({
                 justifyContent="space-between"
                 color="white"
                 fontWeight="bold"
-                className="bg-primary-default p-2 text-white w-full"
+                className="bg-primary-default-default p-2 text-white w-full"
                 alignItems="center"
             >
                 <IconButton aria-label="Back" sx={{ color: "white" }} onClick={() => router.back()}>
@@ -161,7 +161,7 @@ export default function ChatPage({
             </div>
             <Stack
                 direction="row"
-                className="pl-4 pr-2 pt-2 pb-10 bg-primary-default w-full"
+                className="pl-4 pr-2 pt-2 pb-10 bg-primary-default-default w-full"
                 spacing={1}
             >
                 <ChatInput

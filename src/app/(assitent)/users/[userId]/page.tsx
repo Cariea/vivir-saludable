@@ -93,18 +93,18 @@ const UserInfo = ({ params }: { params: { userId: string } }) => {
                     isOverlayOpen && "pointer-events-none"
                 }`}
             >
-                <div className="relative -top-12 bg-primary h-24 w-24 flex items-center justify-center rounded-full">
+                <div className="relative -top-12 bg-primary-default h-24 w-24 flex items-center justify-center rounded-full">
                     <span className="text-white text-4xl font-bold">{userAlias}</span>
                 </div>
                 <span className="block text-gray-400 text-sm -mt-6">
                     {userInfo.specialty || "Paciente"}
                 </span>
-                <h1 className="text-2xl text-primary font-bold text-wrap text-center">
+                <h1 className="text-2xl text-primary-default font-bold text-wrap text-center">
                     {userInfo.name}
                 </h1>
                 <div className="flex gap-x-2 items-center">
-                    <div className="w-2 h-2 bg-secondary rounded-full"></div>
-                    <span className="block text-secondary">Activo</span>
+                    <div className="w-2 h-2 bg-secondary-default rounded-full"></div>
+                    <span className="block text-secondary-default">Activo</span>
                 </div>
                 <Button 
                     size="small"
@@ -115,7 +115,7 @@ const UserInfo = ({ params }: { params: { userId: string } }) => {
                     onClick={() => router.push(`/users/add?edit=true&userId=${params.userId}`)}
                 >Editar</Button>
             </div>
-            <h2 className="font-bold text-primary mt-8 mb-4">Información Personal</h2>
+            <h2 className="font-bold text-primary-default mt-8 mb-4">Información Personal</h2>
             <div className="bg-white shadow-base rounded-3xl p-8 flex flex-col gap-y-4">
                 <div>
                     <span className="block text-xs text-gray-400">Cédula</span>
@@ -140,7 +140,7 @@ const UserInfo = ({ params }: { params: { userId: string } }) => {
                             {userInfo.programs.map((program) => (
                                 <div
                                     key={program.programId}
-                                    className="rounded-full bg-secondary p-1 px-2 w-fit text-sm"
+                                    className="rounded-full bg-secondary-default p-1 px-2 w-fit text-sm"
                                 >
                                     {program.programName}
                                 </div>
@@ -162,7 +162,7 @@ const UserInfo = ({ params }: { params: { userId: string } }) => {
                     </>
                 )}
             </div>
-            <h2 className="font-bold text-primary mt-8">
+            <h2 className="font-bold text-primary-default mt-8">
                 {userInfo.specialty ? "Pacientes" : "Especialistas"}
             </h2>
             <div className="flex justify-between items-end gap-x-4 my-4 mb-8">

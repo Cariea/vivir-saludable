@@ -24,7 +24,6 @@ export default function RootContainer({ cookies, children }: any) {
                 userId: cookie.id
             }
         });
-        console.log(client);
 
         client.on("chat message", (message: ChatMessage) => {
             console.log('Mensaje Recibido: ', message, new Date().toISOString());
