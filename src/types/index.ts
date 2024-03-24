@@ -168,3 +168,11 @@ export interface ChatMessage {
     to: string,
     text: string
 }
+export interface Assignments {
+    specialistName: string;
+    specialty: string;
+    date: string;
+    recordId: number;
+    description: string;
+    completed: boolean;
+}
