@@ -31,7 +31,7 @@ export default function ContactList({ contacts }: { contacts: any[] }) {
                         <Stack spacing={0.5} width="100%" alignItems="flex-start" ml={1}>
                             <Typography fontWeight="bold">{contact.name}</Typography>
                             <Typography variant="caption" className="text-gray-400">
-                                {contact.name}
+                                {contact.specialty || contact.program}
                             </Typography>
                         </Stack>
                     </Button>

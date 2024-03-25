@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-
+import Navbar from "@/components/Navbar";
 import { getMe, getPacientSpecialists } from "@/actions/getActions";
 
 import { withRoles } from "@/components/WithRolesWrapper";
@@ -139,6 +139,7 @@ const UserList = () => {
                 </div>
 
             </div>
+            <Navbar />
         </>
     );
     
