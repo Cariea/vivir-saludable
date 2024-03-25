@@ -38,8 +38,9 @@ export default function Navbar() {
         >
             {session.role === "asistent" && <StyledBottomNavigationAction value="/users" label="Usuarios" icon={<PeopleRounded />} />}
             {session.role !== "asistent" && <StyledBottomNavigationAction value="/todo" label="Todo" icon={<CheckRounded />} />}
-            {session.role !== "asistent" && <StyledBottomNavigationAction value="/consults" label="Consultas" icon={<CalendarMonthRounded />} />}
+            {/* {session.role !== "asistent" && <StyledBottomNavigationAction value="/consults" label="Consultas" icon={<CalendarMonthRounded />} />} */}
             {session.role !== "asistent" && <StyledBottomNavigationAction value="/chat" label="Chat" icon={<MessageRounded />} />}
+            {session.role === "pacient" && <StyledBottomNavigationAction value="/specialists" label="specialist" icon={<People />} />}
             <StyledBottomNavigationAction value="/notifications" label="Notificaciones" icon={<NotificationsRounded />} />
             <StyledBottomNavigationAction value="/profile" label="Perfil" icon={<PersonRounded />} />
         </BottomNavigation>
