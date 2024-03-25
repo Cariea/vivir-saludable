@@ -5,11 +5,11 @@ import Image from "next/image";
 import Logo from "@/images/Logo.png";
 import { IconButton, Stack } from "@mui/material";
 import { Help } from "@mui/icons-material";
-import PacientNavbar from "@/components/Navbar/PacientsNavbar";
+import Navbar from "@/components/Navbar";
 
 export default function TodoLayout({ children }: { children: React.ReactNode }) {
     return (
-        <>
+        <div style={{ paddingLeft: "1rem", paddingRight: "1rem" }}>
             <Stack direction='row' justifyContent="space-between" alignItems="center" className="mb-4">
                 <Image src={Logo} alt="Logo" className="size-8" />
                 <h4 className="font-bold text-primary">Tareas Diarias</h4>
@@ -21,7 +21,7 @@ export default function TodoLayout({ children }: { children: React.ReactNode }) 
 
             {children}
            
-            <PacientNavbar selected="/todo" />
-        </>
+            <Navbar />
+        </div>
     )
 }

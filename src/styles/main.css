@@ -4,7 +4,6 @@
 @import './vendor/tailwindcss/components.css';
 @import './vendor/tailwindcss/utilities.css';
 
-
 @import './components/import.css';
 
 @import './shame.css';

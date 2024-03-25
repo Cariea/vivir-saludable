@@ -9,7 +9,7 @@ export default function UserInfoLoading() {
                 <div className="skeleton bg-gray-100 w-1/4 h-3 rounded-full"></div>
                 <div className="mt-8 w-full rounded-full h-8 bg-gray-100 skeleton"></div>
             </div>
-            <h2 className="font-bold text-primary mt-8 mb-4">Información Personal</h2>
+            <h2 className="font-bold text-primary-default mt-8 mb-4">Información Personal</h2>
             <div className="bg-white shadow-base rounded-3xl p-8 flex flex-col gap-y-4">
                 <div>
                     <div className="skeleton bg-gray-100 rounded-full w-1/4 h-3 mb-2"></div>

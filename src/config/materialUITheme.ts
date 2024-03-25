@@ -14,9 +14,29 @@ export const themeOptions: ThemeOptions = {
     mode: 'light',
     primary: {
       main: '#003f52',
+      "50": "#c9fffc",
+      "100": "#99fffd",
+      "200": "#54fffe",
+      "300": "#07f4ff",
+      "400": "#00d5ef",
+      "500": "#00a9c9",
+      "600": "#0086a1",
+      "700": "#111922",
+      "800": "#086b82",
+      "900": "#003f52",
     },
     secondary: {
       main: '#32c5a3',
+      "50": "#f1fcf9",
+      "100": "#cef9eb",
+      "200": "#9ef1d8",
+      "300": "#65e3c2",
+      "400": "#32c5a3",
+      "500": "#1cb090",
+      "600": "#148d76",
+      "700": "#147160",
+      "800": "#155a4f",
+      "900": "#164b41",
     },
     background: {
       default: '#f5f9ff',
@@ -33,10 +53,22 @@ export const themeOptions: ThemeOptions = {
     success: {
       main: '#32C5A3',
     },
+    grey: {
+      "50": "#EEF2F6",
+      "100": "#DDE5EE",
+      "200": "#BBCBDD",
+      "300": "#9AB2CB",
+      "400": "#7898BA",
+      "500": "#456587",
+      "600": "#344C65",
+      "700": "#18232F",
+      "800": "#111922",
+      "900": "#090D11",
+    }
   },
   typography: {
     fontFamily: ubuntu.style.fontFamily,
-    fontSize: 16
+    fontSize: 14
   },
   components: {
     MuiButton: {

@@ -1,4 +1,6 @@
+import { StoredMessage } from '@/types';
 import { createContext } from 'react';
+import { Socket } from "socket.io-client";
 
 export interface UserListContextType {
     selection: Object;
@@ -15,3 +17,10 @@ export interface SessionCookies {
 }
 
 export const SessionCookiesContext = createContext<any>({} as any);
+
+export interface ChatContextType {
+    messages: StoredMessage[],
+    socket: Socket
+}
+
+export const ChatContext = createContext<ChatContextType>({} as ChatContextType);

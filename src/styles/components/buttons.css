@@ -1,8 +1,0 @@
-[data-theme="vs"] .btn {
-    min-height: auto;
-    font-size: 1rem;
-}
-
-[data-theme="vs"] .btn-sm {
-    @apply text-sm
-}

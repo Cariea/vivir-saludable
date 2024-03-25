@@ -124,12 +124,12 @@ const UserRegister = () => {
             </button>
             {isLoading ?
                 <div className="h-full flex items-center justify-center">
-                    <span className="loading loading-spinner loading-lg text-primary"></span>
+                    <span className="loading loading-spinner loading-lg text-primary-default"></span>
                 </div>
                 : <>
-                    <h1 className="text-4xl text-primary mt-8 mb-2 font-bold">{isEditing ? "Editar Usuario" : "Nuevo Usuario"}</h1>
+                    <h1 className="text-4xl text-primary-default mt-8 mb-2 font-bold">{isEditing ? "Editar Usuario" : "Nuevo Usuario"}</h1>
                     <span className="text-gray-400 text-sm">Por favor, complete la siguiente información</span>
-                    <h4 className="text-primary font-bold mt-8 mb-2">Tipo de Usuario</h4>
+                    <h4 className="text-primary-default font-bold mt-8 mb-2">Tipo de Usuario</h4>
                     <div className="grid gap-x-4 grid-cols-2 w-full">
                         <input
                             className="btn py-2 px-9 rounded-8xl w-full shadow-base font-normal bg-white text-gray-400 border-0 checked:text-white disabled:bg-gray-50 disabled:text-gray-300"
@@ -149,7 +149,7 @@ const UserRegister = () => {
                             {...register("role")}
                         />
                     </div>
-                    <h4 className="text-primary font-bold mt-8 mb-4">Información Personal</h4>
+                    <h4 className="text-primary-default font-bold mt-8 mb-4">Información Personal</h4>
                     <form className="flex flex-col gap-y-8 w-full">
                         <div className="flex flex-col gap-y-2 w-full">
                             <input

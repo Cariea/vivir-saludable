@@ -123,8 +123,8 @@ export default function UserCard({
             </Stack>
             {user.status ? (
                 <div className="flex gap-x-2 items-center">
-                    <div className="w-3 h-3 bg-secondary rounded-full"></div>
-                    <span className="text-secondary text-sm">Activo</span>
+                    <div className="w-3 h-3 bg-secondary-default rounded-full"></div>
+                    <span className="text-secondary-default text-sm">Activo</span>
                 </div>
             ) : (
                 <div className="flex gap-x-2 items-center">

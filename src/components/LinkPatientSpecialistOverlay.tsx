@@ -47,7 +47,7 @@ export default function LinkPatientSpecialistOverlay({
         <>
             <IconButton
                 aria-label="add"
-                className="rounded-full shadow-base bg-primary text-white"
+                className="rounded-full shadow-base bg-primary-default text-white"
                 sx={{ padding: 2, backgroundColor: "#003f52", color: "white" }}
                 onClick={toggleDrawer(true)}
             >

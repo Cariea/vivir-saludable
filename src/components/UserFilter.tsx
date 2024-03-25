@@ -1,10 +1,7 @@
 "use client";
 
 import { useState, createRef, useEffect, useMemo } from "react";
-import { Sheet, Content, detents, Portal, Header, Footer } from "react-sheet-slide";
 import { IoFilter, IoClose } from "react-icons/io5";
-
-import "react-sheet-slide/style.css";
 
 import { getSpecialties, getPrograms } from "@/actions/getActions";
 import { SpecialtyType, ProgramType } from "@/types";
@@ -162,7 +159,7 @@ export default function UserFilter({ setOriginalSelection }: FilterProps) {
                         minWidth="100%"
                         marginBottom={2}
                     >
-                        <h3 className="text-2xl font-bold text-primary">Por Tipo de Usuario</h3>
+                        <h3 className="text-2xl font-bold text-primary-default">Por Tipo de Usuario</h3>
                         {!!selection.byRole && (
                             <ClearButton
                                 startIcon={<Close />}
@@ -210,7 +207,7 @@ export default function UserFilter({ setOriginalSelection }: FilterProps) {
                                 marginBottom={2}
                                 marginTop={4}
                             >
-                                <h3 className="text-2xl font-bold text-primary">
+                                <h3 className="text-2xl font-bold text-primary-default">
                                     Por Especialidad
                                 </h3>
                                 {!!selection.bySpecialty?.length && (
@@ -246,7 +243,7 @@ export default function UserFilter({ setOriginalSelection }: FilterProps) {
                                         marginBottom={2}
                                         marginTop={4}
                                     >
-                                        <h3 className="text-2xl font-bold text-primary">
+                                        <h3 className="text-2xl font-bold text-primary-default">
                                             Por Programa
                                         </h3>
                                         {!!selection.byProgram?.length && (
