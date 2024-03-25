@@ -150,9 +150,9 @@ export default function ChatPage({
                 ref={container}
                 className="min-h-[calc(100vh-9rem)] max-h-[calc(100vh-10.5rem)] overflow-auto flex flex-col p-4 pt-3 first:mt-0"
             >
-                {sortedMessages.map((message) => (
+                {sortedMessages.map((message,index) => (
                     <MessageBubble
-                        key={currentMessageCount}
+                        key={index}
                         type={session.id === message.userId ? "sender" : "receiver"}
                         text={message.message}
                         timestamp={message.createdAt}

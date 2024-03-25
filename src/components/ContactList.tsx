@@ -12,7 +12,7 @@ export default function ContactList({ contacts }: { contacts: any[] }) {
     return (
         <div className="mb-12">
             {contacts.map((contact) => (
-                <>
+                <div key={contact.userid}>
                     <Button
                         key={contact.userid}
                         onClick={() => router.push(`/chat/${contact.userid}?name=${contact.name}`)}
@@ -36,7 +36,7 @@ export default function ContactList({ contacts }: { contacts: any[] }) {
                         </Stack>
                     </Button>
                     <div className="h-[1px] w-[calc(100%-(1.5rem+56px))] bg-gray-50 translate-x-[calc(1.5rem+56px)]" />
-                </>
+                </div>
             ))}
         </div>
     );
