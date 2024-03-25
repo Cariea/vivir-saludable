@@ -27,7 +27,7 @@ const ChatInput = styled(Input)(({ theme }) => ({
     width: "100%",
     fontSize: "14px",
     backgroundColor: "white",
-    minHeight: "2.25rem",
+    minHeight: "3rem",
     maxHeight: "5rem",
     lineHeight: "inherit",
     overflowY: "auto",
@@ -160,23 +160,22 @@ export default function ChatPage({
                 ))}
             </div>
             <Stack
-                direction="row"
-                className="pl-4 pr-2 pt-2 pb-10 bg-primary-default w-full"
-                spacing={1}
+                direction="column"
             >
+                <div className="pl-4 pr-2 pt-2 pb-10 bg-primary-default w-full flex items-center">
                 <ChatInput
                     multiline
                     inputProps={{ maxLength: 250 }}
                     value={inputValue}
                     maxRows={2}
                     onChange={(e) => setInputValue(e.currentTarget.value)}
-                    sx={{ fontSize: "1rem" }}
+                    sx={{ fontSize: "1rem",marginTop: "0.7rem"}}
                     placeholder="Escribe Tu Mensaje..."
                 />
                 <IconButton
                     aria-label="Send"
                     color="secondary"
-                    sx={{ width: "2.25rem", height: "2.25rem" }}
+                    sx={{ width: "2.25rem", height: "2.25rem",marginTop: "0.7rem"}}
                     onClick={() => {
                         if(inputValue.length !== 0) {
                             socket.emit("chat message", {
@@ -202,6 +201,7 @@ export default function ChatPage({
                 >
                     <SendRounded />
                 </IconButton>
+                </div>
             </Stack>
         </div>
     );

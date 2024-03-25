@@ -5,8 +5,8 @@ type Config = {
 
 
 const config: Config = {
-    apiUrl: process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000',
-    encryptPassword: process.env.ENCRYPT_PASSWORD || "",
+    apiUrl: process.env.NEXT_PUBLIC_API_URL || "",
+    encryptPassword: process.env.NEXT_PUBLIC_ENCRYPT_PASSWORD || "",
 }
 
 export default config;
