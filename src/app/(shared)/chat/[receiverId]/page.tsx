@@ -134,7 +134,7 @@ export default function ChatPage({
                 justifyContent="space-between"
                 color="white"
                 fontWeight="bold"
-                className="bg-primary-default-default p-2 text-white w-full"
+                className="bg-primary-default p-2 text-white w-full"
                 alignItems="center"
             >
                 <IconButton aria-label="Back" sx={{ color: "white" }} onClick={() => router.back()}>
@@ -161,7 +161,7 @@ export default function ChatPage({
             </div>
             <Stack
                 direction="row"
-                className="pl-4 pr-2 pt-2 pb-10 bg-primary-default-default w-full"
+                className="pl-4 pr-2 pt-2 pb-10 bg-primary-default w-full"
                 spacing={1}
             >
                 <ChatInput
@@ -178,24 +178,26 @@ export default function ChatPage({
                     color="secondary"
                     sx={{ width: "2.25rem", height: "2.25rem" }}
                     onClick={() => {
-                        socket.emit("chat message", {
-                            text: inputValue,
-                            from: session.id,
-                            to: params.receiverId,
-                        });
-
-                        setMessages((prev) => [
-                            ...prev,
-                            {
-                                createdAt: new Date().toISOString(),
-                                message: inputValue,
-                                userId: session.id,
-                                userReceptor: params.receiverId,
-                            },
-                        ]);
-
-                        setInputValue("");
-                        setCurrentMessageCount(currentMessageCount + 1);
+                        if(inputValue.length !== 0) {
+                            socket.emit("chat message", {
+                                text: inputValue,
+                                from: session.id,
+                                to: params.receiverId,
+                            });
+    
+                            setMessages((prev) => [
+                                ...prev,
+                                {
+                                    createdAt: new Date().toISOString(),
+                                    message: inputValue,
+                                    userId: session.id,
+                                    userReceptor: params.receiverId,
+                                },
+                            ]);
+    
+                            setInputValue("");
+                            setCurrentMessageCount(currentMessageCount + 1);
+                        }
                     }}
                 >
                     <SendRounded />
