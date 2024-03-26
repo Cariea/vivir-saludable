@@ -19,23 +19,23 @@ export default function RootContainer({ cookies, children }: any) {
             return;
         }
         const cookie = JSON.parse(cookies.value);
-        // const client = io(config.apiUrl, {
-        //     query: {
-        //         userId: cookie.id
-        //     }
-        // });
+        const client = io(config.apiUrl, {
+            query: {
+                userId: cookie.id
+            }
+        });
 
-        // client.on("chat message", (message: ChatMessage) => {
-        //     console.log('Mensaje Recibido: ', message, new Date().toISOString());
-        //     setMessages((prevMessages) => [...prevMessages, {
-        //         createdAt: new Date().toISOString(),
-        //         message: message.text,
-        //         userId: message.from,
-        //         userReceptor: message.to
-        //     }]);
-        // })
+        client.on("chat message", (message: ChatMessage) => {
+            console.log('Mensaje Recibido: ', message, new Date().toISOString());
+            setMessages((prevMessages) => [...prevMessages, {
+                createdAt: new Date().toISOString(),
+                message: message.text,
+                userId: message.from,
+                userReceptor: message.to
+            }]);
+        })
 
-        // setSocket(client);
+        setSocket(client);
 
         // return () => {
         //     console.log("Disconeccting socket")
