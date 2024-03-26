@@ -10,7 +10,7 @@ import { CurrentPacient} from "@/types";
 import { IconButton, Stack } from "@mui/material";
 import { Check, ChevronLeft, ChevronRight } from "@mui/icons-material";
 import Meals from "@/components/pacient/nutricionist/Meals";
-import  {Symptoms}  from "@/components/pacient/shared/Symptoms";
+import  {Symptoms}  from "@/components/pacient/shared/symptoms";
 import { Activities } from "@/components/pacient/shared/Activities";
 
 
