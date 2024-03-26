@@ -40,8 +40,8 @@ export default function Navbar() {
             {session.role !== "asistent" && <StyledBottomNavigationAction value="/todo" label="Todo" icon={<CheckRounded />} />}
             {/* {session.role !== "asistent" && <StyledBottomNavigationAction value="/consults" label="Consultas" icon={<CalendarMonthRounded />} />} */}
             {session.role !== "asistent" && <StyledBottomNavigationAction value="/chat" label="Chat" icon={<MessageRounded />} />}
-            {session.role === "pacient" && <StyledBottomNavigationAction value="/specialists" label="specialist" icon={<People />} />}
-            <StyledBottomNavigationAction value="/notifications" label="Notificaciones" icon={<NotificationsRounded />} />
+            {session.role === "pacient" && <StyledBottomNavigationAction value="/specialists" label="Especialistas" icon={<People />} />}
+            <StyledBottomNavigationAction value="/notifications" label="Alertas" icon={<NotificationsRounded />} />
             <StyledBottomNavigationAction value="/profile" label="Perfil" icon={<PersonRounded />} />
         </BottomNavigation>
     );
