@@ -166,7 +166,7 @@ export const Activities = () => {
                 </AccordionDetails>
             
             <Snackbar open={openNotification} autoHideDuration={6000} onClose={() => setOpenNotification(false)}>
-            <Alert onClose={() => setOpenNotification(false)} severity={notificationData.severity} sx={{ width: '100%' }}>
+            <Alert variant="filled" onClose={() => setOpenNotification(false)} severity={notificationData.severity} sx={{ width: '100%' }}>
                 {notificationData.message}
             </Alert>
         </Snackbar>

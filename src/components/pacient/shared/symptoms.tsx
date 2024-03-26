@@ -53,7 +53,7 @@ export const Symptoms = ({ specialist, pacient }: SymptomsProps) => {
         autoHideDuration={6000}
         onClose={() => setOpenNotification(false)}
       >
-        <Alert onClose={() => setOpenNotification(false)} severity={notificationData.severity}>
+        <Alert variant="filled" onClose={() => setOpenNotification(false)} severity={notificationData.severity}>
           {notificationData.message}
         </Alert>
       </Snackbar>

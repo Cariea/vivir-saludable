@@ -252,7 +252,7 @@ export default function MealsBox() {
         autoHideDuration={6000}
         onClose={() => setOpenNotification(false)}
       >
-        <Alert severity={notificationData.severity}>{notificationData.message}</Alert>
+        <Alert variant='filled' severity={notificationData.severity}>{notificationData.message}</Alert>
       </Snackbar>
     </Accordion>
   );
