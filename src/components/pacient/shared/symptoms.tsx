@@ -2,6 +2,8 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Button, TextField }
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React, { useState } from "react";
 import {postSymptoms} from "@/actions/postActions";
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 interface DataState {
   description: string;
   symptom: string;
@@ -17,6 +19,8 @@ export const Symptoms = ({ specialist, pacient }: SymptomsProps) => {
   const [description, setDescription] = useState<string>('');
   const [when, setWhen] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
+  const [openNotification, setOpenNotification] = useState(false);
+  const [notificationData, setNotificationData] = useState<{ message: string; severity: "error" | "success" | "warning" }>({ message: '', severity: 'success' });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setState: React.Dispatch<React.SetStateAction<string>>, field: keyof DataState) => {
     const { value } = event.target;
@@ -30,18 +34,29 @@ export const Symptoms = ({ specialist, pacient }: SymptomsProps) => {
       setError(false);
       const response = await postSymptoms(symptom, description, when, specialist);
       if (response.status === 200) {
-        alert('Síntoma registrado con éxito');
+        setOpenNotification(true);
+        setNotificationData({ message: 'Síntoma registrado correctamente', severity: 'success' });
         setSymptom('');
         setDescription('');
         setWhen('');
       } else {
-        alert('Error al registrar el síntoma');
+        setOpenNotification(true);
+        setNotificationData({ message: 'Error al registrar el síntoma', severity: 'error' });
       }
     }
   }
 
   return (
     <>
+      <Snackbar
+        open={openNotification}
+        autoHideDuration={6000}
+        onClose={() => setOpenNotification(false)}
+      >
+        <Alert onClose={() => setOpenNotification(false)} severity={notificationData.severity}>
+          {notificationData.message}
+        </Alert>
+      </Snackbar>
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           Síntomas

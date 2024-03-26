@@ -3,6 +3,8 @@ import { Accordion, AccordionDetails, AccordionSummary, Button, FormControl, Inp
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { postActivitie } from "@/actions/postActions";
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 // Define las opciones de los campos
 const fieldOptions = [
     { label: "Tiempo en minutos", value: "time", min: 0, max: 300 },
@@ -14,7 +16,7 @@ const fieldOptions = [
 
 // Definir el tipo de formData con una firma de índice
 interface FormData {
-    [key: string]: string | number;
+    [key: string]: string | number | undefined;
 }
 
 export const Activities = () => {
@@ -28,6 +30,8 @@ export const Activities = () => {
         repetitions: 0,
         description: ''
     });
+    const [openNotification, setOpenNotification] = useState(false);
+    const [notificationData, setNotificationData] = useState<{ message: string; severity: "error" | "success" | "warning" }>({ message: '', severity: 'success' });
 
     // Manejador de evento para seleccionar los campos a mostrar
     const handleFieldSelectChange = (event: SelectChangeEvent<string[]>) => {
@@ -53,9 +57,22 @@ export const Activities = () => {
         if (fieldsAreFilled && requiredFieldsFilled) {
             // Lógica para enviar los datos al servidor
             console.log("Datos de la actividad física:", formData);
+            if (formData.time === 0) {
+                formData.time = undefined;
+            }
+            if (formData.distance === 0) {
+                formData.distance = undefined;
+            }
+            if (formData.weight === 0) {
+                formData.weight = undefined;
+            }
+            if (formData.repetitions === 0) {
+                formData.repetitions = undefined;
+            }
             const response = await postActivitie(formData.name as string, formData.description as string, formData.time as number, formData.distance as number, formData.weight as number, formData.repetitions as number);
             if (response.status === 200) {
-                alert("Actividad física registrada con éxito.");
+              setNotificationData({ message: 'Actividad física registrada con éxito.', severity: 'success' });
+              setOpenNotification(true);
                 setFormData({
                     name: '',
                     time: 0,
@@ -65,10 +82,13 @@ export const Activities = () => {
                     description: ''
                 });
             } else {
-                alert("Error al registrar la actividad física.");
+
+              setNotificationData({ message: 'Error al cargar la actividad.', severity: 'error' });
+              setOpenNotification(true);
             }
         } else {
-            alert("Por favor, llene todos los campos mostrados.");
+            setNotificationData({ message: 'Por favor, llene todos los campos.', severity: 'warning' });
+            setOpenNotification(true);
         }
     };
 
@@ -144,7 +164,13 @@ export const Activities = () => {
                         </Button>
                     </div>
                 </AccordionDetails>
-            </Accordion>
+            
+            <Snackbar open={openNotification} autoHideDuration={6000} onClose={() => setOpenNotification(false)}>
+            <Alert onClose={() => setOpenNotification(false)} severity={notificationData.severity} sx={{ width: '100%' }}>
+                {notificationData.message}
+            </Alert>
+        </Snackbar>
+        </Accordion>
         );
     };
     

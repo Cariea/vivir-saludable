@@ -13,7 +13,9 @@ import AddIcon from '@mui/icons-material/Add';
 import Image from 'next/image';
 import { postPacientMeal } from '@/actions/postActions';
 import imageCompression from 'browser-image-compression';
-
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import { set } from 'react-hook-form';
 export interface MealData {
   description: string;
   mealImage: File | '';
@@ -35,7 +37,8 @@ export default function MealsBox() {
         reader.onerror = error => reject(error);
     });
   };
-
+  const [openNotification, setOpenNotification] = React.useState(false);
+  const [notificationData, setNotificationData] = React.useState<{ message: string; severity: "error" | "success" | "warning" }>({ message: '', severity: 'success' });
   const [mealData, setMealData] = React.useState<MealData>({
     description: '',
     mealImage: '',
@@ -69,9 +72,11 @@ export default function MealsBox() {
 
         } catch (error) {
           console.log(error);
-          alert('Ocurrio un error al subir la imagen, intenta con una imagen mas pequeña');
+          setNotificationData({ message: 'Error al comprimir la imagen', severity: 'error' });
+          setOpenNotification(true);
         }
       }else{
+
         setImage(file);
         setMealData({ ...mealData, mealImage: file });
       }
@@ -83,15 +88,28 @@ export default function MealsBox() {
   };
 
   const handleAddIngredient = () => {
-    if (!ingredient.name || !ingredient.quantity) return;
+    if (!ingredient.name || !ingredient.quantity){
+      setNotificationData({ message: 'Ingrediente incompleto', severity: 'error' });
+      setOpenNotification(true);
+      return;
+    } 
     setIngredients([...ingredients, ingredient]);
     setIngredient({ name: '', quantity: '', type: '' });
   };
 
   const handleSubmit = async () => {
+    setNotificationData({ message: 'Espere un momento mientras se cargan los datos', severity: 'warning' });
+    setOpenNotification(true);
     if(image instanceof Blob){
       const base = await imageToBase64(image);
-      await postPacientMeal(mealData.description, mealData.pica, mealData.wasSatisfied, base as string, ingredients, image.name);
+      const response = await postPacientMeal(mealData.description, mealData.pica, mealData.wasSatisfied, base as string, ingredients, image.name);
+      if (response.status === 200) {
+        setNotificationData({ message: 'Comida registrada con éxito.', severity: 'success' });
+        setOpenNotification(true);
+      } else {
+        setNotificationData({ message: 'Error al cargar la comida.', severity: 'error' });
+        setOpenNotification(true);
+      }
     }
     setMealData({
       description: '',
@@ -229,6 +247,13 @@ export default function MealsBox() {
           </div>
         </Box>
       </AccordionDetails>
+      <Snackbar
+        open={openNotification}
+        autoHideDuration={6000}
+        onClose={() => setOpenNotification(false)}
+      >
+        <Alert severity={notificationData.severity}>{notificationData.message}</Alert>
+      </Snackbar>
     </Accordion>
   );
 }
