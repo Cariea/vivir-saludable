@@ -27,7 +27,7 @@ export default function SpecialistCard({
         console.log(e);
         console.log(pacientId);
         console.log(user.userId);
-        //router.push(`/chat/${pacientId}/${user.userId}`);
+        router.push(`/chat/${user.userId}?name=${user.name}`)
     };
     return (
       <Box

@@ -10,6 +10,8 @@ import { CurrentPacient} from "@/types";
 import { IconButton, Stack } from "@mui/material";
 import { Check, ChevronLeft, ChevronRight } from "@mui/icons-material";
 import Meals from "@/components/pacient/nutricionist/Meals";
+import  {Symptoms}  from "@/components/pacient/shared/Symptoms";
+import { Activities } from "@/components/pacient/shared/Activities";
 
 
 const UserList = () => {
@@ -136,6 +138,20 @@ const UserList = () => {
                             <Meals />
                         )
                     }
+                    {
+                        specialistsBySpecialty && (
+                            <Symptoms 
+                                specialist={specialistsBySpecialty.userId}
+                                pacient={currentUserInfo.userId}
+                            />
+                        )
+                    }
+                    {
+                        currentSpecialty === 'deportologo' && (
+                            <Activities />
+                        )
+                    }
+                    
                 </div>
 
             </div>
