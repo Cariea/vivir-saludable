@@ -32,7 +32,7 @@ export const Activities = () => {
     });
     const [openNotification, setOpenNotification] = useState(false);
     const [notificationData, setNotificationData] = useState<{ message: string; severity: "error" | "success" | "warning" }>({ message: '', severity: 'success' });
-
+    const [error, setError] = useState<boolean>(false);
     // Manejador de evento para seleccionar los campos a mostrar
     const handleFieldSelectChange = (event: SelectChangeEvent<string[]>) => {
         setFieldsToShow(event.target.value as string[]);
@@ -87,6 +87,7 @@ export const Activities = () => {
               setOpenNotification(true);
             }
         } else {
+            setError(true);
             setNotificationData({ message: 'Por favor, llene todos los campos.', severity: 'warning' });
             setOpenNotification(true);
         }
@@ -124,6 +125,7 @@ export const Activities = () => {
                         fullWidth
                         margin="normal"
                         type="text"
+                        error={error && !formData.name}
                     />
                     {fieldOptions.map((option) => (
                         fieldsToShow.includes(option.value) && (
@@ -137,6 +139,7 @@ export const Activities = () => {
                                 margin="normal"
                                 type="number"
                                 inputProps={{ min: option.min, max: option.max }}
+                                error={error && !formData[option.value]}
                             />
                         )
                     ))}
@@ -152,6 +155,7 @@ export const Activities = () => {
                         margin="normal"
                         multiline
                         rows={4}
+                        error={error && !formData.description}
                         />
                         
                         <Button
