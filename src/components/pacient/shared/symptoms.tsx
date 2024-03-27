@@ -12,9 +12,10 @@ interface DataState {
 interface SymptomsProps {
   specialist: string;
   pacient: string;
+  text: string;
 }
 
-export const Symptoms = ({ specialist, pacient }: SymptomsProps) => {
+export const Symptoms = ({ specialist, pacient,text }: SymptomsProps) => {
   const [symptom, setSymptom] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [when, setWhen] = useState<string>('');
@@ -59,7 +60,7 @@ export const Symptoms = ({ specialist, pacient }: SymptomsProps) => {
       </Snackbar>
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
-          Síntomas
+          Síntomas {text}
         </AccordionSummary>
         <AccordionDetails>
           <Box display="flex" flexDirection="column" alignItems="center" gap={4} p={2}>

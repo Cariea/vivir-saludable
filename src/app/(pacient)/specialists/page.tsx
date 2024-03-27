@@ -139,18 +139,20 @@ const UserList = () => {
                         )
                     }
                     {
+                        currentSpecialty === 'deportologo' && (
+                            <Activities />
+                        )
+                    }
+                    {
                         specialistsBySpecialty && (
                             <Symptoms 
+                                text={currentSpecialty === 'nutricionista' ? 'Gastrointestinales' : currentSpecialty === 'deportologo' ? 'Fisicos' : currentSpecialty === 'psicologo' ? 'Psicosomaticos' : ''}
                                 specialist={specialistsBySpecialty.userId}
                                 pacient={currentUserInfo.userId}
                             />
                         )
                     }
-                    {
-                        currentSpecialty === 'deportologo' && (
-                            <Activities />
-                        )
-                    }
+                    
                     
                 </div>
 
