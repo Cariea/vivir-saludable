@@ -48,7 +48,8 @@ export default function Login() {
             return;
         }
         setLoading(false);
-        switch (response?.message.data) {
+        console.log(response?.message.role);
+        switch (response?.message.role) {
             case "specialist":
                 router.push("/pacients");
             case "pacient":

@@ -34,8 +34,10 @@ export function withRoles(Component: any, requiredPermissions: string[]) {
                         router.push("/users");
                         break;
                     case "pacient":
-                    case "specialist":
                         router.push("/todo");
+                        break;
+                    case "specialist":
+                        router.push("/pacients");
                         break;
                 }
             }

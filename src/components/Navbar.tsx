@@ -37,9 +37,10 @@ export default function Navbar() {
             className="fixed bottom-0 left-0 right-0"
         >
             {session.role === "asistent" && <StyledBottomNavigationAction value="/users" label="Usuarios" icon={<PeopleRounded />} />}
-            {session.role !== "asistent" && <StyledBottomNavigationAction value="/todo" label="Todo" icon={<CheckRounded />} />}
             {/* {session.role !== "asistent" && <StyledBottomNavigationAction value="/consults" label="Consultas" icon={<CalendarMonthRounded />} />} */}
+            {session.role === "specialist" && <StyledBottomNavigationAction value="/pacients" label="Pacientes" icon={<People />} />}
             {session.role !== "asistent" && <StyledBottomNavigationAction value="/chat" label="Chat" icon={<MessageRounded />} />}
+            {session.role === "pacient" && <StyledBottomNavigationAction value="/todo" label="Todo" icon={<CheckRounded />} />}
             {session.role === "pacient" && <StyledBottomNavigationAction value="/specialists" label="Especialistas" icon={<People />} />}
             <StyledBottomNavigationAction value="/notifications" label="Alertas" icon={<NotificationsRounded />} />
             <StyledBottomNavigationAction value="/profile" label="Perfil" icon={<PersonRounded />} />
