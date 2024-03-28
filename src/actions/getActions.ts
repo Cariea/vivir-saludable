@@ -36,7 +36,6 @@ export async function getSpecialties() {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,
@@ -70,7 +69,6 @@ export async function getMe() {
     } catch(error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,
@@ -107,7 +105,6 @@ export async function getPrograms() {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,
@@ -141,7 +138,6 @@ export async function getUsers({ size, page }: UserListParams) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,
@@ -174,7 +170,6 @@ export async function getUserInfo(userId: string) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,
@@ -210,7 +205,6 @@ export async function getSpecialists() {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,
@@ -246,7 +240,6 @@ export async function getPacients() {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,
@@ -282,7 +275,6 @@ export async function getAvailableUsersForLink(userId: string) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,
@@ -317,7 +309,6 @@ export async function getUserContacts() {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,
@@ -353,7 +344,6 @@ export async function getChatMessages({ toUserId }: { toUserId: string }) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,
@@ -387,7 +377,6 @@ export const getDailyAssignments = async (userId: string) => {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,
@@ -419,7 +408,142 @@ export const getPacientSpecialists = async ( ) => {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.log("error message: ", error.response?.data.message);
-            // 👇️ error: AxiosError<any, any>
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}
+
+export const getSpecialistPacients = async ({size,page}:{size:number, page:number}) => {
+    const session = await getSession();
+    try {
+        const response = await axios.get(`${config.apiUrl}pacients/specialist/pacients`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            },
+            params: {
+                size,
+                page
+            }
+        });
+
+        return {
+            status: response.status,
+            data: response.data
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}
+
+export async function getMeSpecialist() {
+    const session = await getSession();
+
+    try {
+        const response = await axios.get(`${config.apiUrl}specialists/me`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            }
+        });
+
+        return {
+            status: response.status,
+            data: response.data
+        }
+        
+    } catch(error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}
+
+export const getPacient = async (pacientId: string) => {
+    const session = await getSession();
+
+    try {
+        const response = await axios.get(`${config.apiUrl}pacients/${pacientId}`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            }
+        });
+        return {
+            status: response.status,
+            data: response.data
+        }
+        
+    } catch(error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}
+
+export const getIngredientsByMeal = async (mealId: number) => {
+    const session = await getSession();
+
+    try {
+        const response = await axios.get(`${config.apiUrl}ingredients/`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            },
+            params: {
+                mealId,
+                size: 100,
+            }
+        });
+        return {
+            status: response.status,
+            data: response.data
+        }
+        
+    } catch(error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
             return {
                 status: error.response?.status,
                 message: error.response?.data.message,

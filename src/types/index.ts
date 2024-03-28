@@ -176,3 +176,15 @@ export interface Assignments {
     description: string;
     completed: boolean;
 }
+
+export interface Specialist extends User {
+    specialistName: string;
+    specialtyName: string;
+}
+
+export interface Ingredient {
+    ingredientId: number;
+    name: string;
+    volume: string;
+    ingredientType: string;
+}
