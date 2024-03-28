@@ -457,3 +457,104 @@ export const getSpecialistPacients = async ({size,page}:{size:number, page:numbe
         };
     }
 }
+
+export async function getMeSpecialist() {
+    const session = await getSession();
+
+    try {
+        const response = await axios.get(`${config.apiUrl}specialists/me`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            }
+        });
+
+        return {
+            status: response.status,
+            data: response.data
+        }
+        
+    } catch(error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}
+
+export const getPacient = async (pacientId: string) => {
+    const session = await getSession();
+
+    try {
+        const response = await axios.get(`${config.apiUrl}pacients/${pacientId}`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            }
+        });
+        return {
+            status: response.status,
+            data: response.data
+        }
+        
+    } catch(error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}
+
+export const getIngredientsByMeal = async (mealId: number) => {
+    const session = await getSession();
+
+    try {
+        const response = await axios.get(`${config.apiUrl}ingredients/`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            },
+            params: {
+                mealId,
+                size: 100,
+            }
+        });
+        return {
+            status: response.status,
+            data: response.data
+        }
+        
+    } catch(error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}

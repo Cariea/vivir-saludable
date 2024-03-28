@@ -53,8 +53,8 @@ export default function PacientCard({
                 break;
             case "DIV":
                 if (!e.target.className.includes("MuiBackdrop-root")) {
-                    // router.push(`/users/${user.userId}`);
-                    console.log("Vamos al detalle de: ", user.name);
+                    router.push(`/pacients/${user.userId}`);
+                    console.log("Vamos al detalle de: ", user.userId);
                 }
                 break;
             default:

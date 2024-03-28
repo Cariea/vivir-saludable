@@ -88,7 +88,7 @@ const UserList = () => {
             >
                 <div className="flex flex-col gap-y-8">
                     {searchedUserItems.map((user: User) => (
-                      // <UserCard user={user} key={user.userId} setUpdate={() => {}} />
+                      
                       <PacientCard user={user} key={user.userId}  setUpdate={() => {}}/>
                     ))}
                 </div>

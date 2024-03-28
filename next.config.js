@@ -6,6 +6,9 @@ const nextConfig = {
     compiler: {
         removeConsole: process.env.NODE_ENV !== 'development'
     },
+    images: {
+        domains: ['res.cloudinary.com'],
+      },
     async redirects() {
         return [
             {
