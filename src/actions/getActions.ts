@@ -491,7 +491,7 @@ export async function getMeSpecialist() {
     }
 }
 
-export const getPacient = async (pacientId: string) => {
+export async function getPacient(pacientId: string)  {
     const session = await getSession();
 
     try {
