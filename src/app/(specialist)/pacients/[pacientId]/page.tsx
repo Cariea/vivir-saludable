@@ -59,7 +59,7 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
         <div style={{ maxHeight: 'calc(100vh - 9rem)', overflowY: 'auto' }}>
             <SimplePacientCard user={currentPacient} pacientId={params.pacientId} />
             <Box sx={{ display: 'flex',flexDirection:'column', alignItems: 'center', flexWrap: 'wrap'}}>
-                <Typography sx={{marginBottom:'1rem'}}variant="h6">Comidas</Typography>
+                {currentSpecialist.specialtyName === "nutricionista" && <Typography sx={{marginBottom:'1rem'}}variant="h6">Comidas</Typography>}
                 {currentSpecialist.specialtyName === "nutricionista" && dates.map((date,index) => {
                     return(
                         <div key={index}>
