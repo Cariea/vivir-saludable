@@ -13,6 +13,7 @@ export interface PacientSpecialists extends User {
   nextHealthQueryDate: string,
   nextQuoteDate?: string
   meals: {mealId:number, description:string, mealImageUrl:string, wasSafistied:boolean, pica:boolean,  createdAt:string}[]
+  symptoms: {description:string, name:string, specialistId:string, symptomId:number, whenAppeared:string, createdAt:string}[]
 }
 interface SpecialistCardProps {
     user: PacientSpecialists;
