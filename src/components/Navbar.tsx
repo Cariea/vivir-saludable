@@ -20,7 +20,7 @@ const StyledBottomNavigationAction = styled(BottomNavigationAction)({
 export default function Navbar() {
     const router = useRouter();
     const pathname = usePathname();
-    const [session, setSession] = useState<{ role: string  }>({} as any);
+    const [session, setSession] = useState<{ role: string,id:string  }>({} as any);
     const cookie = useContext(SessionCookiesContext);
 
     useEffect(() => {
@@ -39,11 +39,12 @@ export default function Navbar() {
             {session.role === "asistent" && <StyledBottomNavigationAction value="/users" label="Usuarios" icon={<PeopleRounded />} />}
             {/* {session.role !== "asistent" && <StyledBottomNavigationAction value="/consults" label="Consultas" icon={<CalendarMonthRounded />} />} */}
             {session.role === "specialist" && <StyledBottomNavigationAction value="/pacients" label="Pacientes" icon={<People />} />}
-            {session.role !== "asistent" && <StyledBottomNavigationAction value="/chat" label="Chat" icon={<MessageRounded />} />}
             {session.role === "pacient" && <StyledBottomNavigationAction value="/todo" label="Todo" icon={<CheckRounded />} />}
+            {session.role !== "asistent" && <StyledBottomNavigationAction value="/chat" label="Chat" icon={<MessageRounded />} />}
             {session.role === "pacient" && <StyledBottomNavigationAction value="/specialists" label="Especialistas" icon={<People />} />}
             <StyledBottomNavigationAction value="/notifications" label="Alertas" icon={<NotificationsRounded />} />
-            <StyledBottomNavigationAction value="/profile" label="Perfil" icon={<PersonRounded />} />
+            {session.role ==="specialist" && <StyledBottomNavigationAction value={"/profile/"+session.id} label="Perfil" icon={<PersonRounded />} />}
+            {session.role ==="pacient" && <StyledBottomNavigationAction value={"/pacient-profile/"+session.id} label="Perfil" icon={<PersonRounded />} />}
         </BottomNavigation>
     );
 }
