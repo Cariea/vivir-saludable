@@ -92,7 +92,7 @@ export default function UserSelector({
                         <Box
                             className={`shadow-base rounded-3xl p-8 bg-white ${
                                 state.selectedUsers.includes(user.userId)
-                                    ? "outline-2 outline-secondary outline"
+                                    ? "outline outline-2 outline-secondary-default"
                                     : ""
                             }`}
                             key={user.userId}

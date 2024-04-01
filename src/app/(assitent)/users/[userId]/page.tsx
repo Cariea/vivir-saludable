@@ -103,11 +103,14 @@ const UserInfo = ({ params }: { params: { userId: string } }) => {
                     {userInfo.name}
                 </h1>
                 <div className="flex gap-x-2 items-center">
-                    <div className="w-2 h-2 bg-secondary-default rounded-full"></div>
-                    <span className="block text-secondary-default">Activo</span>
+                    <div className="w-2 h-2 bg-secondary rounded-full"></div>
+                    <span className="block text-secondary">Activo</span>
                 </div>
                 <Button 
-                    size="small"
+                    sx={{
+                        paddingY: "0.25rem",
+                        marginTop: "1rem"
+                    }}
                     variant="outlined"
                     color="inherit"
                     className="shadow-none"

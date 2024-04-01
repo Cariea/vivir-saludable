@@ -10,7 +10,8 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 
 import { authenticate } from "@/actions/authActions";
 import Logo from "../../images/Logo.png";
-import { Button } from "@mui/material";
+import { Alert, Button } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 type Inputs = {
     cedula: string;
@@ -102,31 +103,31 @@ export default function Login() {
                     {errors.password && <span className="text-red-500">Campo requerido</span>}
                 </div>
                 <div className="flex flex-col gap-y-4 w-full items-center">
-                    <Button
+                    <LoadingButton
+                        loading={loading}
                         variant="contained"
                         color="primary"
                         onClick={handleSubmit(onSubmit)}
                         disabled={loading}
                     >
-                        {loading ? (
-                            <span className="loading loading-ring loading-xs"></span>
-                        ) : "Iniciar sesión"
-                        }
-                    </Button>
-                    {/* <button disabled={loading} className="btn btn-primary w-full rounded-full text-white-dark py-4" onClick={handleSubmit(onSubmit)}>
-                        {loading ? (
-                            <span className="loading loading-ring loading-xs"></span>
-                        ) : "Iniciar sesión"
-                        }
-                    </button> */}
+                        Iniciar sesión
+                    </LoadingButton>
                     <Link href="/reset-password" className="text-gray-400 font-bold">
                         ¿Olvidaste tu contraseña?
                     </Link>
                 </div>
             </form>
-            {!!errorMessage && (
-                <div role="alert" className="absolute bottom-0 left-0 right-0 rounded-none py-4 px-8 alert alert-error">
-                    <span className="font-bold text-sm text-center">{errorMessage}</span>
+            {errorMessage !== "" && (
+                <div className="absolute right-2 left-2 top-2">
+                    <Alert
+                        variant="filled"
+                        severity="error"
+                        onClose={() => {
+                            setErrorMessage("")
+                        }}
+                    >
+                        {errorMessage}
+                    </Alert>
                 </div>
             )}
         </div>

@@ -3,11 +3,14 @@
 import { Ubuntu } from 'next/font/google';
 import { ThemeOptions, createTheme } from '@mui/material/styles';
 
+import type {} from '@mui/lab/themeAugmentation';
+
 const ubuntu = Ubuntu({
     weight: ['300', '400', '500', '700'],
     subsets: ['latin'],
     display: 'swap',
   });
+
 
 export const themeOptions: ThemeOptions = {
   palette: {
@@ -72,6 +75,20 @@ export const themeOptions: ThemeOptions = {
   },
   components: {
     MuiButton: {
+      variants: [{
+        props: { color: "inherit" },
+        style: {
+          backgroundColor: "white",
+          color: "#7898BA",
+          ":disabled": {
+            backgroundColor: "#EEF2F6",
+            color: "#9AB2CB"
+          },
+          ":focus": {
+            backgroundColor: "white"
+          }
+        }
+      }],
         styleOverrides: {
             root: ({ ownerState }) => ({
                 ...(ownerState && {
@@ -113,6 +130,42 @@ export const themeOptions: ThemeOptions = {
           ...(ownerState && {
             backgroundColor: theme.palette.background.default,
             height: "100vh"
+          })
+        })
+      }
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: ({ ownerState, theme }) => ({
+          ...(ownerState.variant === "standard" && {
+            minHeight: '3.5rem',
+            backgroundColor: "white",
+            boxShadow: '0px 18px 50px -10px rgba(120, 152, 186, 0.3)',
+            borderRadius: "8rem",
+            border: 0,
+            "&::before": {
+              border: 0,
+            },
+            "&:hover:not(.Mui-disabled, .Mui-error):before": {
+              border: 0,
+            },
+            "&::after": {
+              border: 0,
+            },
+          })
+        }),
+        select: ({ ownerState }) => ({
+          ...(ownerState.variant === "standard" && {
+            border: 0,
+            paddingLeft: '1rem',
+            paddingRight: '1rem',
+            borderRadius: '8rem',
+            backgroundColor: 'white'
+          })
+        }),
+        iconStandard: ({ ownerState }) => ({
+          ...(ownerState && {
+            right: '1rem'
           })
         })
       }

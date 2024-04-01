@@ -5,7 +5,17 @@ import { IoFilter, IoClose } from "react-icons/io5";
 
 import { getSpecialties, getPrograms } from "@/actions/getActions";
 import { SpecialtyType, ProgramType } from "@/types";
-import { Badge, Button, Container, Grid, IconButton, Stack, SwipeableDrawer, styled } from "@mui/material";
+import {
+    Badge,
+    Button,
+    Container,
+    Grid,
+    IconButton,
+    Stack,
+    SwipeableDrawer,
+    Typography,
+    styled,
+} from "@mui/material";
 import { Close, FilterList } from "@mui/icons-material";
 
 interface FilterProps {
@@ -27,11 +37,11 @@ const ClearButton = styled(Button)({
 });
 
 const FilterBadge = styled(Badge)({
-    '& .MuiBadge-badge': {
+    "& .MuiBadge-badge": {
         top: 6,
-        right: 6
-    }
-})
+        right: 6,
+    },
+});
 export default function UserFilter({ setOriginalSelection }: FilterProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [selection, setSelection] = useState<SelectionProps>({});
@@ -74,7 +84,7 @@ export default function UserFilter({ setOriginalSelection }: FilterProps) {
 
     const onClear = (category: string) => {
         if (category === "all") {
-            setSelection({})
+            setSelection({});
         } else {
             setSelection({ ...selection, [category]: undefined });
         }
@@ -99,11 +109,13 @@ export default function UserFilter({ setOriginalSelection }: FilterProps) {
         setIsOpen(newOpen);
     };
 
-    const filterSelectionBadgeCount = useMemo(() => (
-        (selection.byRole ? 1 : 0) +
-        (selection.byProgram ? 1 : 0) +
-        (selection.bySpecialty ? 1 : 0)
-    ), [selection])
+    const filterSelectionBadgeCount = useMemo(
+        () =>
+            (selection.byRole ? 1 : 0) +
+            (selection.byProgram ? 1 : 0) +
+            (selection.bySpecialty ? 1 : 0),
+        [selection]
+    );
 
     useEffect(() => {
         const getSpecialtiesData = async () => {
@@ -121,10 +133,13 @@ export default function UserFilter({ setOriginalSelection }: FilterProps) {
         getSpecialtiesData();
     }, []);
 
-
     return (
         <>
-            <FilterBadge color="primary" badgeContent={filterSelectionBadgeCount} invisible={filterSelectionBadgeCount === 0 ? true : false}>
+            <FilterBadge
+                color="primary"
+                badgeContent={filterSelectionBadgeCount}
+                invisible={filterSelectionBadgeCount === 0 ? true : false}
+            >
                 <IconButton
                     aria-label="filter"
                     color="default"
@@ -159,7 +174,9 @@ export default function UserFilter({ setOriginalSelection }: FilterProps) {
                         minWidth="100%"
                         marginBottom={2}
                     >
-                        <h3 className="text-2xl font-bold text-primary-default">Por Tipo de Usuario</h3>
+                        <h3 className="text-2xl font-bold text-primary-default">
+                            Por Tipo de Usuario
+                        </h3>
                         {!!selection.byRole && (
                             <ClearButton
                                 startIcon={<Close />}
@@ -173,28 +190,28 @@ export default function UserFilter({ setOriginalSelection }: FilterProps) {
                     </Stack>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
-                            <input
-                                className="btn py-2 px-8 rounded-8xl w-full shadow-base font-normal bg-white text-gray-400 border-0 checked:text-white"
-                                type="radio"
-                                name="byRole"
-                                aria-label="Especialista"
+                            <Button
+                                variant="contained"
+                                color={selection.byRole === "specialist" ? "primary" : "inherit"}
                                 onClick={() =>
                                     setSelection &&
                                     setSelection({ ...selection, byRole: "specialist" })
                                 }
-                            />
+                            >
+                                Especialista
+                            </Button>
                         </Grid>
                         <Grid item xs={6}>
-                            <input
-                                className="btn py-2 px-8 w-full rounded-8xl shadow-base font-normal bg-white text-gray-400 border-0 checked:text-white"
-                                type="radio"
-                                name="byRole"
-                                aria-label="Paciente"
+                            <Button
+                                variant="contained"
+                                color={selection.byRole === "pacient" ? "primary" : "inherit"}
                                 onClick={() =>
                                     setSelection &&
                                     setSelection({ ...selection, byRole: "pacient" })
                                 }
-                            />
+                            >
+                                Paciente
+                            </Button>
                         </Grid>
                     </Grid>
                     {!!specialties.length && (
@@ -223,14 +240,19 @@ export default function UserFilter({ setOriginalSelection }: FilterProps) {
                             </Stack>
                             <Stack direction="row" flexWrap="wrap" useFlexGap spacing={2}>
                                 {specialties.map((specialty: SpecialtyType) => (
-                                    <input
+                                    <Button
                                         key={specialty.specialtyId}
-                                        className="btn py-2 px-8 rounded-8xl shadow-base font-normal bg-white text-gray-400 border-0 checked:text-white capitalize"
-                                        type="checkbox"
-                                        name="bySpecialty"
-                                        aria-label={specialty.name}
+                                        variant="contained"
+                                        color={
+                                            selection.bySpecialty?.includes(specialty.name)
+                                                ? "primary"
+                                                : "inherit"
+                                        }
+                                        sx={{ width: "fit-content" }}
                                         onClick={() => setBySpecialty(specialty.name)}
-                                    />
+                                    >
+                                        {specialty.name}
+                                    </Button>
                                 ))}
                             </Stack>
                             {!!programs.length && (
@@ -259,14 +281,19 @@ export default function UserFilter({ setOriginalSelection }: FilterProps) {
                                     </Stack>
                                     <Stack direction="row" flexWrap="wrap" useFlexGap spacing={2}>
                                         {programs.map((program: ProgramType) => (
-                                            <input
+                                            <Button
                                                 key={program.programId}
-                                                className="btn py-2 px-8 rounded-8xl shadow-base font-normal bg-white text-gray-400 border-0 checked:text-white capitalize"
-                                                type="checkbox"
-                                                name="byProgram"
-                                                aria-label={program.name}
+                                                variant="contained"
+                                                color={
+                                                    selection.byProgram?.includes(program.name)
+                                                        ? "primary"
+                                                        : "inherit"
+                                                }
+                                                sx={{ width: "fit-content" }}
                                                 onClick={() => setByProgram(program.name)}
-                                            />
+                                            >
+                                                {program.name}
+                                            </Button>
                                         ))}
                                     </Stack>
                                 </>
