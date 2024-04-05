@@ -11,6 +11,7 @@ const fieldOptions = [
     { label: "Distancia en metros", value: "distance", min: 0, max: 5000 },
     { label: "Peso en kg", value: "weight", min: 0, max: 100 },
     { label: "Numero de Repeticiones", value: "repetitions", min: 0, max: 10000 },
+    { label: "Frecuencia Cardiaca", value: "heartRate", min: 0, max: 200 }
 ];
 
 
@@ -28,6 +29,7 @@ export const Activities = () => {
         distance: 0,
         weight: 0,
         repetitions: 0,
+        heartRate: 0,
         description: ''
     });
     const [openNotification, setOpenNotification] = useState(false);
@@ -69,7 +71,10 @@ export const Activities = () => {
             if (formData.repetitions === 0) {
                 formData.repetitions = undefined;
             }
-            const response = await postActivitie(formData.name as string, formData.description as string, formData.time as number, formData.distance as number, formData.weight as number, formData.repetitions as number);
+            if (formData.heartRate === 0) {
+                formData.heartRate = undefined;
+            }
+            const response = await postActivitie(formData.name as string, formData.description as string, formData.time as number, formData.distance as number, formData.weight as number, formData.repetitions as number, formData.heartRate as number);
             if (response.status === 200) {
               setNotificationData({ message: 'Actividad física registrada con éxito.', severity: 'success' });
               setOpenNotification(true);
@@ -79,6 +84,7 @@ export const Activities = () => {
                     distance: 0,
                     weight: 0,
                     repetitions: 0,
+                    heartRate: 0,
                     description: ''
                 });
             } else {

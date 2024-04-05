@@ -690,3 +690,37 @@ export const getIndicationsComplianceReports = async (pacientId: string) => {
         };
     }
 }
+
+export const getActivities = async (pacientId: string) => {
+    const session = await getSession();
+    try {
+        const response = await axios.get(`${config.apiUrl}activities`, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            },
+            params: {
+                pacientId
+            }
+        });
+
+        return {
+            status: response.status,
+            data: response.data
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error"
+        };
+    }
+}

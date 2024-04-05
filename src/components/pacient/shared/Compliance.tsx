@@ -33,9 +33,7 @@ const fetchIndications = async () => {
 
   if (response.status === 200) {
     setIndications(response.data);
-    console.log('hola')
     if (Array.isArray(response.data) && response.data.every(item => typeof item === 'object' && 'date' in item)) {
-      console.log('holaaa')
       setIndications(response.data as Indication[]);
       setDates(getDistinctDatesFromIndications(response.data as Indication[]) as string[]);
     } else {
@@ -53,7 +51,7 @@ const fetchIndications = async () => {
   return(
     <> 
      
-     <Box >
+     <Box  >
      <Typography sx={{ margin: '1rem', textAlign: 'center'  }} variant="h6">Cumplimiento de asignaciones</Typography>
       {dates.map((date) => (
         <Accordion key={date}>
@@ -63,7 +61,7 @@ const fetchIndications = async () => {
             <Typography variant="h6">{date as string}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TableContainer component={Paper}>
+            <TableContainer  component={Paper}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -97,27 +95,3 @@ const fetchIndications = async () => {
     </>
   )
 }
-
-// <p>  Hola {params.userId}</p>
-// <TableContainer component={Paper}>
-//   <Table>
-//     <TableHead>
-//       <TableRow>
-//         <TableCell>Indication</TableCell>
-//         <TableCell>Date</TableCell>
-//         <TableCell>Completed</TableCell>
-//       </TableRow>
-//     </TableHead>
-//     <TableBody>
-//       {indications.map((indication) => (
-//         <TableRow key={indication.indicationId}>
-//           <TableCell>{indication.description}</TableCell>
-//           <TableCell>{indication.date}</TableCell>
-//           <TableCell>
-//             <Checkbox checked={indication.completed} />
-//           </TableCell>
-//         </TableRow>
-//       ))}
-//     </TableBody>
-//   </Table>
-// </TableContainer>
