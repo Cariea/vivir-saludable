@@ -60,7 +60,6 @@ const MealCard = ({props}:{props: {mealId:number, description:string, mealImage:
            <TableHead>
              <TableRow sx={{justifyContent: 'space-between'}}>
                <TableCell align="left">Nombre</TableCell>
-               <TableCell align="center">Tipo</TableCell>
                <TableCell align="right">Peso&nbsp;(g)</TableCell>
              </TableRow>
            </TableHead>
@@ -73,7 +72,6 @@ const MealCard = ({props}:{props: {mealId:number, description:string, mealImage:
                  <TableCell component="th" scope="row">
                    {ingredient.name}
                  </TableCell>
-                 <TableCell align="center">{ingredient.ingredientType}</TableCell>
                  <TableCell align="right">{ingredient.volume}</TableCell>
                </TableRow>
              ))}
