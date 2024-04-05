@@ -12,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import { deleteAssingments } from "@/actions/deleteActions"
 import { AddIndicationToPacient } from "@/actions/postActions"
 import { Compliance } from "@/components/pacient/shared/Compliance"
+import { ActivitiesTable } from "@/components/specialist/deportologo/Activities"
 interface Indications {
     indicationId: number;
     description: string;
@@ -113,7 +114,7 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
                           <TableRow
                             key={indication.indicationId}
                             hover
-                            onClick={(event) => handleClick(event, indication.indicationId)}
+                            onClick={(event: React.MouseEvent<unknown, MouseEvent>) => handleClick(event, indication.indicationId)}
                             role="checkbox"
                             aria-checked={indication.status}
                             tabIndex={-1}
@@ -210,7 +211,9 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
                     <Compliance params={{ userId: params.pacientId }} />
               </Box>
 
-             
+              {currentSpecialist.specialtyName === "deportologo" && 
+                    <ActivitiesTable params={{userId: currentPacient.userId}} />
+              }
             </Box>
             <Navbar />
         </div>

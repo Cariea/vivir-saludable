@@ -17,6 +17,7 @@
     "@mui/lab": "^5.0.0-alpha.169",
     "@mui/material": "^5.15.10",
     "@mui/material-nextjs": "^5.15.9",
+    "@mui/x-date-pickers": "^7.1.1",
     "@react-spring/web": "^9.7.3",
     "@types/crypto-js": "^4.2.2",
     "@use-gesture/react": "^10.3.0",
@@ -24,6 +25,7 @@
     "browser-image-compression": "^2.0.2",
     "cookies-next": "^4.1.1",
     "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.10",
     "framer-motion": "^11.0.5",
     "next": "14.1.0",
     "next-client-cookies": "^1.1.0",
@@ -42,6 +44,7 @@
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-datepicker": "^6.2.0",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.17",
     "daisyui": "^4.6.1",
