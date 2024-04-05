@@ -1,23 +1,37 @@
 "use client";
-
-import Link from "next/link";
-import { IoLayers, IoPerson } from "react-icons/io5";
-
+import { IoLayers } from "react-icons/io5";
 import { User } from "@/types";
-import { useRouter } from "next/navigation";
 import {
-    Box,
-    IconButton,
-    ListItem,
-    ListItemIcon,
-    Menu,
-    MenuItem,
-    Stack,
-    Typography,
+  Box,
+  Stack,
+  Typography,
 } from "@mui/material";
-import { DeleteRounded, MoreHorizRounded } from "@mui/icons-material";
+import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import {postConsultation} from '@/actions/postActions';
+
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import AlertDialog from "./AlertDialog";
+
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 interface UserCardProps {
     user: User;
@@ -32,24 +46,44 @@ export default function PacientCard({
     user,
     noSpecialist,
     noPatient,
-    noMenu,
-    setUpdate,
 }: UserCardProps) {
     const router = useRouter();
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState<Dayjs | null>(dayjs('2024-04-17'));
 
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [openModal, setModal] = useState<boolean>(false);
-    const open = Boolean(anchorEl);
+    const [openNotification, setOpenNotification] = useState(false);
+    const [notificationData, setNotificationData] = useState<{ message: string; severity: "error" | "success" | "warning" }>({ message: '', severity: 'success' });
+    const handleOpen = () => setOpen(true);
+    
+    const handleClose = () => {
+      setOpen(false)
+
+    };
+    const handleSelectDate = async() => {
+      setOpen(false);
+      const response = await postConsultation(user.userId, dayjs(value).format('YYYY-MM-DD'));
+      if(response.status === 200){
+        setOpenNotification(true);
+        setNotificationData({ message: `Consulta programada correctamente para el ${dayjs(value).format('YYYY-MM-DD')}`, severity: 'success' });
+      }else
+      {
+        setOpenNotification(true);
+        setNotificationData({ message: `Error al programar la consulta`, severity: 'error' });
+      }
+    };
+
+
 
     const handleRouter = (e: any) => {
-        console.log(e);
+        //console.log(e);
 
+        if(open === false) {
         switch (e.target.nodeName) {
             case "svg":
-                setAnchorEl(e.target);
+                console.log("Icono");
                 break;
             case "LI":
-                setModal(true);
+                console.log("Listado");
                 break;
             case "DIV":
                 if (!e.target.className.includes("MuiBackdrop-root")) {
@@ -60,15 +94,7 @@ export default function PacientCard({
             default:
                 console.log("No hay acciones definidas para este elemento");
         }
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleDelete = (info: any) => () => {
-        console.log(info);
-        setUpdate(true);
+    }
     };
 
     return (
@@ -85,44 +111,7 @@ export default function PacientCard({
                         {user.name}
                     </Typography>
                 </Box>
-                {!noMenu && (
-                    <>
-                        <IconButton
-                            id={`user-submenu-button-${user.userId}`}
-                            className="text-gray-400"
-                            aria-controls={open ? `user-submenu-${user.userId}` : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? "true" : undefined}
-                            onClick={handleRouter}
-                        >
-                            <MoreHorizRounded className="text-gray-400" />
-                        </IconButton>
-                        <Menu
-                            id={`user-submenu-${user.userId}`}
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            MenuListProps={{
-                                "aria-labelledby": `user-submenu-button-${user.userId}`,
-                            }}
-                        >
-                            <MenuItem color="danger" onClick={handleRouter}>
-                                <ListItemIcon>
-                                    <DeleteRounded fontSize="small" />
-                                </ListItemIcon>
-                                Desenlazar
-                            </MenuItem>
-                        </Menu>
-                        <AlertDialog
-                            color="error"
-                            open={openModal}
-                            setOpen={setModal}
-                            text="Toda información relacionada, como consultas, listas diarias y similares será eliminada"
-                            title="¿Está seguro que desea desenlazar estos usuarios?"
-                            action={handleDelete("Hello World")}
-                        />
-                    </>
-                )}
+                
             </Stack>
             {user.status ? (
                 <div className="flex gap-x-2 items-center">
@@ -152,6 +141,35 @@ export default function PacientCard({
                     </>
                 )}
             </div>
+            <Button onClick={handleOpen}>Programar Consulta</Button>
+            <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Seleccione la fecha de la consulta
+          </Typography>
+          
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={['DateCalendar', 'DateCalendar']}>
+              <DemoItem >
+                <DateCalendar value={value} onChange={(newValue) => setValue(newValue)} />
+              </DemoItem>
+            </DemoContainer>
+          </LocalizationProvider>
+
+          <Button onClick={handleSelectDate}>Programar</Button>
+
+        </Box>
+      </Modal>
+      <Snackbar open={openNotification} autoHideDuration={6000} onClose={() => setOpenNotification(false)}>
+            <Alert variant="filled" onClose={() => setOpenNotification(false)} severity={notificationData.severity} sx={{ width: '100%' }}>
+                {notificationData.message}
+            </Alert>
+        </Snackbar>
         </Box>
     );
 }
