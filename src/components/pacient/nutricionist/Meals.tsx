@@ -205,7 +205,7 @@ export default function MealsBox() {
                     type='number'
                   />
                   <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Selecciona un tipo de ingrediente</InputLabel>
+                  {/* <InputLabel id="demo-simple-select-label">Selecciona un tipo de ingrediente</InputLabel>
                   <Select
                     labelId="Tipo de ingrediente"
                     id="ingredient-type"
@@ -222,7 +222,7 @@ export default function MealsBox() {
                     <MenuItem value={'carbohidrato'}>carbohidrato</MenuItem>
                     <MenuItem value={'otro'}>otro</MenuItem>
                     
-                </Select>
+                </Select> */}
                 </FormControl>
                   <Button onClick={handleAddIngredient} variant="contained" startIcon={<AddIcon />}>
                     Agregar Ingrediente

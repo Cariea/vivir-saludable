@@ -211,7 +211,7 @@ export async function postSymptoms(symptom: string, description: string, when: s
     }
 }
 
-export const postActivitie =  async (name: string, description: string, time: number, distance: number, weight: number, repetitions: number) => {
+export const postActivitie =  async (name: string, description: string, time: number, distance: number, weight: number, repetitions: number, heartRate: number) => {
     try {
         const session = await getSession();
         const response = await axios.post(`${config.apiUrl}activities`, {
@@ -220,7 +220,8 @@ export const postActivitie =  async (name: string, description: string, time: nu
             time,
             distance,
             weight,
-            repetitions
+            repetitions,
+            heartRate
         }, {
             headers: {
                 Authorization: `Bearer ${session.token}`,
@@ -289,6 +290,40 @@ export const AddIndicationToPacient = async (pacientId: string, indicationId: nu
         const response = await axios.post(`${config.apiUrl}assignments`, {
             pacientId,
             indicationId
+        }, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            },
+        });
+
+        return {
+            status: response.status,
+            data: response.data,
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error",
+        };
+    }
+}
+
+export const postConsultation = async (pacientId: string, quoteDate: string) => {
+    try {
+        const session = await getSession();
+        const response = await axios.post(`${config.apiUrl}health-queries/`, {
+            pacientId,
+            quoteDate
         }, {
             headers: {
                 Authorization: `Bearer ${session.token}`,

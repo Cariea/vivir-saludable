@@ -4,23 +4,31 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Navbar from "@/components/Navbar";
 import { Accordion, AccordionDetails, AccordionSummary, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Snackbar, Alert } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { getIndications } from "@/actions/getActions";
+import { getIndications, getMe, getMeByToken, getUserInfo } from "@/actions/getActions";
 import { useEffect, useState } from "react";
 import BasicModal from "@/components/BasicModal";
 import { deleteIndications } from '@/actions/deleteActions';
 import { set } from 'react-hook-form';
+import { CurrentPacient, User, UserInfoByAssitent } from '@/types';
+import router from 'next/router';
 interface Indications {
   indicationId: string;
   description: string;
+}
+
+interface CurrentPacientExtended extends CurrentPacient {
+  role: string;
 }
 
 const ProfilePage = ({ params }: { params: { userId: string } }) => {
   const [indications, setIndications] = useState<Indications[]>([]);
   const [openNotification, setOpenNotification] = useState(false);
   const [notificationData, setNotificationData] = useState<{ message: string; severity: "error" | "success" | "warning" }>({ message: '', severity: 'success' });
+  const [currentUserInfo, setCurrentUserInfo] = useState<UserInfoByAssitent>({} as UserInfoByAssitent);
   
   useEffect(() => {
     fetchIndications();
+    fetchUser();
   }, []);
   const handleSnackbarClose = () => setOpenNotification(false);
   const fetchIndications = async () => {
@@ -33,6 +41,22 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
       }
     } catch (error) {
       console.error('Error fetching indications:', error);
+    }
+  }
+  const fetchUser = async () => {
+    const response =  await getMeByToken();
+    if(response.data.userId !== params.userId){
+      setOpenNotification(true);
+      setNotificationData({ message: 'No tienes permisos para ver este perfil, se enviara un reporte por actividad sospechosa', severity: 'error' });
+     
+    }
+    if (response.status === 200) {
+      setCurrentUserInfo(response.data);
+     
+
+    } else {
+      setOpenNotification(true);
+      setNotificationData({ message: response.message, severity: 'error' });
     }
   }
   const handleDelete = async (indicationId: string) => {
@@ -63,7 +87,10 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
 
   return (
     <div>
-      <Accordion>
+      {
+        currentUserInfo.role === 'specialist' &&
+        <>
+        <Accordion >
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1-content" id="panel1-header">
           Mis Indicaciones
         </AccordionSummary>
@@ -101,6 +128,113 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
           </TableContainer>
         </AccordionDetails>
       </Accordion>
+        <div className='mb-16'>
+           <h2 className="font-bold text-primary-default mt-8 mb-4">Información Personal</h2>
+            <div className="bg-white shadow-base rounded-3xl p-8 flex flex-col gap-y-4">
+                <div>
+                    <span className="block text-xs text-gray-400">Cédula</span>
+                    <span>{currentUserInfo.userId}</span>
+                </div>
+                <div>
+                    <span className="block text-xs text-gray-400">Correo Electrónico</span>
+                    <span>{currentUserInfo.email}</span>
+                </div>
+                <div>
+                    <span className="block text-xs text-gray-400">Dirección</span>
+                    <span>{currentUserInfo.address}</span>
+                </div>
+                <div>
+                    <span className="block text-xs text-gray-400">Teléfono</span>
+                    <span>{currentUserInfo.phone}</span>
+                </div>
+                {currentUserInfo.programs ? (
+                    <div>
+                        <span className="block text-xs text-gray-400 mb-2">Programas</span>
+                        <div className="flex flex-wrap gap-2">
+                            {currentUserInfo.programs.map((program) => (
+                                <div
+                                    key={program.programId}
+                                    className="rounded-full bg-secondary-default p-1 px-2 w-fit text-sm"
+                                >
+                                    {program.programName}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        <div>
+                            <span className="block text-xs text-gray-400">Programa</span>
+                            <span>{currentUserInfo.program}</span>
+                        </div>
+                        <div>
+                            <span className="block text-xs text-gray-400">
+                                Descripción del Programa
+                            </span>
+                            <span>{currentUserInfo.description}</span>
+                        </div>
+                    </>
+                )}
+            </div>
+            </div>
+        
+        
+      </>
+      }
+
+      {
+        currentUserInfo.role === 'pacient' && 
+        <>
+           <h2 className="font-bold text-primary-default mt-8 mb-4">Información Personal</h2>
+            <div className="bg-white shadow-base rounded-3xl p-8 flex flex-col gap-y-4">
+                <div>
+                    <span className="block text-xs text-gray-400">Cédula</span>
+                    <span>{currentUserInfo.userId}</span>
+                </div>
+                <div>
+                    <span className="block text-xs text-gray-400">Correo Electrónico</span>
+                    <span>{currentUserInfo.email}</span>
+                </div>
+                <div>
+                    <span className="block text-xs text-gray-400">Dirección</span>
+                    <span>{currentUserInfo.address}</span>
+                </div>
+                <div>
+                    <span className="block text-xs text-gray-400">Teléfono</span>
+                    <span>{currentUserInfo.phone}</span>
+                </div>
+                {currentUserInfo.programs ? (
+                    <div>
+                        <span className="block text-xs text-gray-400 mb-2">Programas</span>
+                        <div className="flex flex-wrap gap-2">
+                            {currentUserInfo.programs.map((program) => (
+                                <div
+                                    key={program.programId}
+                                    className="rounded-full bg-secondary-default p-1 px-2 w-fit text-sm"
+                                >
+                                    {program.programName}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        <div>
+                            <span className="block text-xs text-gray-400">Programa</span>
+                            <span>{currentUserInfo.program}</span>
+                        </div>
+                        <div>
+                            <span className="block text-xs text-gray-400">
+                                Descripción del Programa
+                            </span>
+                            <span>{currentUserInfo.description}</span>
+                        </div>
+                    </>
+                )}
+            </div>
+
+        </>
+      }
       <Navbar />
       <Snackbar open={openNotification} autoHideDuration={6000} onClose={handleSnackbarClose}>
         <Alert variant="filled" onClose={handleSnackbarClose} severity={notificationData.severity} sx={{ width: '100%' }}>

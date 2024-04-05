@@ -53,6 +53,7 @@ export interface SpecialistInfoByUser {
 
 export interface UserInfoByAssitent {
     userId: string,
+    role: string,
     name: string,
     email: string,
     address?: string,
