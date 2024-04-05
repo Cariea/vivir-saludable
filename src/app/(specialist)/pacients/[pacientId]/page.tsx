@@ -11,6 +11,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Paper from '@mui/material/Paper';
 import { deleteAssingments } from "@/actions/deleteActions"
 import { AddIndicationToPacient } from "@/actions/postActions"
+import { Compliance } from "@/components/pacient/shared/Compliance"
 interface Indications {
     indicationId: number;
     description: string;
@@ -204,7 +205,9 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
                         </AccordionDetails>
                       </Accordion>
                     ))}
+
                 </div>
+                    <Compliance params={{ userId: params.pacientId }} />
               </Box>
 
              
