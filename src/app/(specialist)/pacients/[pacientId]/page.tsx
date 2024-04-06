@@ -13,6 +13,7 @@ import { deleteAssingments } from "@/actions/deleteActions"
 import { AddIndicationToPacient } from "@/actions/postActions"
 import { Compliance } from "@/components/pacient/shared/Compliance"
 import { ActivitiesTable } from "@/components/specialist/deportologo/Activities"
+import { AntropometricsComponent } from "@/components/specialist/shared/Anthropometrics"
 interface Indications {
     indicationId: number;
     description: string;
@@ -95,7 +96,7 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
     return (
         <div style={{ maxHeight: 'calc(100vh - 9rem)', overflowY: 'auto' }}>
             <SimplePacientCard user={currentPacient} pacientId={params.pacientId} />
-            <Box sx={{ width:'100%',display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom:'1rem'}}>
+            <Box sx={{ width:'100%',display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
               <Typography sx={{ margin: '1rem' }} variant="h6">Indicaciones</Typography>
                 <TableContainer  component={Paper} >
                   <Table>
@@ -208,12 +209,14 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
                     ))}
 
                 </div>
-                    <Compliance params={{ userId: params.pacientId }} />
               </Box>
+              <Compliance params={{ userId: params.pacientId }} />
 
               {currentSpecialist.specialtyName === "deportologo" && 
                     <ActivitiesTable params={{userId: currentPacient.userId}} />
               }
+
+              <AntropometricsComponent params={{pacientId: currentPacient.userId}} />
             </Box>
             <Navbar />
         </div>
