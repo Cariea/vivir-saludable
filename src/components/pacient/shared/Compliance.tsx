@@ -51,10 +51,10 @@ const fetchIndications = async () => {
   return(
     <> 
      
-     <Box  >
+     <Box sx={{width:'100%'}} >
      <Typography sx={{ margin: '1rem', textAlign: 'center'  }} variant="h6">Cumplimiento de asignaciones</Typography>
       {dates.map((date) => (
-        <Accordion key={date}>
+        <Accordion key={date} sx={{width:'100%'}}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
           >

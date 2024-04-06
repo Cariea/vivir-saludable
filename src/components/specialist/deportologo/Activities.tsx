@@ -58,7 +58,7 @@ const fetchActivities = async () => {
   return(
     <> 
      
-     <Box >
+     <Box sx={{width:'100%'}}>
      <Typography sx={{ margin: '1rem', textAlign: 'center'  }} variant="h6">Actividades</Typography>
       {dates.map((date) => (
         <Accordion key={date}>
@@ -70,7 +70,7 @@ const fetchActivities = async () => {
            <Typography variant="h6">{date}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <TableContainer component={Paper} sx={{maxWidth: 360}}>
+            <TableContainer component={Paper} >
               <Table>
                 <TableHead>
                   <TableRow>
