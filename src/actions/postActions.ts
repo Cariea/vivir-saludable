@@ -7,6 +7,7 @@ import config from "@/config/config";
 import { NewUserInput } from "@/types";
 import { Ingredient } from "@/components/pacient/nutricionist/Meals";
 import sharp from "sharp";
+import { Anthropometric } from "@/components/specialist/shared/Anthropometrics";
 
 export async function base64ToFile(base64String: string, fileName: string): Promise<File> {
     return new Promise((resolve, reject) => {
@@ -328,6 +329,45 @@ export const postConsultation = async (pacientId: string, quoteDate: string) => 
             headers: {
                 Authorization: `Bearer ${session.token}`,
             },
+        });
+
+        return {
+            status: response.status,
+            data: response.data,
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error",
+        };
+    }
+}
+
+
+
+
+export const postAntrhropometricData = async (pacientId: string, antropometricData:Anthropometric) => {
+    try {
+        const session = await getSession();
+        const response = await axios.post(`${config.apiUrl}antropometricos/add`, {
+            ...antropometricData
+        }, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            },
+            params: {
+                pacientId
+            }
         });
 
         return {

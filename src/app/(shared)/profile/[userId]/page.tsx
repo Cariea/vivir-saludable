@@ -11,6 +11,7 @@ import { deleteIndications } from '@/actions/deleteActions';
 import { set } from 'react-hook-form';
 import { CurrentPacient, User, UserInfoByAssitent } from '@/types';
 import router from 'next/router';
+import EChartsMultiLineChart from '@/components/AnthropometricsChart';
 interface Indications {
   indicationId: string;
   description: string;
@@ -129,11 +130,19 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
         </AccordionDetails>
       </Accordion>
         <div className='mb-16'>
-           <h2 className="font-bold text-primary-default mt-8 mb-4">Información Personal</h2>
+           <h2 className="font-bold text-primary-default mt-8 mb-4 text-center">Información Personal</h2>
             <div className="bg-white shadow-base rounded-3xl p-8 flex flex-col gap-y-4">
                 <div>
                     <span className="block text-xs text-gray-400">Cédula</span>
                     <span>{currentUserInfo.userId}</span>
+                </div>
+                <div>
+                    <span className="block text-xs text-gray-400">Nombre</span>
+                    <span>{currentUserInfo.name}</span>
+                </div>
+                <div>
+                    <span className="block text-xs text-gray-400">Especialidad</span>
+                    <span>{currentUserInfo.specialty}</span>
                 </div>
                 <div>
                     <span className="block text-xs text-gray-400">Correo Electrónico</span>
@@ -185,11 +194,15 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
       {
         currentUserInfo.role === 'pacient' && 
         <>
-           <h2 className="font-bold text-primary-default mt-8 mb-4">Información Personal</h2>
+           <h2 className="font-bold text-primary-default mt-8 mb-4 text-center">Información Personal</h2>
             <div className="bg-white shadow-base rounded-3xl p-8 flex flex-col gap-y-4">
                 <div>
                     <span className="block text-xs text-gray-400">Cédula</span>
                     <span>{currentUserInfo.userId}</span>
+                </div>
+                <div>
+                    <span className="block text-xs text-gray-400">Nombre</span>
+                    <span>{currentUserInfo.name}</span>
                 </div>
                 <div>
                     <span className="block text-xs text-gray-400">Correo Electrónico</span>
@@ -232,6 +245,8 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
                     </>
                 )}
             </div>
+
+            <EChartsMultiLineChart params={{pacientId: currentUserInfo.userId}}/>
 
         </>
       }
