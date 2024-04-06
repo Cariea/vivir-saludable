@@ -14,6 +14,7 @@ import { AddIndicationToPacient } from "@/actions/postActions"
 import { Compliance } from "@/components/pacient/shared/Compliance"
 import { ActivitiesTable } from "@/components/specialist/deportologo/Activities"
 import { AntropometricsComponent } from "@/components/specialist/shared/Anthropometrics"
+import EChartsMultiLineChart from "@/components/AnthropometricsChart"
 interface Indications {
     indicationId: number;
     description: string;
@@ -217,6 +218,8 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
               }
 
               <AntropometricsComponent params={{pacientId: currentPacient.userId}} />
+
+              <EChartsMultiLineChart params={{pacientId: params.pacientId}}/>
             </Box>
             <Navbar />
         </div>
