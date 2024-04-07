@@ -33,6 +33,9 @@ export default function ContactList({ contacts }: { contacts: any[] }) {
                             <Typography variant="caption" className="text-gray-400">
                                 {contact.specialty || contact.program}
                             </Typography>
+                            <Typography variant="caption" className="text-gray-400">
+                                {contact.lastMessage || "No hay mensajes"}
+                            </Typography>
                         </Stack>
                     </Button>
                     <div className="h-[1px] w-[calc(100%-(1.5rem+56px))] bg-gray-50 translate-x-[calc(1.5rem+56px)]" />
