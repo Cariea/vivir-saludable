@@ -1,24 +1,26 @@
 'use client';
-import ModeIcon from '@mui/icons-material/Mode';
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import Navbar from "@/components/Navbar";
 import { Accordion, AccordionDetails, AccordionSummary, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Snackbar, Alert } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { getIndications, getMe, getMeByToken, getUserInfo } from "@/actions/getActions";
+import { getIndications, getMe, getMeByToken } from "@/actions/getActions";
 import { useEffect, useState } from "react";
 import BasicModal from "@/components/BasicModal";
-import { deleteIndications } from '@/actions/deleteActions';
-import { set } from 'react-hook-form';
-import { CurrentPacient, User, UserInfoByAssitent } from '@/types';
-import router from 'next/router';
+import QuestionsModal from "@/components/QuestionsModal";
+import {UserInfoByAssitent } from '@/types';
 import EChartsMultiLineChart from '@/components/AnthropometricsChart';
+import { deleteIndications } from '@/actions/deleteActions';
+import { deleteQuestions } from '@/actions/deleteActions';
+import {getBotQuestions} from '@/actions/getActions';
 interface Indications {
   indicationId: string;
   description: string;
 }
-
-interface CurrentPacientExtended extends CurrentPacient {
-  role: string;
+interface questions {
+  questionId: string;
+  question: string;
+  answer: string;
 }
 
 const ProfilePage = ({ params }: { params: { userId: string } }) => {
@@ -26,12 +28,25 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
   const [openNotification, setOpenNotification] = useState(false);
   const [notificationData, setNotificationData] = useState<{ message: string; severity: "error" | "success" | "warning" }>({ message: '', severity: 'success' });
   const [currentUserInfo, setCurrentUserInfo] = useState<UserInfoByAssitent>({} as UserInfoByAssitent);
-  
+  const[questions, setQuestions] = useState<questions[]>([]);
   useEffect(() => {
     fetchIndications();
     fetchUser();
+    fetchQuestions();
   }, []);
   const handleSnackbarClose = () => setOpenNotification(false);
+
+  const fetchQuestions = async () => {
+    const response = await getBotQuestions();
+    if (response.status === 200) {
+      setQuestions(response.data);
+      
+    } else {
+      setOpenNotification(true);
+      setNotificationData({ message: response.message, severity: 'error' });
+    }
+  }
+
   const fetchIndications = async () => {
     try {
       const response = await getIndications();
@@ -74,16 +89,27 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
     }
   }
 
-  const handleUpdate = async (indicationId: string) => {
-    // Aquí puedes poner cualquier lógica que necesites para el manejo de actualización de la indicación
-    await fetchIndications();
+  const handleQuestionDelete = async (questionId: string) => {
+    const response = await deleteQuestions(questionId);
+    if (response.status === 200) {
+      await fetchQuestions();
+      setOpenNotification(true);
+      setNotificationData({ message: 'Pregunta eliminada correctamente', severity: 'success' });
+
+    } else {
+      setOpenNotification(true);
+      setNotificationData({ message: response.message, severity: 'error' });
+      console.error(response.message);
+    }
   }
+
 
   const handleModalSubmit = async () => {
     // Aquí puedes poner cualquier lógica que necesites para el manejo de envío del formulario en el modal
 
     // Después de que se haya enviado exitosamente el formulario, vuelva a cargar las indicaciones
     await fetchIndications();
+    await fetchQuestions();
   };
 
   return (
@@ -112,9 +138,6 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
                     <TableCell align="right" style={{ maxWidth: '100px', wordBreak: 'break-all'  }}>{indication.description}</TableCell>
                     <TableCell align="right">
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <button className="flex items-center" onClick={() => handleUpdate(indication.indicationId)}>
-                    <ModeIcon />
-                  </button>
                   <button className="flex items-center" onClick={() => handleDelete(indication.indicationId)}>
                     <DeleteIcon />
                   </button>
@@ -126,6 +149,43 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
               </TableBody>
             </Table>
             <BasicModal onSubmit={handleModalSubmit} userId={params.userId} />
+          </TableContainer>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion >
+        <AccordionSummary expandIcon={<ExpandMoreIcon  />} aria-controls="panel1-content" id="panel1-header">
+          Mis Preguntas Frecuentes
+        </AccordionSummary>
+        <AccordionDetails>
+          <TableContainer component={Paper} style={{ maxWidth: '520px' }}>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left">Id</TableCell>
+                  <TableCell align="right">Pregunta</TableCell>
+                  <TableCell align="right">Respuesta</TableCell>
+                  <TableCell align="right">Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {questions.map((question) => (
+                  <TableRow key={question.questionId}>
+                    <TableCell align="left" style={{ maxWidth: '100px' }}>{question.questionId}</TableCell>
+                    <TableCell align="right" style={{ maxWidth: '100px' }}>{question.question}</TableCell>
+                    <TableCell align="right" style={{ maxWidth: '100px' }}>{question.answer}</TableCell>
+                    <TableCell align="right">
+                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <button className="flex items-center" onClick={() => handleQuestionDelete(question.questionId)}>
+                          <DeleteIcon />
+                        </button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <QuestionsModal onSubmit={handleModalSubmit}  />
           </TableContainer>
         </AccordionDetails>
       </Accordion>

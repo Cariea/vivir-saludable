@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Box, Snackbar, Typography } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Box, Snackbar, Typography, Button } from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -67,6 +67,7 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
       if (response.status === 200) {
         setNotificationData({ message: 'Datos enviados correctamente', severity: 'success' });
         setOpenNotification(true);
+        setAnthropometrics({} as Anthropometric);
       }else{
         console.log(response)
         setNotificationData({ message: 'Error al enviar los datos', severity: 'error' });
@@ -92,14 +93,14 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
         <Typography sx={{marginBottom:'1rem'}} variant="h6">Registrar Antropometricos</Typography>
         <Accordion sx={{width:'100%'}} >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="h6">Fecha de hoy</Typography>
+            <Typography suppressHydrationWarning variant="h6">{new Date().toLocaleString('default', { day: '2-digit',month: '2-digit',year:'numeric' })}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <FormControl sx={{ width: '100%' }} variant="outlined">
               <FormHelperText sx={{marginLeft:0}} id="outlined-weight-helper-text">Circunferencia del brazo</FormHelperText>
               <OutlinedInput
                 sx={{width: '100%', justifyContent: 'center'}}
-                id="outlined-adornment-weight"
+                id="outlined-adornment-armCircunference"
                 endAdornment={<InputAdornment position="end">cm</InputAdornment>}
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{
@@ -115,7 +116,7 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
               <FormHelperText sx={{marginLeft:0}} id="outlined-weight-helper-text">Circunferencia de pierna</FormHelperText>
               <OutlinedInput
                 sx={{width: '100%', justifyContent: 'center'}}
-                id="outlined-adornment-weight"
+                id="outlined-adornment-legCircunference"
                 endAdornment={<InputAdornment position="end">cm</InputAdornment>}
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{
@@ -131,7 +132,7 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
               <FormHelperText sx={{marginLeft:0}} id="outlined-weight-helper-text">Circunferencia de cintura</FormHelperText>
               <OutlinedInput
                 sx={{width: '100%', justifyContent: 'center'}}
-                id="outlined-adornment-weight"
+                id="outlined-adornment-waist"
                 endAdornment={<InputAdornment position="end">cm</InputAdornment>}
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{
@@ -147,7 +148,7 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
               <FormHelperText sx={{marginLeft:0}} id="outlined-weight-helper-text">Circunferencia de cadera</FormHelperText>
               <OutlinedInput
                 sx={{width: '100%', justifyContent: 'center'}}
-                id="outlined-adornment-weight"
+                id="outlined-adornment-hip"
                 endAdornment={<InputAdornment position="end">cm</InputAdornment>}
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{
@@ -179,7 +180,7 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
               <FormHelperText sx={{marginLeft:0}} id="outlined-weight-helper-text">Talla</FormHelperText>
               <OutlinedInput
                 sx={{width: '100%', justifyContent: 'center'}}
-                id="outlined-adornment-weight"
+                id="outlined-adornment-size"
                 endAdornment={<InputAdornment position="end">cm</InputAdornment>}
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{
@@ -195,7 +196,7 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
               <FormHelperText sx={{marginLeft:0}} id="outlined-weight-helper-text">Masa muscular</FormHelperText>
               <OutlinedInput
                 sx={{width: '100%', justifyContent: 'center'}}
-                id="outlined-adornment-weight"
+                id="outlined-adornment-musculoskeletalMass"
                 endAdornment={<InputAdornment position="end">kg</InputAdornment>}
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{
@@ -211,7 +212,7 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
               <FormHelperText sx={{marginLeft:0}} id="outlined-weight-helper-text">Masa grasa</FormHelperText>
               <OutlinedInput
                 sx={{width: '100%', justifyContent: 'center'}}
-                id="outlined-adornment-weight"
+                id="outlined-adornment-bodyFatMass"
                 endAdornment={<InputAdornment position="end">kg</InputAdornment>}
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{
@@ -227,7 +228,7 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
               <FormHelperText sx={{marginLeft:0}} id="outlined-weight-helper-text">Indice de masa corporal</FormHelperText>
               <OutlinedInput
                 sx={{width: '100%', justifyContent: 'center'}}
-                id="outlined-adornment-weight"
+                id="outlined-adornment-bodyMassIndex"
                 endAdornment={<InputAdornment position="end">kg/m²</InputAdornment>}
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{
@@ -243,7 +244,7 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
               <FormHelperText sx={{marginLeft:0}} id="outlined-weight-helper-text">Porcentaje de grasa</FormHelperText>
               <OutlinedInput
                 sx={{width: '100%', justifyContent: 'center'}}
-                id="outlined-adornment-weight"
+                id="outlined-adornment-bodyFatPercentage"
                 endAdornment={<InputAdornment position="end">%</InputAdornment>}
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{
@@ -259,7 +260,7 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
               <FormHelperText sx={{marginLeft:0}} id="outlined-weight-helper-text">Relación cintura-cadera</FormHelperText>
               <OutlinedInput
                 sx={{width: '100%', justifyContent: 'center'}}
-                id="outlined-adornment-weight"
+                id="outlined-adornment-waistHipRatio"
                 endAdornment={<InputAdornment position="end"></InputAdornment>}
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{
@@ -275,7 +276,7 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
               <FormHelperText sx={{marginLeft:0}} id="outlined-weight-helper-text">Nivel de grasa visceral</FormHelperText>
               <OutlinedInput
                 sx={{width: '100%', justifyContent: 'center'}}
-                id="outlined-adornment-weight"
+                id="outlined-adornment-visceralFatLevel"
                 endAdornment={<InputAdornment position="end"></InputAdornment>}
                 aria-describedby="outlined-weight-helper-text"
                 inputProps={{
@@ -287,7 +288,17 @@ export const AntropometricsComponent = ({params}: {params:{pacientId:string}}) =
                 onChange={(e) => handleInputChange(e, 'visceralFatLevel')}
               />
             </FormControl>
-            <button onClick={handleSubmit}>Enviar</button>
+            <Button 
+                    sx={{
+                        paddingY: "0.25rem",
+                        marginTop: "1rem"
+                    }}
+                    variant="outlined"
+                    color="inherit"
+                    className="shadow-none"
+                    onClick={handleSubmit}
+                >Enviar</Button>
+            
           </AccordionDetails>
         </Accordion>
       </Box>

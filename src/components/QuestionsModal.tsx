@@ -4,10 +4,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { postIndications } from '@/actions/postActions';
+import { postBotQuestion } from '@/actions/postActions';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import { set } from 'react-hook-form';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -22,23 +21,31 @@ const style = {
 };
 
 interface BasicModalProps {
-  userId: string;
   onSubmit: () => Promise<void>; // Acepta onSubmit como una prop
 }
+interface Question{
+  question:string;
+  answer:string;
+}
 
-const IndicationsModal: React.FC<BasicModalProps> = ({ userId, onSubmit }) => {
+const QuestionsModal: React.FC<BasicModalProps> = ({ onSubmit }) => {
   const [open, setOpen] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [question, setQuestion] = useState<Question>({question:'',answer:''});
   const [openNotification, setOpenNotification] = useState(false);
   const [notificationData, setNotificationData] = useState<{ message: string; severity: "error" | "success" | "warning" }>({ message: '', severity: 'success' });
 
   const handleOpen = () => setOpen(true);
   const handleClose = async () => {
-    const response = await postIndications(inputValue, userId);
+    if(question.question === '' || question.answer === ''){
+      setOpenNotification(true);
+      setNotificationData({ message: 'Por favor llene todos los campos', severity: 'error' });
+      return;
+    }
+    const response = await postBotQuestion(question.question, question.answer);
     if (response.status === 200) {
       setOpen(false);
-      onSubmit(); // Llamar a onSubmit cuando se cierre el modal
-      setInputValue('');
+      onSubmit(); 
+      setQuestion({question:'',answer:''});
     } else {
       setOpenNotification(true);
       setNotificationData({ message: response.message, severity: 'error' });
@@ -50,7 +57,7 @@ const IndicationsModal: React.FC<BasicModalProps> = ({ userId, onSubmit }) => {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Agregar Indicacion</Button>
+      <Button onClick={handleOpen}>Agregar Pregunta</Button>
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -59,15 +66,23 @@ const IndicationsModal: React.FC<BasicModalProps> = ({ userId, onSubmit }) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Ingrese su indicacion
+            Ingrese su pregunta frecuente con su respuesta
           </Typography>
           <TextField
-            id="input"
-            label="Tomar agua"
+            id="inputp"
+            label="pregunta"
             variant="outlined"
             fullWidth
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            value={question.question}
+            onChange={(e) => setQuestion({...question,question:e.target.value})}
+          />
+          <TextField
+            id="inputr"
+            label="respuesta"
+            variant="outlined"
+            fullWidth
+            value={question.answer}
+            onChange={(e) => setQuestion({...question,answer:e.target.value})}  
           />
           <Button variant="contained" onClick={handleClose}>
             Submit
@@ -83,4 +98,4 @@ const IndicationsModal: React.FC<BasicModalProps> = ({ userId, onSubmit }) => {
   );
 }
 
-export default IndicationsModal;
+export default QuestionsModal;
