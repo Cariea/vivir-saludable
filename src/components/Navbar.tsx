@@ -42,7 +42,7 @@ export default function Navbar() {
             {session.role === "pacient" && <StyledBottomNavigationAction value="/todo" label="Todo" icon={<CheckRounded />} />}
             {session.role !== "asistent" && <StyledBottomNavigationAction value="/chat" label="Chat" icon={<MessageRounded />} />}
             {session.role === "pacient" && <StyledBottomNavigationAction value="/specialists" label="Especialistas" icon={<People />} />}
-            <StyledBottomNavigationAction value="/notifications" label="Alertas" icon={<NotificationsRounded />} />
+            {session.role !== "asistent" &&  <StyledBottomNavigationAction value="/notifications" label="Alertas" icon={<NotificationsRounded />} />}
             {session.role ==="specialist" && <StyledBottomNavigationAction value={"/profile/"+session.id} label="Perfil" icon={<PersonRounded />} />}
             {session.role ==="pacient" && <StyledBottomNavigationAction value={"/profile/"+session.id} label="Perfil" icon={<PersonRounded />} />}
         </BottomNavigation>
