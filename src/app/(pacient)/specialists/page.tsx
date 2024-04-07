@@ -6,14 +6,14 @@ import { getMe, getPacientSpecialists, getQuestions } from "@/actions/getActions
 
 import { withRoles } from "@/components/WithRolesWrapper";
 import SpecialistCard, { PacientSpecialists } from "@/components/SpecialistCard";
-import { CurrentPacient} from "@/types";
+import { CurrentPacient, SpecialistType} from "@/types";
 import { IconButton, Stack } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import Meals from "@/components/pacient/nutricionist/Meals";
 import  {Symptoms}  from "@/components/pacient/shared/symptoms";
 import { Activities } from "@/components/pacient/shared/Activities";
 import { QuestionsView } from "@/components/specialist/shared/FrequentQuestions";
-import { set } from "react-hook-form";
+
 
 const UserList = () => {
     const [specialists, setSpecialists] = useState<PacientSpecialists[]>([]);
@@ -26,6 +26,12 @@ const UserList = () => {
         if (user.status === 200) {
             setCurrentUserInfo(user.data);
             setCurrentSpecialty(user.data.specialists[0].especialty);
+           
+            const currentSpecialistId = user.data.specialists[0].specialistId;
+              const response = await getQuestions(currentSpecialistId);
+              if (response.status === 200){
+                setQuestions(response.data);
+              }
         }
         const response = await getPacientSpecialists();
         if (response.status === 200) {
