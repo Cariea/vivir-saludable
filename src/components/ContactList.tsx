@@ -33,8 +33,8 @@ export default function ContactList({ contacts }: { contacts: any[] }) {
                             <Typography variant="caption" className="text-gray-400">
                                 {contact.specialty || contact.program}
                             </Typography>
-                            <Typography variant="caption" className="text-gray-400">
-                                {contact.lastMessage || "No hay mensajes"}
+                            <Typography variant="caption"  >
+                                {contact.lastMessageSenderId === contact.userid ? `${contact.name}: ` : contact.lastMessageSenderId ? 'Tu: ' : 'No hay mensajes' }{ contact.lastMessage ? contact.lastMessage.length > 35 ? `${contact.lastMessage.slice(0,35)}...`: contact.lastMessage:'' }
                             </Typography>
                         </Stack>
                     </Button>
