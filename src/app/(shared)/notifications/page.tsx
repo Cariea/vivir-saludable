@@ -46,7 +46,7 @@ export default function NotificationsPage() {
               </ListItemAvatar>
               </Badge>
               <ListItemText
-                primary={alert.type}
+                primary={alert.type === 'warning' ? 'Advertencia' : 'Felicitaciones'}
                 secondary={
                   <>
                     <Typography
