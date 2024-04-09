@@ -49,7 +49,7 @@ export default function PacientCard({
 }: UserCardProps) {
     const router = useRouter();
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState<Dayjs | null>(dayjs('2024-04-17'));
+    const [value, setValue] = useState<Dayjs | null>(dayjs((new Date).toString()));
 
     const [openNotification, setOpenNotification] = useState(false);
     const [notificationData, setNotificationData] = useState<{ message: string; severity: "error" | "success" | "warning" }>({ message: '', severity: 'success' });
@@ -61,6 +61,7 @@ export default function PacientCard({
     };
     const handleSelectDate = async() => {
       setOpen(false);
+  
       const response = await postConsultation(user.userId, dayjs(value).format('YYYY-MM-DD'));
       if(response.status === 200){
         setOpenNotification(true);
@@ -156,7 +157,7 @@ export default function PacientCard({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={['DateCalendar', 'DateCalendar']}>
               <DemoItem >
-                <DateCalendar value={value} onChange={(newValue) => setValue(newValue)} />
+                <DateCalendar minDate={dayjs((new Date).toString())} value={value} onChange={(newValue) => setValue(newValue)} />
               </DemoItem>
             </DemoContainer>
           </LocalizationProvider>

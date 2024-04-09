@@ -1,23 +1,18 @@
 "use client";
 
-import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
 
 import { useEffect, useMemo, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Fab } from "@mui/material";
-import { AddRounded } from "@mui/icons-material";
 
 import { User } from "@/types";
 import { getSpecialistPacients, getUsers } from "@/actions/getActions";
 
 import { withRoles } from "@/components/WithRolesWrapper";
-import UserCard from "@/components/UserCard";
+
 import Navbar from "@/components/Navbar";
-import UserFilter from "@/components/UserFilter";
+
 import SearchInput from "@/components/SearchInput";
 
-import Logo from "@/images/Logo.png";
 
 import Loading from "./loading";
 import PacientCard from "@/components/PacientCard";
@@ -30,14 +25,12 @@ interface SelectionProps {
 }
 
 const UserList = () => {
-    const pathname = usePathname();
     const [filterSelection, setFilterSelection] = useState<SelectionProps>({});
     const [searchInput, setSearchInput] = useState<string>("");
     const [users, setUsers] = useState<User[]>([]);
     const [hasMore, setHasMore] = useState(true);
     const [userPageSize, setUserPageSize] = useState(5);
     const [userPage, setUserPage] = useState(1);
-    const router = useRouter();
 
     const getUserData = async () => {
         const response = await getSpecialistPacients({ size: userPageSize, page: userPage });
@@ -72,7 +65,6 @@ const UserList = () => {
         <>
             <div className="flex justify-between items-end gap-x-4 mt-4">
                 <SearchInput value={searchInput} setValue={setSearchInput} />
-                <UserFilter setOriginalSelection={setFilterSelection} />
             </div>
             <InfiniteScroll
                 dataLength={searchedUserItems.length}
