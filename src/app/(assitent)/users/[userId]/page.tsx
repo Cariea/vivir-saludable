@@ -74,7 +74,7 @@ const UserInfo = ({ params }: { params: { userId: string } }) => {
             if (response.status === 200) {
                 setUserInfo(response.data);
             } else {
-                throw new Error(response.message);
+               // throw new Error(response.message);
             }
 
             setIsLoading(false);
@@ -182,6 +182,7 @@ const UserInfo = ({ params }: { params: { userId: string } }) => {
                               key={pacient.userId}
                               noSpecialist
                               setUpdate={setUpdateUser}
+                              currentUserId={userInfo.userId}
                           />
                       ))
                     : userInfo.specialists?.map((specialist) => (
@@ -191,6 +192,7 @@ const UserInfo = ({ params }: { params: { userId: string } }) => {
                               noSpecialist
                               noPatient
                               setUpdate={setUpdateUser}
+                              currentUserId={userInfo.userId}
                           />
                       ))}
             </div>

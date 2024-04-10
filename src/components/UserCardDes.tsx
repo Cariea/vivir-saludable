@@ -8,17 +8,20 @@ import { useRouter } from "next/navigation";
 import {
     Box,
     IconButton,
-    ListItem,
+
     ListItemIcon,
+
     Menu,
+
     MenuItem,
+
     Stack,
     Typography,
 } from "@mui/material";
-import { DeleteRounded, MoreHorizRounded } from "@mui/icons-material";
+import { Delete, DeleteRounded, MoreHorizRounded } from "@mui/icons-material";
 import { useState } from "react";
-import AlertDialog from "./AlertDialog";
-import { unLinkUsers } from "@/actions/deleteActions";
+import AlertDialog from "./AlertDialogDesc";
+import { deleteUsers } from "@/actions/deleteActions";
 
 interface UserCardProps {
     user: User;
@@ -26,56 +29,48 @@ interface UserCardProps {
     noSpecialist?: boolean;
     noPatient?: boolean;
     noMenu?: boolean;
-    currentUserId: string;
     setUpdate: (value: boolean) => void;
 }
 
-export default function UserCard({
+export default function UserCardDesc({
     user,
     noSpecialist,
     noPatient,
     noMenu,
-    currentUserId,
     setUpdate,
 }: UserCardProps) {
     const router = useRouter();
-
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [openModal, setModal] = useState<boolean>(false);
     const open = Boolean(anchorEl);
-
+    const handleRouter = () => {
+       
+      router.push(`/users/${user.userId}`);
+     
+    };
 
     const handleMenu = (e: any) => {
         setAnchorEl(e.currentTarget);
     }
-
-    const handleDesenlazar = () => {
+    const handleDeleteButton = () => {  
         setModal(true);
     }
 
     const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleDelete = () => async() => {
-        console.log(user);
-        console.log(currentUserId);
-      if(user.role === "specialist"){
-        const response = await unLinkUsers(currentUserId, user.userId);
-
-      }else{
-        const response = await unLinkUsers(user.userId, currentUserId);
-      }
- 
+      setAnchorEl(null);
+  };
+    const handleDelete =  (info: any) => async () => {
+        const response = await deleteUsers(info.userId, info.role);
         setUpdate(true);
     };
 
     return (
         <Box
+            
             className="bg-white shadow-base rounded-3xl w-full p-8 cursor-pointer"
         >
             <Stack direction="row" justifyContent="space-between">
-                <Box>
+                <Box onClick={handleRouter}>
                     <Typography variant="caption" className="text-gray-400">
                         {user.role === "specialist" ? user.especialty : "Paciente"}
                     </Typography>
@@ -93,7 +88,7 @@ export default function UserCard({
                             aria-expanded={open ? "true" : undefined}
                             onClick={handleMenu}
                         >
-                            <MoreHorizRounded className="text-gray-400" />
+                            <Delete className="text-gray-400" />
                         </IconButton>
                         <Menu
                             id={`user-submenu-${user.userId}`}
@@ -104,20 +99,20 @@ export default function UserCard({
                                 "aria-labelledby": `user-submenu-button-${user.userId}`,
                             }}
                         >
-                            <MenuItem color="danger" onClick={handleDesenlazar}>
+                            <MenuItem color="danger" onClick={handleDeleteButton}>
                                 <ListItemIcon>
                                     <DeleteRounded fontSize="small" />
                                 </ListItemIcon>
-                                Desenlazar
+                                Eliminar
                             </MenuItem>
                         </Menu>
                         <AlertDialog
                             color="error"
                             open={openModal}
                             setOpen={setModal}
-                            text="Toda información relacionada, como consultas, listas diarias y similares será eliminada"
-                            title="¿Está seguro que desea desenlazar estos usuarios?"
-                            action={handleDelete()}
+                            text="Toda información relacionada, como consultas, tareas diarias y similares será eliminada"
+                            title="¿Está seguro que desea eliminar este usuario?"
+                            action={handleDelete(user)}
                         />
                     </>
                 )}

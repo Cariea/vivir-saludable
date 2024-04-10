@@ -148,18 +148,18 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
                 ))}
               </TableBody>
             </Table>
-            <BasicModal onSubmit={handleModalSubmit} userId={params.userId} />
           </TableContainer>
         </AccordionDetails>
+            <BasicModal onSubmit={handleModalSubmit} userId={params.userId} />
       </Accordion>
 
       <Accordion >
         <AccordionSummary expandIcon={<ExpandMoreIcon  />} aria-controls="panel1-content" id="panel1-header">
           Mis Preguntas Frecuentes
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ maxHeight: '300px', overflowY: 'auto' }}>
           <TableContainer component={Paper} style={{ maxWidth: '520px' }}>
-            <Table aria-label="simple table">
+            <Table aria-label="simple table" >
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Id</TableCell>
@@ -185,9 +185,9 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
                 ))}
               </TableBody>
             </Table>
-            <QuestionsModal onSubmit={handleModalSubmit}  />
           </TableContainer>
         </AccordionDetails>
+            <QuestionsModal onSubmit={handleModalSubmit}  />
       </Accordion>
         <div className='mb-16'>
            <h2 className="font-bold text-primary-default mt-8 mb-4 text-center">Información Personal</h2>

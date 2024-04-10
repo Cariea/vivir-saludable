@@ -17,7 +17,7 @@ interface AlertDialogProps {
     setOpen: (value: boolean) => void;
 }
 
-export default function AlertDialog({
+export default function AlertDialogDesc({
     text,
     title,
     color,
@@ -29,11 +29,11 @@ export default function AlertDialog({
   const handleClose = () => {
     setOpen(false);
   };
-
-  const handleDesenlazar =() => {
+  const handleDelete =() => {
     action();
     setOpen(false);
   }
+
 
   return (
     <>
@@ -54,8 +54,8 @@ export default function AlertDialog({
         <DialogActions sx={{ width: "100%", padding: "1rem" }}>
             <Stack spacing={1} width="100%">
                 <Button fullWidth color={color} onClick={handleClose}>Cancelar</Button>
-                <Button fullWidth variant="contained" color={color} onClick={handleDesenlazar} autoFocus>
-                    Desenlazar
+                <Button fullWidth variant="contained" color={color} onClick={handleDelete} autoFocus>
+                    Eliminar
                 </Button>
             </Stack>
         </DialogActions>

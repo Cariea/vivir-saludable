@@ -111,3 +111,39 @@ export const updateStatusAlert = async (alertId: number) => {
         };
     }
 }
+
+export const darAlta = async (userId: string) => {
+    try {
+        const session = await getSession();
+
+        const response = await axios.put(`${config.apiUrl}linker/alta`, {}, {
+            headers: {
+                Authorization: `Bearer ${session.token}`,
+            },
+            params: {
+                pacientId: userId,
+            },
+        });
+
+        return {
+            status: response.status,
+            data: response.data,
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log("error message: ", error.response?.data.message);
+            // 👇️ error: AxiosError<any, any>
+            return {
+                status: error.response?.status,
+                message: error.response?.data.message,
+            };
+        }
+
+        console.log("error: ", error);
+
+        return {
+            status: 500,
+            message: "Internal Server Error",
+        };
+    }
+}
