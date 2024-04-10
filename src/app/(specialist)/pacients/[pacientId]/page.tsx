@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import SimplePacientCard, { PacientSpecialists } from "@/components/SimplePacientCard"
 
 import MealCard from "@/components/specialist/nutricionist/MealCard"
-import { Accordion, AccordionDetails, AccordionSummary, Box, Checkbox, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Checkbox, Modal, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Paper from '@mui/material/Paper';
 import { deleteAssingments } from "@/actions/deleteActions"
@@ -15,11 +15,24 @@ import { Compliance } from "@/components/pacient/shared/Compliance"
 import { ActivitiesTable } from "@/components/specialist/deportologo/Activities"
 import { AntropometricsComponent } from "@/components/specialist/shared/Anthropometrics"
 import EChartsMultiLineChart from "@/components/AnthropometricsChart"
+import { darAlta } from "@/actions/putActions"
 interface Indications {
     indicationId: number;
     description: string;
     status: boolean;
 }
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
 
     const [currentSpecialist, setCurrentSpecialist] = useState({}as Specialist)
@@ -27,7 +40,7 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
     const [dates, setDates] = useState([] as unknown[])
     const [symptomsDates, setSymptomsDates] = useState([] as unknown[])
     const [indications, setIndications] = useState<Indications[]>([])
-
+    const [openAltaModal, setOpenAltaModal] = useState(false)
     const getDistinctDatesFromMeals = (patient:PacientSpecialists) => {
         const datesSet = new Set();
         patient.meals.forEach((meal) => {
@@ -90,6 +103,18 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
       setIndications(updatedIndications);
   };
   
+  const handleOpenAltaModal = () => {
+
+    setOpenAltaModal(true)
+  }
+  const handleClose = () => {
+    setOpenAltaModal(false)
+  }
+  const handleAlta = async () => {
+    const response = await darAlta(params.pacientId)
+    console.log(response)
+    setOpenAltaModal(false)
+  }
 
     useEffect(() => {
         getUserData()
@@ -221,6 +246,32 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
 
               <EChartsMultiLineChart params={{pacientId: params.pacientId}}/>
             </Box>
+            <Modal
+              open={openAltaModal}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Esta seguro que quiere dar de alta al paciente?
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  Ya no podra ver su informacion ni comunicarse con el
+                </Typography>
+                <div className=" flex gap-x-2 items-center">
+                <Button onClick={handleClose} variant="outlined" color="success">
+              Cancelar
+            </Button>
+            <Button onClick={handleAlta} variant="contained" color="error">
+              Dar de Alta
+            </Button>
+            </div>
+              </Box>
+            </Modal>
+            <Button onClick={handleOpenAltaModal} variant="contained" color="error">
+              Dar de Alta
+            </Button>
             <Navbar />
         </div>
     )
