@@ -12,7 +12,7 @@ import { User } from "@/types";
 import { getUsers } from "@/actions/getActions";
 
 import { withRoles } from "@/components/WithRolesWrapper";
-import UserCard from "@/components/UserCard";
+import UserCardDesc from "@/components/UserCardDes";
 import Navbar from "@/components/Navbar";
 import UserFilter from "@/components/UserFilter";
 import SearchInput from "@/components/SearchInput";
@@ -120,7 +120,7 @@ const UserList = () => {
             >
                 <div className="flex flex-col gap-y-8">
                     {searchedUserItems.map((user: User) => (
-                        <UserCard user={user} key={user.userId} setUpdate={() => {}} />
+                        <UserCardDesc user={user} key={user.userId} setUpdate={() => {}} />
                     ))}
                 </div>
             </InfiniteScroll>
