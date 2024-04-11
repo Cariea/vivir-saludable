@@ -8,6 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { IoArrowBack } from "react-icons/io5";
 
 import Logo from "../../images/Logo.png";
+import { forgotPassword } from "@/actions/postActions";
 
 type Inputs = {
     email: string;
@@ -24,9 +25,14 @@ export default function ResetPassword() {
         formState: { errors },
     } = useForm<Inputs>();
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
         console.log(data);
-        showMessage ? setShowMessage(false) : setShowMessage(true);
+        const response = await forgotPassword(data.email);
+        if (response.status === 200) {
+          showMessage ? setShowMessage(false) : setShowMessage(true);
+        }else{
+          console.log('error');
+        }
     }
 
     return (
@@ -39,7 +45,7 @@ export default function ResetPassword() {
                 <div className="flex flex-col gap-y-2 w-full items-center">
                     <h1 className="text-4xl text-primary-default font-bold text-center">Reseteo de Contraseña</h1>
                     <span className="text-gray-400 text-center">
-                        Introduzca su correo electrónico para recibir un enlace de restablecimiento de contraseña
+                        Introduzca su correo electrónico para recibir una nueva contraseña.
                     </span>
                 </div>
                 <div className="flex flex-col gap-y-4 w-full">
@@ -51,24 +57,20 @@ export default function ResetPassword() {
                                 required: {
                                     value: true,
                                     message: "Campo requerido"
-                                }, 
-                                pattern: {
-                                    value: /^[a-zA-Z0-9. _-]+@[a-zA-Z0-9. -]+\. [a-zA-Z]{2,4}$/,
-                                    message: "Correo Electrónico Inválido"
                                 }
                             })}
                             className="block shadow-base rounded-full w-full p-4 text-black placeholder-gray-200 bg-white focus:bg-white outline-1 outline-secondary focus:ring-secundary focus:outline-none focus:ring focus:ring-opacity-40"
                         />
                         {errors.email && <span className="text-red-500">{errors.email.message}</span>}
                     </div>
-                    <button className="btn btn-primary w-full rounded-full text-white-dark py-4" onClick={handleSubmit(onSubmit)}>
+                    <button className="btn btn-primary w-full rounded-full py-4 " onClick={handleSubmit(onSubmit)}>
                         Enviar Correo Electrónico
                     </button>
                 </div>
             </div>
             {showMessage && (
                 <div className="absolute bottom-0 right-0 left-0 flex items-center justify-center bg-secondary-default text-primary-default text-center px-4 py-3" role="alert">
-                    <span><strong>Correo Enviado.</strong> Revise su bandeja de entrada para acceder al link de reseteo de contraseña.</span>
+                    <span><strong>Correo Enviado.</strong> Revise su bandeja de entrada o spam para ver su contraseña.</span>
                 </div>
             )}
         </>
