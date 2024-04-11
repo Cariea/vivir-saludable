@@ -59,9 +59,9 @@ export default function MealsBox() {
     const file = event.target.files?.[0];
     if(file instanceof Blob){
 
-      if(file.size > 1048576){
+      if(file.size > 900000){
         const options = {
-          maxSizeMB: 1,
+          maxSizeMB: 0.9,
           maxWidthOrHeight: 1920,
           useWebWorker: true,
         }
