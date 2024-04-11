@@ -269,7 +269,7 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
             </div>
               </Box>
             </Modal>
-            <Button onClick={handleOpenAltaModal} variant="contained" color="error">
+            <Button onClick={handleOpenAltaModal} variant="contained" color="success">
               Dar de Alta
             </Button>
             <Navbar />

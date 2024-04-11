@@ -461,3 +461,35 @@ export const postAlert = async(userReceptor: string, alert: string, type: string
         };
     }
 }
+
+export const forgotPassword = async(email: string) => {
+    try {
+      const response = await axios.post(`${config.apiUrl}auth/forgot-password`, {
+        email,
+      }, {
+        headers: {
+          Authorization: `Apllication/json`
+        },
+      });
+
+      return {
+        status: response.status,
+        data: response.data,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.response?.data.message);
+        return {
+          status: error.response?.status,
+          message: error.response?.data.message,
+        };
+      }
+
+      console.log("error: ", error);
+
+      return {
+        status: 500,
+        message: "Internal Server Error",
+      };
+    }
+  }

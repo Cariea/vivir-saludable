@@ -6,7 +6,7 @@ import { Container } from "@mui/material";
 import { ChatMessage, StoredMessage } from "@/types";
 import { SessionCookiesContext, ChatContext } from "@/contexts";
 import config from "@/config/config";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function RootContainer({ cookies, children }: any) {
     const pathname = usePathname();
@@ -37,11 +37,11 @@ export default function RootContainer({ cookies, children }: any) {
 
         setSocket(client);
 
-        // return () => {
-        //     console.log("Disconeccting socket")
-        //     client.disconnect();
-        //     setSocket({} as Socket);
-        // }
+        return () => { //*
+            console.log("Disconeccting socket")
+            client.disconnect();
+            setSocket({} as Socket);
+        }//*
     }, [cookies]);
 
     return (
