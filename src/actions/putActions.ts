@@ -17,7 +17,7 @@ export async function updateUser(newUser: NewUserInput) {
             url = `${config.apiUrl}pacients/${newUser.userId}`;
         }
 
-        const response = await axios.post(url, newUser, {
+        const response = await axios.put(url, newUser, {
             headers: {
                 Authorization: `Bearer ${session.token}`,
             },
