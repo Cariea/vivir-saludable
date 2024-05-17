@@ -57,6 +57,7 @@ const UserRegister = () => {
         };
 
         if (isEditing) {
+            console.log("isEditing", newData.name);
             response = await updateUser(newData);
         } else {
             response = await createUser(newData);
