@@ -50,14 +50,19 @@ export default function Login() {
         }
         setLoading(false);
         console.log(response?.message.role);
-        switch (response?.message.role) {
-            case "specialist":
-                router.push("/pacients");
-            case "pacient":
-                router.push("/specialists");
-            default:
-                router.push("/users");
-        }
+
+        if(response?.message.first_login === false && response?.message.role === "pacient"){
+          router.push("/consent")
+        }else{
+          switch (response?.message.role) {
+              case "specialist":
+                  router.push("/pacients");
+              case "pacient":
+                  router.push("/specialists");
+              default:
+                  router.push("/users");
+          }
+      }
     };
 
     return (
