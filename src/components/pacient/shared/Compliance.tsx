@@ -42,7 +42,7 @@ const fetchIndications = async () => {
       setIndications(response.data as Indication[]);
       setDates(getDistinctDatesFromIndications(response.data as Indication[]) as string[]);
     } else {
-      console.error('Los datos de respuesta no están en el formato esperado.');
+      console.log('Los datos de respuesta no están en el formato esperado.');
     }
   }
 }
@@ -101,7 +101,7 @@ const sendAlert = async(indication:Indication,type:string) => {
                       <TableRow key={indication.recordId}>
                         <TableCell>{indication.description}</TableCell>
                         <TableCell>{indication.completed ? indication.hour : '--'}</TableCell>
-                        <TableCell onClick={ () => sendAlert( indication, indication.completed ? 'warning': 'congrats' )} sx={{ textAlign: 'center' }}>
+                        <TableCell onClick={ () => sendAlert( indication, indication.completed ? 'congrats': 'warning' )} sx={{ textAlign: 'center' }}>
                         <Tooltip title={indication.completed ? 'Enviar Felicitaciones': 'Enviar Advertencia'} placement="right-start">
                           {indication.completed ? <CheckIcon style={{ color: 'green' }} /> : <DangerousIcon style={{ color: 'red' }} />}
                         </Tooltip>

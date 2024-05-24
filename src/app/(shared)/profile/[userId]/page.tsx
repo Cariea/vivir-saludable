@@ -53,10 +53,10 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
       if (response.status === 200) {
         setIndications(response.data || []);
       } else {
-        console.error('Error fetching indications:', response.message);
+        console.log('Error fetching indications:', response.message);
       }
     } catch (error) {
-      console.error('Error fetching indications:', error);
+      console.log('Error fetching indications:', error);
     }
   }
   const fetchUser = async () => {
@@ -85,7 +85,7 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
     } else {
       setOpenNotification(true);
       setNotificationData({ message: response.message, severity: 'error' });
-      console.error(response.message);
+      console.log(response.message);
     }
   }
 
@@ -99,7 +99,7 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
     } else {
       setOpenNotification(true);
       setNotificationData({ message: response.message, severity: 'error' });
-      console.error(response.message);
+      console.log(response.message);
     }
   }
 
@@ -164,7 +164,7 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
                 <TableRow>
                   <TableCell align="left">Id</TableCell>
                   <TableCell align="right">Pregunta</TableCell>
-                  <TableCell align="right">Respuesta</TableCell>
+                  <TableCell align="right" >Respuesta</TableCell>
                   <TableCell align="right">Action</TableCell>
                 </TableRow>
               </TableHead>
@@ -172,8 +172,8 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
                 {questions.map((question) => (
                   <TableRow key={question.questionId}>
                     <TableCell align="left" style={{ maxWidth: '100px' }}>{question.questionId}</TableCell>
-                    <TableCell align="right" style={{ maxWidth: '100px' }}>{question.question}</TableCell>
-                    <TableCell align="right" style={{ maxWidth: '100px' }}>{question.answer}</TableCell>
+                    <TableCell align="right" style={{ maxWidth: '150px', wordBreak: 'break-all' }}>{question.question}</TableCell>
+                    <TableCell align="right" style={{ maxWidth: '150px' , wordBreak: 'break-all'}}>{question.answer}</TableCell>
                     <TableCell align="right">
                       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <button className="flex items-center" onClick={() => handleQuestionDelete(question.questionId)}>

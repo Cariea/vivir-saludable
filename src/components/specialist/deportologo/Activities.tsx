@@ -44,7 +44,7 @@ const fetchActivities = async () => {
       setActivities(response.data as Activity[]);
       setDates(getDistinctDatesFromActivities(response.data as Activity[]) as string[]);
     } else {
-      console.error('Los datos de respuesta no están en el formato esperado.');
+      console.log('Los datos de respuesta no están en el formato esperado.');
     }
   }
 }

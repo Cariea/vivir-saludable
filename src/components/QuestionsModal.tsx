@@ -42,14 +42,14 @@ const QuestionsModal: React.FC<BasicModalProps> = ({ onSubmit }) => {
       return;
     }
     const response = await postBotQuestion(question.question, question.answer);
+    console.log(`Se hizo el post y devolvio ${response.status}`)
     if (response.status === 200) {
       setOpen(false);
       onSubmit(); 
       setQuestion({question:'',answer:''});
     } else {
       setOpenNotification(true);
-      setNotificationData({ message: response.message, severity: 'error' });
-      console.error(response.message);
+      setNotificationData({ message: 'Ocurrio un error al guardar la pregunta', severity: 'error' });
     }
   };
 

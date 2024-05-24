@@ -42,7 +42,7 @@ const IndicationsModal: React.FC<BasicModalProps> = ({ userId, onSubmit }) => {
     } else {
       setOpenNotification(true);
       setNotificationData({ message: response.message, severity: 'error' });
-      console.error(response.message);
+      console.log(response.message);
     }
   };
 
