@@ -76,7 +76,7 @@ export default function UserSelector({
             toggleDrawer(false);
             setUpdate(true);
         } catch (e) {
-            console.error(e);
+            console.log(e);
         }
         setLoading(false);
     };

@@ -42,7 +42,7 @@ const fetchIndications = async () => {
       setIndications(response.data as Indication[]);
       setDates(getDistinctDatesFromIndications(response.data as Indication[]) as string[]);
     } else {
-      console.error('Los datos de respuesta no están en el formato esperado.');
+      console.log('Los datos de respuesta no están en el formato esperado.');
     }
   }
 }

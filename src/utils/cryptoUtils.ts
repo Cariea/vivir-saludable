@@ -17,7 +17,7 @@ export function encrypt(plaintext: string) {
         const result = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(encrypted));
         return result;
     } catch (error) {
-        console.error(error);
+        console.log(error);
         throw error;
     }
 }

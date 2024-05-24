@@ -56,7 +56,7 @@ export default function EChartsMultiLineChart({ params }: { params: { pacientId:
     
         setSeriesData(seriesData);
       } catch (error) {
-        console.error('Error fetching patient anthropometrics:', error);
+        console.log('Error fetching patient anthropometrics:', error);
       }
     
     };
