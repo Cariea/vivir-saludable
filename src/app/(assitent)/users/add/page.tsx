@@ -248,7 +248,7 @@ const UserRegister = () => {
                                 message: "Campo requerido",
                             },
                             pattern: {
-                                value: /^[0-9]{9}$/,
+                                value: /^\+[0-9]{1,15}$/,
                                 message: "Teléfono inválido",
                             },
                         })}
