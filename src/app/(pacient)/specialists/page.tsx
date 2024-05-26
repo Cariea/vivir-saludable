@@ -157,12 +157,12 @@ const UserList = () => {
                 </div>
                 <div className="flex flex-col gap-y-8 pb-12" >
                     {
-                        currentSpecialty === 'nutricionista' && (
+                        currentSpecialty === 'Nutricionista' && (
                             <Meals />
                         )
                     }
                     {
-                        currentSpecialty === 'deportologo' && (
+                        currentSpecialty === 'Deportologo' && (
                             <Activities />
                         )
                     }
@@ -170,7 +170,7 @@ const UserList = () => {
                         specialistsBySpecialty && (
                           <>
                             <Symptoms 
-                                text={currentSpecialty === 'nutricionista' ? 'Gastrointestinales' : currentSpecialty === 'deportologo' ? 'Fisicos' : currentSpecialty === 'psicologo' ? 'Psicosomaticos' : ''}
+                                text={currentSpecialty === 'Nutricionista' ? 'Gastrointestinales' : currentSpecialty === 'Deportologo' ? 'Fisicos' : currentSpecialty === 'Psicólogo' ? 'Psicosomaticos' : ''}
                                 specialist={specialistsBySpecialty.userId}
                                 pacient={currentUserInfo.userId}
                             />

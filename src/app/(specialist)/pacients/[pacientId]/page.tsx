@@ -164,8 +164,8 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
                 </TableContainer>
               </Box>
             <Box sx={{ display: 'flex',flexDirection:'column', alignItems: 'center', flexWrap: 'wrap'}}>
-                {currentSpecialist.specialtyName === "nutricionista" && <Typography sx={{marginBottom:'1rem'}}variant="h6">Comidas</Typography>}
-                {currentSpecialist.specialtyName === "nutricionista" && dates.map((date,index) => {
+                {currentSpecialist.specialtyName === "Nutricionista" && <Typography sx={{marginBottom:'1rem'}}variant="h6">Comidas</Typography>}
+                {currentSpecialist.specialtyName === "Nutricionista" && dates.map((date,index) => {
                     return(
                         <div key={index}>
                             <Accordion sx={{ minWidth: 360 }}>
@@ -238,7 +238,7 @@ const PacientPage =  ({ params }: { params: { pacientId: string} })  => {
               </Box>
               <Compliance params={{ userId: params.pacientId }} />
 
-              {currentSpecialist.specialtyName === "deportologo" && 
+              {currentSpecialist.specialtyName === "Deportologo" && 
                     <ActivitiesTable params={{userId: currentPacient.userId}} />
               }
 
