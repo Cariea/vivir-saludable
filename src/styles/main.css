@@ -1,3 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './vendor/tailwindcss/base.css';
+@import './layout/import.css';
+
+@import './vendor/tailwindcss/components.css';
+@import './vendor/tailwindcss/utilities.css';
+
+@import './components/import.css';
+
+@import './shame.css';

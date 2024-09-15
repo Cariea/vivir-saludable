@@ -1,0 +1,7 @@
+.input {
+    @apply p-4 rounded-full placeholder-gray-200 text-black block shadow-base focus:ring-secondary-400 focus:outline-none focus:ring focus:ring-opacity-40 w-full;
+
+    &.left-icon {
+        @apply pl-12
+    }
+}

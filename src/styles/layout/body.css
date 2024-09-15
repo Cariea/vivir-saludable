@@ -1,0 +1,9 @@
+main {
+    background-color: theme('colors.white-dark');
+}
+
+[data-theme="vs"] .btm-nav {
+    padding: 1rem;
+    height: auto;
+    border-radius: 4rem 4rem 0 0;
+}
